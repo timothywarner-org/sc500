@@ -1,0 +1,44 @@
+# Azure / IaC
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+*.bicepparam.local
+.azure/
+
+# Secrets and local config
+*.env
+.env.local
+secrets/
+*.pem
+*.pfx
+*.key
+
+# Editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# PowerShell history
+*.ps1_history
+
+# Build / scratch
+build/
+dist/
+out/
+tmp/
+scratch/
