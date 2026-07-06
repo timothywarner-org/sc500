@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Microsoft Learn SC-500 page
-    url: https://learn.microsoft.com/credentials/certifications/exams/sc-500/
+    url: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-500
     about: Official exam objectives and registration
   - name: Tim Warner — website
     url: https://timw.info

@@ -4,7 +4,7 @@
 >
 > 15 lessons · ~10 hours runtime · 100% aligned to the official Microsoft *Skills Measured* document for **Exam SC-500**.
 
-[![Microsoft Learn](https://img.shields.io/badge/Microsoft%20Learn-SC--500-0078D4?logo=microsoft)](https://learn.microsoft.com/credentials/certifications/exams/sc-500/)
+[![Microsoft Learn](https://img.shields.io/badge/Microsoft%20Learn-SC--500-0078D4?logo=microsoft)](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-500)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Course Status](https://img.shields.io/badge/status-in%20production-yellow)]()
 [![Beta Exam](https://img.shields.io/badge/Beta%20Exam-May%202026-blue)]()
@@ -36,7 +36,7 @@ Inside, you will find:
 | **Beta exam window** | May 2026 |
 | **General availability** | July 2026 |
 | **Format** | Multiple choice, case studies, scenario-based |
-| **Official study guide** | [SC-500 Skills Measured (Microsoft)](https://learn.microsoft.com/credentials/certifications/exams/sc-500/) |
+| **Official study guide** | [SC-500 Skills Measured (Microsoft)](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-500) |
 
 ### Skills measured (published weights)
 
