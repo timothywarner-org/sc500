@@ -2,7 +2,7 @@
 
 This document mirrors Microsoft's published **Skills Measured** for Exam SC-500 and shows exactly which lesson in this course covers which sub-domain. Use it as a self-assessment checklist while you study.
 
-> **Source:** [Microsoft Skills Measured — SC-500](https://learn.microsoft.com/credentials/certifications/exams/sc-500/)
+> **Source:** [Microsoft Skills Measured — SC-500](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-500)
 > **Beta exam window:** May 2026
 > **General availability:** July 2026
 > **Successor to:** AZ-500 (retires August 31, 2026)

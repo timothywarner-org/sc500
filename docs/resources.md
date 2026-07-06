@@ -4,7 +4,7 @@ Curated Microsoft Learn and external links to support the course. Organized by F
 
 ## Official Microsoft
 
-- [Exam SC-500 page](https://learn.microsoft.com/credentials/certifications/exams/sc-500/)
+- [Exam SC-500 study guide](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/sc-500)
 - [Microsoft Certified: Cloud and AI Security Engineer Associate](https://learn.microsoft.com/credentials/certifications/cloud-and-ai-security-engineer-associate/)
 - [Microsoft Defender for Cloud documentation](https://learn.microsoft.com/azure/defender-for-cloud/)
 - [Microsoft Sentinel documentation](https://learn.microsoft.com/azure/sentinel/)
