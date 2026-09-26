@@ -5,6 +5,7 @@ All notable changes to this course companion repository are tracked here. This p
 ## [Unreleased]
 
 ### Added
+- Lesson 2 instructor federation proof: manually dispatched OIDC exchange, resource-group read, and rejected tag write.
 - Initial repository scaffold: README, license, contribution guide, exam objective map
 - Lesson folders 1 through 15 with sub-domain mapping and placeholder demo runbooks
 - Issue templates for typos, broken links, and content questions

@@ -1,0 +1,73 @@
+# Publish to the exact repository/environment already trusted by the lab identity.
+# Manual dispatch and a main-only environment keep this proof scoped to the instructor.
+name: SC-500 Lesson 02 workload federation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: sc500-lesson02-identity-proof
+  cancel-in-progress: false
+
+jobs:
+  prove-reader-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: github.repository == 'timothywarner-org/sc500' && github.ref == 'refs/heads/main'
+    environment: sc500-lesson02
+    env:
+      AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+    steps:
+      # Pin the verified Azure/login v2 commit so a later tag move cannot change the demo.
+      - name: Exchange GitHub OIDC identity for the Contoso managed identity
+        uses: azure/login@7184910d9eb2b1c5e48f7073824a90609bb9b6d6
+        with:
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+          audience: api://AzureADTokenExchange
+      - name: Read the target and demonstrate rejected tag write
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          # Keep the demonstration inside the explicit course boundary even if variables drift.
+          if ($env:AZURE_SUBSCRIPTION_ID -ne '92fd53f2-c38e-461a-9f50-e1ef3382c54c' -or $env:AZURE_TENANT_ID -ne 'f74b1450-e46a-41df-abee-ebf3621bfd85') {
+            throw 'The configured environment does not match the Lesson 2 course boundary.'
+          }
+          $target = "/subscriptions/$env:AZURE_SUBSCRIPTION_ID/resourceGroups/rg-sc500-l02-target"
+          # Azure CLI accepts a subscription or a tenant selector, never both on this command.
+          $account = az account show --subscription $env:AZURE_SUBSCRIPTION_ID --output json | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0 -or $account.tenantId -ne $env:AZURE_TENANT_ID) { throw 'Authenticated tenant mismatch.' }
+          $token = az account get-access-token --resource https://management.core.windows.net/ --subscription $env:AZURE_SUBSCRIPTION_ID --query accessToken --output tsv
+          if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($token)) { throw 'ARM token acquisition failed.' }
+          try {
+            # The bearer token remains in memory and is never written to output or artifacts.
+            $headers = @{Authorization="Bearer $token"}
+            $read = Invoke-WebRequest -Uri "https://management.azure.com$($target)?api-version=2021-04-01" -Headers $headers -SkipHttpErrorCheck
+            if ([int]$read.StatusCode -ne 200) { throw "Expected read HTTP 200, received $($read.StatusCode)." }
+            $group = $read.Content | ConvertFrom-Json
+            $marker = 'sc500-l02-federation-probe'
+            if ($group.tags.PSObject.Properties.Name -contains $marker) { throw 'The probe marker already exists; inspect the previous failed test.' }
+            $payload = @{operation='Merge';properties=@{tags=@{$marker='denied-expected'}}} | ConvertTo-Json -Depth 5
+            $uri = "https://management.azure.com$target/providers/Microsoft.Resources/tags/default?api-version=2021-04-01"
+            $write = Invoke-WebRequest -Method Patch -Uri $uri -Headers $headers -ContentType application/json -Body $payload -SkipHttpErrorCheck
+            if ([int]$write.StatusCode -ge 200 -and [int]$write.StatusCode -lt 300) {
+              # Restore only this marker if unexpected excessive access allowed the operation.
+              $cleanup = @{operation='Delete';properties=@{tags=@{$marker='denied-expected'}}} | ConvertTo-Json -Depth 5
+              $restored = Invoke-WebRequest -Method Patch -Uri $uri -Headers $headers -ContentType application/json -Body $cleanup -SkipHttpErrorCheck
+              throw "Unexpected tag-write success. Marker cleanup HTTP $($restored.StatusCode); inspect the identity's effective roles."
+            }
+            $errorCode = ($write.Content | ConvertFrom-Json).error.code
+            if ([int]$write.StatusCode -ne 403 -or $errorCode -ne 'AuthorizationFailed') { throw "Expected RBAC rejection, received HTTP $($write.StatusCode) / $errorCode." }
+            [pscustomobject]@{readStatus=[int]$read.StatusCode;writeStatus=[int]$write.StatusCode;writeErrorCode=$errorCode;passed=$true} | ConvertTo-Json
+            "## Lesson 2 federation proof`nARM read: **200**. Tag write: **403 AuthorizationFailed**. Exact environment trust plus Reader scope verified." >> $env:GITHUB_STEP_SUMMARY
+          } finally {
+            $token = $null
+            $headers = $null
+          }
