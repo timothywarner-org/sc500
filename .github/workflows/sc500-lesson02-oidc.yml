@@ -37,7 +37,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           # Keep the demonstration inside the explicit course boundary even if variables drift.
-          if ($env:AZURE_SUBSCRIPTION_ID -ne '92fd53f2-c38e-461a-9f50-e1ef3382c54c' -or $env:AZURE_TENANT_ID -ne 'f74b1450-e46a-41df-abee-ebf3621bfd85') {
+          if ($env:AZURE_SUBSCRIPTION_ID -ne '12f633b2-0c86-43b6-93c6-2f3e0764c7f6' -or $env:AZURE_TENANT_ID -ne 'f74b1450-e46a-41df-abee-ebf3621bfd85') {
             throw 'The configured environment does not match the Lesson 2 course boundary.'
           }
           $target = "/subscriptions/$env:AZURE_SUBSCRIPTION_ID/resourceGroups/rg-sc500-l02-target"
