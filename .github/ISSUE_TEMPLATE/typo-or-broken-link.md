@@ -9,7 +9,7 @@ assignees: 'timothywarner'
 **Where is it?**
 File path and line number (or section heading).
 
-**What's wrong?**
+**What is wrong?**
 Paste the broken text or URL.
 
 **Suggested fix (optional)**

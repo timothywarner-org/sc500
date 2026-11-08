@@ -1,52 +1,30 @@
 # Lesson 04: Secure Storage and Databases
 
-**Maps to:** FG2.1, FG2.2
-**Estimated runtime:** ~40 minutes (video) + ~30-60 minutes (hands-on)
-
----
+**Exam SC-500 domain:** Secure storage, databases, and networking (25-30%)  
+**Study guide sections:** Implement security for storage accounts; Implement security for databases
 
 ## Learning objectives
 
-By the end of this lesson you can:
+- 4.1 Implement and configure Azure Storage account security, configure Storage firewall rules, and manage access to storage, including access policies
+- 4.2 Implement Microsoft Defender for Storage threat protection configurations
+- 4.3 Implement platform-level security configurations in Azure SQL, and configure database auditing for both Azure SQL Database and Azure SQL Managed Instance
+- 4.4 Configure Defender for Databases protection across Azure database services, including SQL Database, SQL Managed Instance, Azure Database for PostgreSQL and MySQL, and Azure Cosmos DB
 
-- Implement and configure security for Azure Storage accounts (network rules, encryption, SAS, identity-based access)
-- Implement Microsoft Defender for Storage threat protection
-- Implement platform-level security configurations in Azure SQL (authentication, auditing, TDE)
-- Configure Microsoft Defender for Databases across Azure SQL Database, SQL Managed Instance, PostgreSQL, MySQL, and Cosmos DB
+## Hands-on practice
 
----
+Every demo in this lesson is work you can repeat in your own subscription, mostly in the Azure portal or the Microsoft admin centers. Do each one yourself after you watch it, because clicking through a configuration sticks far better than reading about it.
 
-## Why this lesson matters on the exam
+The step-by-step walkthrough and any lab files for this lesson land in [`demos/`](demos/) after the lesson publishes. Watch the [changelog](../../CHANGELOG.md) for updates.
 
-The SC-500 exam tests these objectives in scenario-based items. Expect questions that give you a business requirement and ask you to pick the right Microsoft service, the right configuration, or the right remediation. The demos in this folder are designed to make those decisions feel obvious.
+## Before you start
 
----
+- An Azure subscription you control, ideally a dedicated sandbox with a budget alert
+- A resource group just for this lesson, so cleanup is a single delete
+- Defender for Storage and Defender for Databases are paid plans. An Azure SQL Managed Instance can take a long time to deploy and bills while it exists, so plan around it.
 
-## Demo runbook
+## Go deeper
 
-The `demos/` subfolder will contain hands-on scripts as the video course is recorded. Planned demos:
+- [Exam SC-500 study guide](https://learn.microsoft.com/credentials/certifications/resources/study-guides/sc-500)
+- [Curated Microsoft Learn links for this course](../../docs/resources.md)
 
-- [ ] **04.1** — Implement and configure security for Azure Storage accounts (network rules, encryption, SAS, identity-based access)
-- [ ] **04.2** — Implement Microsoft Defender for Storage threat protection
-- [ ] **04.3** — Implement platform-level security configurations in Azure SQL (authentication, auditing, TDE)
-- [ ] **04.4** — Configure Microsoft Defender for Databases across Azure SQL Database, SQL Managed Instance, PostgreSQL, MySQL, and Cosmos DB
-
-Each demo lands as an idempotent script (PowerShell + Azure CLI equivalents) with cleanup at the end. Watch this repo's [CHANGELOG](../../CHANGELOG.md) for the publication schedule.
-
----
-
-## Prerequisites for the demos
-
-- Azure subscription with Owner or Contributor at the subscription scope
-- A resource group dedicated to this lesson (the demos will create one named `rg-sc500-l04`)
-- Tools: Azure CLI 2.60+, Azure PowerShell Az 11+, the active subscription set to your sandbox
-
----
-
-## Further reading
-
-See [docs/resources.md](../../docs/resources.md) for the curated Microsoft Learn links that back this lesson.
-
----
-
-[← Course README](../../README.md) · [Full objective map →](../../docs/exam-objectives.md)
+[Course README](../../README.md) | [Exam objective map](../../docs/exam-objectives.md)

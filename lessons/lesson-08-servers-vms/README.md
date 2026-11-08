@@ -1,52 +1,30 @@
 # Lesson 08: Secure Servers and Virtual Machines
 
-**Maps to:** FG3.2, FG4.1
-**Estimated runtime:** ~40 minutes (video) + ~30-60 minutes (hands-on)
-
----
+**Exam SC-500 domain:** Secure compute (20-25%); Manage and monitor security posture (20-25%)  
+**Study guide sections:** Implement security for servers and virtual machines (VMs); Manage security posture by using Defender for Cloud
 
 ## Learning objectives
 
-By the end of this lesson you can:
+- 8.1 Implement and configure disk encryption, prioritizing encryption at host for new VMs. Configure secure boot, vTPM, integrity monitoring, and VM security type; explain the migration context for existing Azure Disk Encryption deployments
+- 8.2 Plan and implement Azure Bastion for secure RDP and SSH access without public IPs, and enable and enforce JIT VM access through Defender for Cloud
+- 8.3 Extend security controls to hybrid and multicloud servers using Azure Arc. Onboard them to Defender for Servers and configure vulnerability scanning, endpoint detection and response (EDR), and agentless VM scanning
+- 8.4 Enforce security configuration of Azure-managed servers using Azure Machine Configuration, and configure Microsoft Defender Vulnerability Management settings for Azure VMs
 
-- Implement disk encryption (Azure Disk Encryption, host-based) and VM security features
-- Plan Azure Bastion for RDP/SSH without public IPs, and enable JIT VM access through Defender for Cloud
-- Extend controls to hybrid/multicloud servers using Azure Arc, onboard Defender for Servers Plan 1/2, configure vulnerability scanning, agentless scanning, and EDR with Defender for Endpoint
-- Enforce config via Azure Machine Configuration and tune Defender Vulnerability Management
+## Hands-on practice
 
----
+Every demo in this lesson is work you can repeat in your own subscription, mostly in the Azure portal or the Microsoft admin centers. Do each one yourself after you watch it, because clicking through a configuration sticks far better than reading about it.
 
-## Why this lesson matters on the exam
+The step-by-step walkthrough and any lab files for this lesson land in [`demos/`](demos/) after the lesson publishes. Watch the [changelog](../../CHANGELOG.md) for updates.
 
-The SC-500 exam tests these objectives in scenario-based items. Expect questions that give you a business requirement and ask you to pick the right Microsoft service, the right configuration, or the right remediation. The demos in this folder are designed to make those decisions feel obvious.
+## Before you start
 
----
+- An Azure subscription you control, ideally a dedicated sandbox with a budget alert
+- A resource group just for this lesson, so cleanup is a single delete
+- Defender for Servers Plan 2 for just-in-time VM access and agentless scanning. Azure Arc onboarding needs a machine that runs outside Azure.
 
-## Demo runbook
+## Go deeper
 
-The `demos/` subfolder will contain hands-on scripts as the video course is recorded. Planned demos:
+- [Exam SC-500 study guide](https://learn.microsoft.com/credentials/certifications/resources/study-guides/sc-500)
+- [Curated Microsoft Learn links for this course](../../docs/resources.md)
 
-- [ ] **08.1** — Implement disk encryption (Azure Disk Encryption, host-based) and VM security features
-- [ ] **08.2** — Plan Azure Bastion for RDP/SSH without public IPs, and enable JIT VM access through Defender for Cloud
-- [ ] **08.3** — Extend controls to hybrid/multicloud servers using Azure Arc, onboard Defender for Servers Plan 1/2, configure vulnerability scanning, agentless scanning, and EDR with Defender for Endpoint
-- [ ] **08.4** — Enforce config via Azure Machine Configuration and tune Defender Vulnerability Management
-
-Each demo lands as an idempotent script (PowerShell + Azure CLI equivalents) with cleanup at the end. Watch this repo's [CHANGELOG](../../CHANGELOG.md) for the publication schedule.
-
----
-
-## Prerequisites for the demos
-
-- Azure subscription with Owner or Contributor at the subscription scope
-- A resource group dedicated to this lesson (the demos will create one named `rg-sc500-l08`)
-- Tools: Azure CLI 2.60+, Azure PowerShell Az 11+, the active subscription set to your sandbox
-
----
-
-## Further reading
-
-See [docs/resources.md](../../docs/resources.md) for the curated Microsoft Learn links that back this lesson.
-
----
-
-[← Course README](../../README.md) · [Full objective map →](../../docs/exam-objectives.md)
+[Course README](../../README.md) | [Exam objective map](../../docs/exam-objectives.md)

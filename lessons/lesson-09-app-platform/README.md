@@ -1,52 +1,30 @@
-# Lesson 09: Secure Application Platform Services: Containers, Serverless, App Service, WAF, APIM
+# Lesson 09: Secure Application Platform Services: Containers, Serverless, App Service, WAF, and API Management
 
-**Maps to:** FG3.3
-**Estimated runtime:** ~40 minutes (video) + ~30-60 minutes (hands-on)
-
----
+**Exam SC-500 domain:** Secure compute (20-25%)  
+**Study guide sections:** Implement security for application platform services
 
 ## Learning objectives
 
-By the end of this lesson you can:
+- 9.1 Detect container misconfigurations and runtime risks with Defender for Containers. Implement and configure security controls for AKS, Azure Container Registry, Azure Container Instances, and Azure Container Apps
+- 9.2 Implement and configure Azure Functions security, including authentication and network access, and implement and configure security controls for Azure Logic Apps
+- 9.3 Implement and configure Azure App Service security and Azure Web Application Firewall on Azure Front Door and Application Gateway
+- 9.4 Implement security policies for back-end API protection using Azure API Management
 
-- Detect container misconfigurations with Defender for Containers, and secure AKS, ACR, ACI, and Container Apps
-- Implement security controls for Azure Functions and Logic Apps
-- Implement security controls for Azure App Service and configure Azure WAF on Front Door and Application Gateway
-- Implement back-end API security using Azure API Management
+## Hands-on practice
 
----
+Every demo in this lesson is work you can repeat in your own subscription, mostly in the Azure portal or the Microsoft admin centers. Do each one yourself after you watch it, because clicking through a configuration sticks far better than reading about it.
 
-## Why this lesson matters on the exam
+The step-by-step walkthrough and any lab files for this lesson land in [`demos/`](demos/) after the lesson publishes. Watch the [changelog](../../CHANGELOG.md) for updates.
 
-The SC-500 exam tests these objectives in scenario-based items. Expect questions that give you a business requirement and ask you to pick the right Microsoft service, the right configuration, or the right remediation. The demos in this folder are designed to make those decisions feel obvious.
+## Before you start
 
----
+- An Azure subscription you control, ideally a dedicated sandbox with a budget alert
+- A resource group just for this lesson, so cleanup is a single delete
+- Defender for Containers is a paid plan, and Application Gateway with WAF and Azure Front Door bill while they exist.
 
-## Demo runbook
+## Go deeper
 
-The `demos/` subfolder will contain hands-on scripts as the video course is recorded. Planned demos:
+- [Exam SC-500 study guide](https://learn.microsoft.com/credentials/certifications/resources/study-guides/sc-500)
+- [Curated Microsoft Learn links for this course](../../docs/resources.md)
 
-- [ ] **09.1** — Detect container misconfigurations with Defender for Containers, and secure AKS, ACR, ACI, and Container Apps
-- [ ] **09.2** — Implement security controls for Azure Functions and Logic Apps
-- [ ] **09.3** — Implement security controls for Azure App Service and configure Azure WAF on Front Door and Application Gateway
-- [ ] **09.4** — Implement back-end API security using Azure API Management
-
-Each demo lands as an idempotent script (PowerShell + Azure CLI equivalents) with cleanup at the end. Watch this repo's [CHANGELOG](../../CHANGELOG.md) for the publication schedule.
-
----
-
-## Prerequisites for the demos
-
-- Azure subscription with Owner or Contributor at the subscription scope
-- A resource group dedicated to this lesson (the demos will create one named `rg-sc500-l09`)
-- Tools: Azure CLI 2.60+, Azure PowerShell Az 11+, the active subscription set to your sandbox
-
----
-
-## Further reading
-
-See [docs/resources.md](../../docs/resources.md) for the curated Microsoft Learn links that back this lesson.
-
----
-
-[← Course README](../../README.md) · [Full objective map →](../../docs/exam-objectives.md)
+[Course README](../../README.md) | [Exam objective map](../../docs/exam-objectives.md)

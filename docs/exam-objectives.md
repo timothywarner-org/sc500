@@ -1,144 +1,166 @@
-# SC-500 Exam Objectives — Full Map
+# Exam SC-500 objective map
 
-This document mirrors Microsoft's published **Skills Measured** for Exam SC-500 and shows exactly which lesson in this course covers which sub-domain. Use it as a self-assessment checklist while you study.
+This map lists Microsoft's published skills measured for **Exam SC-500: Implementing End-to-End Security Controls for Cloud and AI Workloads** and the lesson in this course that teaches each one. Rate yourself 1 to 5 on every row, then spend your study time on anything below a 4.
 
-> **Source:** [Microsoft Skills Measured — SC-500](https://learn.microsoft.com/credentials/certifications/exams/sc-500/)
-> **Beta exam window:** May 2026
-> **General availability:** July 2026
-> **Successor to:** AZ-500 (retires August 31, 2026)
+> **Source:** [Exam SC-500 study guide](https://learn.microsoft.com/credentials/certifications/resources/study-guides/sc-500). Microsoft's page shows "Last updated on 2026-05-13." When Microsoft revises the study guide, its list wins over this one.
 
----
+## Manage identity, access, and governance (20-25%)
 
-## FG1: Manage identity, access, and governance (20-25%)
+### Secure access to resources by using Microsoft Entra ID
 
-### FG1.1 Manage Microsoft Entra ID identity, authentication, and access — *Lessons 1, 2*
+| Skill | Lesson | Confidence (1-5) |
+| --- | --- | --- |
+| Implement and configure Privileged Identity Management (PIM) | [Lesson 1](../lessons/lesson-01-identity-foundations/) |  |
+| Implement conditional access policies | [Lesson 2](../lessons/lesson-02-entra-id-access/) |  |
+| Implement and configure authentication methods, including multifactor authentication (MFA) and passwordless | [Lesson 2](../lessons/lesson-02-entra-id-access/) |  |
+| Implement and configure identity for applications, including enterprise applications and app registrations | [Lesson 2](../lessons/lesson-02-entra-id-access/) |  |
+| Manage OAuth permission grants and consent settings | [Lesson 2](../lessons/lesson-02-entra-id-access/) |  |
+| Implement and configure managed identities for Azure resources | [Lesson 2](../lessons/lesson-02-entra-id-access/) |  |
 
-- Implement and configure Microsoft Entra Privileged Identity Management for Azure resources and Microsoft Entra roles → **Lesson 1**
-- Implement and configure authentication methods → **Lesson 2**
-- Design and implement Conditional Access policies → **Lesson 2**
-- Implement and configure identity for applications → **Lesson 2**
-- Implement and configure system-assigned and user-assigned managed identities, and apply Workload Identity Federation → **Lesson 2**
+### Secure secrets and keys by using Azure Key Vault
 
-### FG1.2 Manage Azure Key Vault — *Lesson 3*
+| Skill | Lesson | Confidence (1-5) |
+| --- | --- | --- |
+| Deploy Key Vault | [Lesson 3](../lessons/lesson-03-keyvault-policy-iac/) |  |
+| Configure Key Vault settings | [Lesson 3](../lessons/lesson-03-keyvault-policy-iac/) |  |
+| Configure access to Key Vault | [Lesson 3](../lessons/lesson-03-keyvault-policy-iac/) |  |
+| Configure firewall settings on Key Vault | [Lesson 3](../lessons/lesson-03-keyvault-policy-iac/) |  |
+| Manage keys, secrets, and certificates | [Lesson 3](../lessons/lesson-03-keyvault-policy-iac/) |  |
+| Scan for secrets by using Defender Cloud Security Posture Management (Defender CSPM) | [Lesson 3](../lessons/lesson-03-keyvault-policy-iac/) |  |
+| Implement Defender for Key Vault | [Lesson 3](../lessons/lesson-03-keyvault-policy-iac/) |  |
 
-- Deploy and configure Azure Key Vault → **Lesson 3**
-- Scan for exposed secrets using Microsoft Defender Cloud Security Posture Management → **Lesson 3**
+### Implement governance to enforce security and regulatory compliance
 
-### FG1.3 Manage Azure governance and compliance — *Lessons 1, 3*
+| Skill | Lesson | Confidence (1-5) |
+| --- | --- | --- |
+| Implement and configure security controls by using Azure Policy, including built-in and custom policy definitions | [Lesson 3](../lessons/lesson-03-keyvault-policy-iac/) |  |
+| Evaluate regulatory compliance by using Microsoft Defender for Cloud | [Lesson 3](../lessons/lesson-03-keyvault-policy-iac/), [Lesson 12](../lessons/lesson-12-defender-cloud-multicloud/) |  |
+| Implement and configure security controls in Defender for Cloud, including security standards and recommendations | [Lesson 3](../lessons/lesson-03-keyvault-policy-iac/) |  |
+| Implement resource locks | [Lesson 1](../lessons/lesson-01-identity-foundations/) |  |
+| Manage Azure built-in role assignments | [Lesson 1](../lessons/lesson-01-identity-foundations/) |  |
+| Manage custom roles, including Azure roles and Microsoft Entra roles | [Lesson 1](../lessons/lesson-01-identity-foundations/) |  |
+| Evaluate and remediate overprivileged access assignments by using Azure role-based access control (RBAC) | [Lesson 1](../lessons/lesson-01-identity-foundations/) |  |
+| Configure security controls for backup protection by using Azure Backup security features | [Lesson 3](../lessons/lesson-03-keyvault-policy-iac/) |  |
+| Implement and configure security controls by using infrastructure as code | [Lesson 3](../lessons/lesson-03-keyvault-policy-iac/) |  |
 
-- Manage Azure built-in role assignments and create custom Azure roles → **Lesson 1**
-- Manage Microsoft Entra directory roles → **Lesson 1**
-- Evaluate and remediate overprivileged access; apply resource locks → **Lesson 1**
-- Implement security controls using Azure Policy → **Lesson 3**
-- Evaluate compliance and security recommendations in Microsoft Defender for Cloud → **Lesson 3**
-- Configure Azure Backup security features → **Lesson 3**
-- Implement security controls using Infrastructure as Code with Azure Policy guardrails → **Lesson 3**
+## Secure storage, databases, and networking (25-30%)
 
----
+### Implement security for storage accounts
 
-## FG2: Secure storage, databases, and networking (25-30%)
+| Skill | Lesson | Confidence (1-5) |
+| --- | --- | --- |
+| Implement and configure security for storage accounts | [Lesson 4](../lessons/lesson-04-storage-databases/) |  |
+| Configure Azure Storage firewall rules | [Lesson 4](../lessons/lesson-04-storage-databases/) |  |
+| Implement Defender for Storage threat protection configurations | [Lesson 4](../lessons/lesson-04-storage-databases/) |  |
+| Manage access to storage, including access policies | [Lesson 4](../lessons/lesson-04-storage-databases/) |  |
 
-### FG2.1 Implement security for Azure Storage — *Lesson 4*
+### Implement security for databases
 
-- Implement and configure security for Azure Storage accounts → **Lesson 4**
-- Implement Microsoft Defender for Storage threat protection → **Lesson 4**
+| Skill | Lesson | Confidence (1-5) |
+| --- | --- | --- |
+| Implement platform-level security configurations in Azure SQL | [Lesson 4](../lessons/lesson-04-storage-databases/) |  |
+| Configure database auditing for Azure SQL Database and Azure SQL Managed Instance | [Lesson 4](../lessons/lesson-04-storage-databases/) |  |
+| Configure Defender for Databases protection across Azure database services | [Lesson 4](../lessons/lesson-04-storage-databases/) |  |
 
-### FG2.2 Implement security for Azure databases — *Lesson 4*
+### Implement security for Azure network services
 
-- Implement platform-level security configurations in Azure SQL → **Lesson 4**
-- Configure Microsoft Defender for Databases across Azure SQL, PostgreSQL, MySQL, Cosmos DB → **Lesson 4**
+| Skill | Lesson | Confidence (1-5) |
+| --- | --- | --- |
+| Implement and manage network security groups (NSGs) and application security groups (ASGs) | [Lesson 5](../lessons/lesson-05-network-segmentation/) |  |
+| Implement and configure network access policies by using Azure Virtual Network Manager | [Lesson 5](../lessons/lesson-05-network-segmentation/) |  |
+| Configure security for an Azure Virtual WAN | [Lesson 5](../lessons/lesson-05-network-segmentation/) |  |
+| Implement and configure security for virtual private network (VPN) connections | [Lesson 5](../lessons/lesson-05-network-segmentation/) |  |
+| Implement and configure Microsoft Entra Private Access | [Lesson 6](../lessons/lesson-06-private-connectivity/) |  |
+| Configure Azure private endpoints to secure access to Azure platform as a service (PaaS) resources | [Lesson 6](../lessons/lesson-06-private-connectivity/) |  |
+| Configure Azure Private Link services to secure access to network resources | [Lesson 6](../lessons/lesson-06-private-connectivity/) |  |
+| Implement and configure Azure Firewall | [Lesson 7](../lessons/lesson-07-perimeter-protection/) |  |
+| Evaluate effective security rules by using Azure Network Watcher diagnostics | [Lesson 7](../lessons/lesson-07-perimeter-protection/) |  |
 
-### FG2.3 Implement security for Azure networking — *Lessons 5, 6, 7*
+## Secure compute (20-25%)
 
-- Implement and manage NSGs and ASGs → **Lesson 5**
-- Implement network access policies using Azure Virtual Network Manager → **Lesson 5**
-- Configure security for Azure Virtual WAN → **Lesson 5**
-- Implement and configure security for VPN connections → **Lesson 5**
-- Configure Azure Private Endpoints; disable public network access → **Lesson 6**
-- Configure Azure Private Link services → **Lesson 6**
-- Implement Microsoft Entra Private Access → **Lesson 6**
-- Manage Private DNS zones for hybrid and multi-region topologies → **Lesson 6**
-- Implement and configure Azure Firewall → **Lesson 7**
-- Design hub-and-spoke perimeter architectures → **Lesson 7**
-- Evaluate effective security rules with Azure Network Watcher → **Lesson 7**
-- Apply Zero Trust segmentation principles → **Lesson 7**
+### Implement security for AI
 
----
+| Skill | Lesson | Confidence (1-5) |
+| --- | --- | --- |
+| Identify overexposure of data in SharePoint | [Lesson 10](../lessons/lesson-10-ai-workloads-i/) |  |
+| Identify risks related to Microsoft Copilot and AI apps by using Microsoft Purview Data Security Posture Management (DSPM) | [Lesson 10](../lessons/lesson-10-ai-workloads-i/) |  |
+| Enable and configure real-time protection for Microsoft Copilot Studio agents | [Lesson 10](../lessons/lesson-10-ai-workloads-i/) |  |
+| Implement conditional access for Microsoft Entra Agent ID | [Lesson 10](../lessons/lesson-10-ai-workloads-i/) |  |
+| Analyze blast radius for security risks related to Entra Agent ID by using Defender XDR | [Lesson 10](../lessons/lesson-10-ai-workloads-i/) |  |
+| Manage Entra Agent ID access | [Lesson 10](../lessons/lesson-10-ai-workloads-i/) |  |
+| Configure and deploy AI Gateway in Azure API Management for Microsoft Foundry | [Lesson 11](../lessons/lesson-11-ai-workloads-ii/) |  |
+| Enable Defender for AI Service in Cloud Workload Protection in Defender for Cloud | [Lesson 11](../lessons/lesson-11-ai-workloads-ii/) |  |
+| Configure guardrails for agent security in Foundry | [Lesson 11](../lessons/lesson-11-ai-workloads-ii/) |  |
+| Monitor AI security by using the Data and AI security dashboard in Defender for Cloud | [Lesson 11](../lessons/lesson-11-ai-workloads-ii/) |  |
+| Manage agents in Microsoft 365 admin center | [Lesson 10](../lessons/lesson-10-ai-workloads-i/) |  |
 
-## FG3: Secure compute (20-25%)
+### Implement security for servers and virtual machines (VMs)
 
-### FG3.1 Secure AI workloads — *Lessons 10, 11*
+| Skill | Lesson | Confidence (1-5) |
+| --- | --- | --- |
+| Implement and configure disk encryption | [Lesson 8](../lessons/lesson-08-servers-vms/) |  |
+| Plan and implement Azure Bastion | [Lesson 8](../lessons/lesson-08-servers-vms/) |  |
+| Enable and enforce use of just-in-time (JIT) VM access | [Lesson 8](../lessons/lesson-08-servers-vms/) |  |
+| Extend security controls to hybrid and multicloud servers by using Azure Arc | [Lesson 8](../lessons/lesson-08-servers-vms/) |  |
+| Onboard servers to Defender for Servers in Defender for Cloud, including hybrid and multicloud scenarios | [Lesson 8](../lessons/lesson-08-servers-vms/) |  |
+| Configure Defender for Servers settings, including vulnerability scanning, and endpoint detection and response (EDR) | [Lesson 8](../lessons/lesson-08-servers-vms/) |  |
+| Implement and manage agentless scanning for VMs in Defender for Servers | [Lesson 8](../lessons/lesson-08-servers-vms/) |  |
+| Configure security features on a VM, including secure boot, virtual Trusted Platform Module (vTPM), integrity monitoring, and security type | [Lesson 8](../lessons/lesson-08-servers-vms/) |  |
+| Enforce security configuration of Azure-managed servers by using Azure Machine Configuration | [Lesson 8](../lessons/lesson-08-servers-vms/) |  |
 
-- Identify SharePoint data overexposure and Microsoft Copilot risks via Microsoft Purview DSPM → **Lesson 10**
-- Enable real-time protection for Microsoft Copilot Studio agents → **Lesson 10**
-- Manage AI agents in the Microsoft 365 admin center → **Lesson 10**
-- Implement Conditional Access for Microsoft Entra Agent ID → **Lesson 10**
-- Analyze blast radius for Entra Agent ID risks using Microsoft Defender XDR → **Lesson 10**
-- Configure and deploy AI Gateway in Azure API Management for Microsoft Foundry → **Lesson 11**
-- Enable Microsoft Defender for AI Service → **Lesson 11**
-- Configure guardrails for agent security in Microsoft Foundry → **Lesson 11**
-- Monitor AI security with the Data and AI security dashboard; correlate with Microsoft Sentinel → **Lesson 11**
+### Implement security for application platform services
 
-### FG3.2 Secure servers and virtual machines — *Lesson 8*
+| Skill | Lesson | Confidence (1-5) |
+| --- | --- | --- |
+| Detect misconfigurations and runtime risks in container workloads by using Defender for Containers | [Lesson 9](../lessons/lesson-09-app-platform/) |  |
+| Implement and configure security controls for Azure Kubernetes Service (AKS) | [Lesson 9](../lessons/lesson-09-app-platform/) |  |
+| Implement and configure security controls for Azure Container Registry | [Lesson 9](../lessons/lesson-09-app-platform/) |  |
+| Implement and configure security controls for Azure Container Instances and Azure Container Apps | [Lesson 9](../lessons/lesson-09-app-platform/) |  |
+| Implement and configure security controls for Azure Functions, including authentication and network access | [Lesson 9](../lessons/lesson-09-app-platform/) |  |
+| Implement and configure security controls for Azure Logic Apps | [Lesson 9](../lessons/lesson-09-app-platform/) |  |
+| Implement and configure security controls for Azure App Service | [Lesson 9](../lessons/lesson-09-app-platform/) |  |
+| Implement and configure Azure Web Application Firewall | [Lesson 9](../lessons/lesson-09-app-platform/) |  |
+| Implement security policies for back-end API protection by using API Management | [Lesson 9](../lessons/lesson-09-app-platform/) |  |
 
-- Implement disk encryption (Azure Disk Encryption, host-based) and VM security features → **Lesson 8**
-- Plan Azure Bastion for RDP/SSH; enable JIT VM access via Defender for Cloud → **Lesson 8**
-- Extend controls with Azure Arc; onboard Defender for Servers Plan 1/2; configure vulnerability scanning, agentless scanning, EDR with Defender for Endpoint → **Lesson 8**
-- Enforce config via Azure Machine Configuration; tune Defender Vulnerability Management → **Lesson 8**
+## Manage and monitor security posture (20-25%)
 
-### FG3.3 Secure application platform services — *Lesson 9*
+### Manage security posture by using Defender for Cloud
 
-- Detect container misconfigurations with Defender for Containers; secure AKS, ACR, ACI, Container Apps → **Lesson 9**
-- Implement security controls for Azure Functions and Azure Logic Apps → **Lesson 9**
-- Implement security controls for Azure App Service; Azure WAF on Front Door and Application Gateway → **Lesson 9**
-- Implement back-end API security with Azure API Management → **Lesson 9**
+| Skill | Lesson | Confidence (1-5) |
+| --- | --- | --- |
+| Identify security risks by using Defender CSPM | [Lesson 12](../lessons/lesson-12-defender-cloud-multicloud/) |  |
+| Evaluate compliance against security frameworks by using Defender for Cloud | [Lesson 12](../lessons/lesson-12-defender-cloud-multicloud/) |  |
+| Enable and configure Defender for Cloud workload protection plans | [Lesson 12](../lessons/lesson-12-defender-cloud-multicloud/) |  |
+| Connect hybrid cloud and multicloud environments to Defender for Cloud, including Amazon Web Services (AWS) and Google Cloud Platform (GCP) | [Lesson 12](../lessons/lesson-12-defender-cloud-multicloud/) |  |
+| Configure Microsoft Defender Vulnerability Management settings for Azure VMs | [Lesson 8](../lessons/lesson-08-servers-vms/) |  |
+| Discover unprotected assets and vulnerabilities by using Microsoft Defender External Attack Surface Management (EASM) | [Lesson 12](../lessons/lesson-12-defender-cloud-multicloud/) |  |
 
----
+### Implement activity and event collection in Microsoft Sentinel
 
-## FG4: Manage and monitor security posture (20-25%)
+| Skill | Lesson | Confidence (1-5) |
+| --- | --- | --- |
+| Create and connect workspaces in Microsoft Sentinel | [Lesson 13](../lessons/lesson-13-sentinel-i/) |  |
+| Assign roles in Microsoft Sentinel | [Lesson 13](../lessons/lesson-13-sentinel-i/) |  |
+| Implement and use content hub solutions | [Lesson 13](../lessons/lesson-13-sentinel-i/) |  |
+| Configure and use Microsoft data connectors for Azure resources | [Lesson 13](../lessons/lesson-13-sentinel-i/) |  |
+| Implement and configure syslog and Common Event Format (CEF) event collections | [Lesson 13](../lessons/lesson-13-sentinel-i/) |  |
+| Implement and configure collection of Windows Security events by using data collection rules, including Windows Event Forwarding (WEF) | [Lesson 13](../lessons/lesson-13-sentinel-i/) |  |
+| Create custom log tables in the workspace to store ingested data | [Lesson 13](../lessons/lesson-13-sentinel-i/) |  |
+| Implement automation rules and playbooks in Microsoft Sentinel | [Lesson 14](../lessons/lesson-14-sentinel-ii/) |  |
+| Implement data retention in Microsoft Sentinel data stores | [Lesson 13](../lessons/lesson-13-sentinel-i/) |  |
+| Query Microsoft Purview Audit in Defender XDR | [Lesson 14](../lessons/lesson-14-sentinel-ii/) |  |
 
-### FG4.1 Manage posture with Microsoft Defender for Cloud — *Lesson 12*
+### Implement Microsoft Security Copilot
 
-- Identify risks via Defender CSPM; evaluate compliance against frameworks → **Lesson 12**
-- Enable Defender for Cloud workload protection plans → **Lesson 12**
-- Connect hybrid and multicloud (AWS, GCP) environments → **Lesson 12**
-- Discover unprotected assets with Microsoft Defender External Attack Surface Management → **Lesson 12**
+| Skill | Lesson | Confidence (1-5) |
+| --- | --- | --- |
+| Configure workspaces for Security Copilot | [Lesson 15](../lessons/lesson-15-security-copilot/) |  |
+| Manage permissions and roles in Security Copilot | [Lesson 15](../lessons/lesson-15-security-copilot/) |  |
+| Enable and configure plugins | [Lesson 15](../lessons/lesson-15-security-copilot/) |  |
+| Enable and configure Microsoft agents and Security Store agents | [Lesson 15](../lessons/lesson-15-security-copilot/) |  |
 
-### FG4.2 Manage security operations with Microsoft Sentinel — *Lessons 13, 14*
+## Beyond the study guide
 
-- Create and connect Microsoft Sentinel workspaces → **Lesson 13**
-- Implement content hub solutions; configure connectors for Azure, Entra, M365, Defender XDR → **Lesson 13**
-- Implement syslog, CEF, and Windows Security event collection via DCRs and WEF → **Lesson 13**
-- Create custom log tables; implement data retention policies → **Lesson 13**
-- Create and tune analytics rules → **Lesson 14**
-- Implement automation rules and Logic Apps playbooks → **Lesson 14**
-- Write KQL queries for threat hunting; deploy custom workbooks and notebooks → **Lesson 14**
-- Query Microsoft Purview Audit in Defender XDR; manage incidents end-to-end → **Lesson 14**
+A few lesson objectives go a step past the study guide's wording because an engineer needs them on the job: hub-and-spoke perimeter design and DDoS protection (Lesson 7), private DNS for private endpoints (Lesson 6), and analytics rules, KQL hunting, workbooks, and notebooks in Microsoft Sentinel (Lesson 14).
 
-### FG4.3 Manage security with Microsoft Security Copilot — *Lesson 15*
-
-- Configure workspaces for Microsoft Security Copilot → **Lesson 15**
-- Manage permissions and roles → **Lesson 15**
-- Enable plugins for Defender XDR, Sentinel, Intune, Entra, and third-party products → **Lesson 15**
-- Enable Microsoft agents and Security Store agents for AI-assisted response → **Lesson 15**
-
----
-
-## Self-assessment
-
-Copy the table below into your notes and rate each sub-domain on a **1-5 confidence scale** before you sit the exam. Anything under a 4 needs more hands-on time.
-
-| Sub-domain | Confidence (1-5) | Notes |
-|---|---|---|
-| FG1.1 Entra ID identity / auth / access | | |
-| FG1.2 Azure Key Vault | | |
-| FG1.3 Azure governance and compliance | | |
-| FG2.1 Azure Storage | | |
-| FG2.2 Azure databases | | |
-| FG2.3 Azure networking | | |
-| FG3.1 AI workloads | | |
-| FG3.2 Servers and VMs | | |
-| FG3.3 Application platform services | | |
-| FG4.1 Defender for Cloud posture | | |
-| FG4.2 Microsoft Sentinel | | |
-| FG4.3 Microsoft Security Copilot | | |
+[Course README](../README.md)
