@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Offline regression tests for cumulative RBAC grants and the recording evidence boundary.
+    Offline regression tests for cumulative RBAC grants and the demo evidence boundary.
 .DESCRIPTION
     No Azure calls or writes. These cases reproduce the false deny from merging NotActions
     across roles, and check that syntax errors cannot reach your demo session.

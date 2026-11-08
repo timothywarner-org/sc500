@@ -3,7 +3,7 @@
     Puts the legacy app server back at the access demo's starting point WITHOUT changing its public IP.
 
 .DESCRIPTION
-    The access demo (runbook clip 2) enables JIT, deletes the standing SSH rule and requests access. A JIT request
+    The access demo (demo 2) enables JIT, deletes the standing SSH rule and requests access. A JIT request
     can't be withdrawn, and Remove-L08Bounded.ps1 deletes the public IP. This reset keeps the IP:
       1. Deletes the lesson's JIT policy if it exists (Defender stops managing port 22).
       2. Redeploys legacy.bicep through Deploy-L08Bounded.ps1 -Deploy. The NSG's rule list is replaced by the
@@ -13,11 +13,11 @@
       3. Starts the VM if a shutdown schedule deallocated it. A redeploy doesn't start a stopped VM.
       4. Reads the NSG rules back and probes TCP 22 without signing in.
     Changes only the legacy server's JIT policy, NSG rules, shutdown schedule status and power state.
-    Card 2.2 reads the IP from Azure, so an IP change wouldn't break the runbook, but this reset
+    Demo step 2.2 reads the IP from Azure, so an IP change wouldn't break the demo, but this reset
     still warns about one because nothing here should change it.
 
 .PARAMETER Soak
-    Passed to Deploy-L08Bounded.ps1: keeps the legacy server's shutdown schedule Disabled until the take ends.
+    Passed to Deploy-L08Bounded.ps1: keeps the legacy server's shutdown schedule Disabled until the demo ends.
     Use it for every reset between the night before and the last take.
 
 .EXAMPLE
@@ -50,7 +50,7 @@ if ($power -ne 'PowerState/running') {
 }
 
 $ipAfter = Invoke-L08Az -Raw $ipArgs
-if ($ipAfter -ne $ipBefore) { Write-Warning "The legacy public IP changed from $ipBefore to $ipAfter. Card 2.2 reads it live, so the take still works." }
+if ($ipAfter -ne $ipBefore) { Write-Warning "The legacy public IP changed from $ipBefore to $ipAfter. Demo step 2.2 reads it live, so the demo still works." }
 $nsg = Invoke-L08Az @('network', 'nsg', 'show', '--resource-group', $cfg.resourceGroup, '--name', $cfg.names.legacyNsg)
 $rules = @($nsg.securityRules | Sort-Object priority | ForEach-Object { '{0} {1} {2}' -f $_.priority, $_.access, $_.name })
 $rules | Out-Host

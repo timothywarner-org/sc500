@@ -7,7 +7,7 @@
     private traffic through Azure Firewall in the hub, and the Firewall Policy allows exactly
     one east-west path: the ServiceHub app spoke to the shared parts API on TCP 8080.
 
-    Modes, in on-camera order:
+    Modes, in demo order:
       Settings      Virtual WAN type, hub, firewall SKU and policy, routing intent.
       Routes        Effective routes on the ServiceHub app VM's NIC: the next hop is the firewall.
       Probe         From the app spoke: the shared API (allowed) and its database port (denied).

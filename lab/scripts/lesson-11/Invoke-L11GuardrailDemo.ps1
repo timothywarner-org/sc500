@@ -23,11 +23,11 @@
                       2026-09-28: the service scanned the tool call and the tool response, and
                       X-900's tool response was blocked as an indirect attack.
     All runs Model, AgentInherited, then AgentGuarded, and leaves the agent guarded.
-    PrepareAgents publishes both versions off camera without inference. AgentCompare calls each
+    PrepareAgents publishes both versions before the demo without inference. AgentCompare calls each
     prepared version once for C-200 and once for X-900, without publishing or sleeping.
     Responses retain IDs, pinned versions, tool output and filter results in private bounded traces.
     No key or token is printed or saved.
-.PARAMETER Mode Model cases, off-camera PrepareAgents, bounded AgentCompare, repeated AgentAsk,
+.PARAMETER Mode Model cases, setup PrepareAgents, bounded AgentCompare, repeated AgentAsk,
     individual AgentInherited/AgentGuarded publication-and-inference, or All.
 .EXAMPLE
     pwsh -NoProfile -ExecutionPolicy Bypass -File C:\github\sc500\lab\scripts\lesson-11\Invoke-L11GuardrailDemo.ps1 -Mode All
@@ -154,11 +154,11 @@ if ($Mode -eq 'PrepareAgents') {
     # This pointer is private rehearsal state. Existing versioned receipts remain immutable.
     $prepared | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath (Join-Path $script:L11State 'prepared-agent-versions.json')
     $results.prepared = $prepared
-    Write-Host 'Prepared both versions. Allow propagation and rehearse AgentCompare before recording.'
+    Write-Host 'Prepared both versions. Allow propagation and rehearse AgentCompare before the demo.'
 }
 if ($Mode -eq 'AgentCompare') {
     $preparedPath = Join-Path $script:L11State 'prepared-agent-versions.json'
-    if (-not (Test-Path -LiteralPath $preparedPath)) { throw 'Run PrepareAgents off camera first.' }
+    if (-not (Test-Path -LiteralPath $preparedPath)) { throw 'Run PrepareAgents first.' }
     $prepared = Get-Content -LiteralPath $preparedPath -Raw | ConvertFrom-Json
     if ($prepared.agent -ne $cfg.names.agent -or $prepared.projectEndpoint -ne $lab.projectEndpoint -or $prepared.gatewayUrl -ne $gw.gatewayUrl) { throw 'Prepared versions do not match the current lab.' }
     $results.agentCompare = @(foreach ($label in @('inherited','guarded')) {

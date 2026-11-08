@@ -47,7 +47,7 @@ resource records 'Microsoft.Storage/storageAccounts@2025-06-01' = {
     allowBlobPublicAccess: false
     allowCrossTenantReplication: false
     // INTRODUCED FAULT for demo 4.1: account keys still work. The demo disables Shared Key
-    // live; Reset-L04Lab.ps1 restores this baseline for the next take.
+    // live; Reset-L04Lab.ps1 restores this baseline for the next run.
     allowSharedKeyAccess: true
     // Double encryption at rest. It can only be chosen when the account is created.
     encryption: {

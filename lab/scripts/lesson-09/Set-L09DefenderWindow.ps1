@@ -9,7 +9,7 @@
     subscription: Containers (with the sensor, agentless discovery for Kubernetes and registry
     vulnerability assessment) and AppServices. Image findings arrived about 16 minutes after
     import in the September build, but Microsoft documents a few hours, so Open goes at least
-    24 hours before the take.
+    24 hours before the demo.
     https://learn.microsoft.com/azure/defender-for-cloud/defender-for-containers-enable-plan
 
       Status  Reads both plans, their trial time and the Containers extensions. Changes nothing.

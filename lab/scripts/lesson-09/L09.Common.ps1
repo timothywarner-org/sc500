@@ -294,7 +294,7 @@ function Test-L09Preflight {
     foreach ($plan in 'Containers', 'AppServices') {
         $p = Invoke-L09Rest -Path "/subscriptions/$sub/providers/Microsoft.Security/pricings/$plan`?api-version=2024-01-01"
         $tier = "$(Get-L09Value $p 'properties.pricingTier')"
-        Add-Row $(if ($tier -eq 'Standard') { 'PASS' } else { 'WARN' }) "Defender plan $plan" $(if ($tier -eq 'Standard') { 'Standard' } else { "$tier; run Set-L09DefenderWindow.ps1 -State Open at least 24 hours before the take" })
+        Add-Row $(if ($tier -eq 'Standard') { 'PASS' } else { 'WARN' }) "Defender plan $plan" $(if ($tier -eq 'Standard') { 'Standard' } else { "$tier; run Set-L09DefenderWindow.ps1 -State Open at least 24 hours before the demo" })
     }
 
     # 6. Globally unique names: ours already, or free.
@@ -309,7 +309,7 @@ function Test-L09Preflight {
     foreach ($name in $global.Keys) {
         if (@($mine | Where-Object { $_.name -eq $name }).Count) { Add-Row 'PASS' "Global name $name" "already this lab's"; continue }
         $free = & $global[$name]
-        Add-Row $(if ($free) { 'PASS' } else { 'FAIL' }) "Global name $name" $(if ($free) { 'available' } else { 'taken: take the next instance number in config.json' })
+        Add-Row $(if ($free) { 'PASS' } else { 'FAIL' }) "Global name $name" $(if ($free) { 'available' } else { 'taken: restore lab from Git and run Set-LabConfig.ps1 again with a different -NameSuffix' })
     }
 
     # 7. Budgets are supported for this subscription's offer (a list call fails when they aren't).
@@ -323,7 +323,7 @@ function Test-L09Preflight {
     Add-Row $(if ($app) { 'PASS' } else { 'WARN' }) "App registration $($cfg.apiAppDisplayName)" $(if ($app) { "present, appId $($app.appId)" } else { 'absent; -Deploy creates it' })
 
     # 9. Another lesson's lab may hold same-named resources in its own group. Azure allows that, but
-    #    a portal picker would show both, so the runbook opens resources by full resource ID.
+    #    a portal picker would show both, so the demo opens resources by full resource ID.
     $wanted = @($n.PSObject.Properties | ForEach-Object { "$($_.Value)" })
     $clash = @(Invoke-L09Graph -Query 'resources | project name, group = resourceGroup' | Where-Object { $wanted -contains $_.name -and $_.group -notin @($cfg.resourceGroup, $n.aksNodeResourceGroup) })
     Add-Row $(if ($clash.Count) { 'WARN' } else { 'PASS' }) 'Same names in other groups' $(if ($clash.Count) { @($clash | ForEach-Object { "$($_.name) in $($_.group)" }) -join '; ' } else { 'none' })

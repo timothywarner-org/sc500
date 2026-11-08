@@ -76,7 +76,7 @@
     "enabled": true,
     "time": "2300",
     "timeZoneId": "Central Standard Time",
-    "why": "CAF and WAF cost guardrails: shut idle compute down. Deploy-L08Lab.ps1 -Soak deploys the schedules Disabled for the pre-take soak, because agentless scanning only scans a machine that's running during its daily cycle; the next deploy without -Soak turns them back on."
+    "why": "CAF and WAF cost guardrails: shut idle compute down. Deploy-L08Lab.ps1 -Soak deploys the schedules Disabled for the pre-demo soak, because agentless scanning only scans a machine that's running during its daily cycle; the next deploy without -Soak turns them back on."
   },
   "addressPlan": {
     "vnet": "10.80.0.0/22",

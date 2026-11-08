@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Puts the Lesson 10 lab back at CTSO-L10-BASELINE between takes.
+    Puts the Lesson 10 lab back at CTSO-L10-BASELINE between runs.
 .DESCRIPTION
     Idempotent. It:
       - removes any demo secret an interrupted run left on the blueprint (only secrets the demo
@@ -44,7 +44,7 @@ if (-not $broad) {
     $done.Add('restored the assistant''s account-scope Storage Blob Data Reader role')
 }
 # Any assistant assignment AT the knowledge container's scope, whatever its name: Scope mode's fixed name, or the
-# generated name the portal gives runbook v06 card 3.4. atScope() returns assignments at this scope and above, so keep
+# generated name the portal gives demo step 3.4. atScope() returns assignments at this scope and above, so keep
 # only the rows whose scope is exactly the container.
 $knowledge = "$($lab.storageId)/blobServices/default/containers/knowledge"
 $f = [uri]::EscapeDataString("atScope() and assignedTo('$($assistant.id)')")
@@ -54,6 +54,6 @@ foreach ($ra in $rows | Where-Object { $_.properties.scope -eq $knowledge }) {
     $done.Add("removed the knowledge-container assignment $($ra.name)")
 }
 
-if ($done.Count) { $done | ForEach-Object { "  $_" } | Out-Host; Write-Host 'Storage can take a few minutes to see a role change. Run Test-L10Lab.ps1 before the take.' }
+if ($done.Count) { $done | ForEach-Object { "  $_" } | Out-Host; Write-Host 'Storage can take a few minutes to see a role change. Run Test-L10Lab.ps1 before the demo.' }
 else { Write-Host 'Already at the baseline; nothing changed.' }
 [void](Write-L10Evidence 'reset' ([ordered]@{ atUtc = [DateTime]::UtcNow.ToString('o'); changes = $done }))

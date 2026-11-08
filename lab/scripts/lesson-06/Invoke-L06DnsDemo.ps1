@@ -6,7 +6,7 @@
 .DESCRIPTION
     Needs the bounded Dns lab (Deploy-L06Bounded.ps1 -Lab Dns), and demo 6.1's end state: the
     records private endpoint exists and public network access is Disabled. Each -Mode is one
-    on-camera step and saves its result under lab/.azure/lesson-06/evidence.
+    demo step and saves its result under lab/.azure/lesson-06/evidence.
       Settings      The resolver's inbound endpoint, which VNets the private zone is linked to,
                     and the field-office DNS server's conditional forwarders.
       Resolve       The same name from both sides: the field-office DNS stand-in (not linked to

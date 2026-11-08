@@ -4,7 +4,7 @@ Reads the real restored Contoso file from a temporary read-only disk attachment.
 .DESCRIPTION
 Selects the disk by Azure Backup's exact restore-job tag, preserves the original OS
 disk, detaches the restored copy afterward, and removes the restore identity grant.
-Retains the recovered disk as inexpensive recording evidence. Never restores over the VM.
+Retains the recovered disk as inexpensive demo evidence. Never restores over the VM.
 #>
 . (Join-Path $PSScriptRoot 'L03.Cloud.Common.ps1')
 Assert-L03Context

@@ -8,7 +8,7 @@
     SHA256, DH group 14; IPsec GCMAES256, PFS 14). The simulated field service branch still
     offers legacy crypto, which is the introduced fault: the tunnel can't form.
 
-    Modes, in on-camera order:
+    Modes, in demo order:
       Settings   Gateway SKUs, both connections' IPsec/IKE policies, and the P2S settings.
       Status     Connection status and byte counters for both connections.
       IkeLogs    IKE diagnostic log lines from Log Analytics (negotiation failures show here).

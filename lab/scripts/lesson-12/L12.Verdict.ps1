@@ -6,7 +6,7 @@
     The verdict is a word, never a color, because color alone fails colorblind viewers and output shows up on every kind
     of screen. The comparison is trimmed and case-insensitive text, so callers turn booleans and dates into the
     same words on both sides first. Nothing here calls Azure, so it's safe to dot-source anywhere and to test
-    offline (deck-tools\lesson-12-v04-pretake\tests\Test-L12Verdict.ps1).
+    offline.
 .PARAMETER Rows
     Ordered dictionaries, each with Check, Expected and Observed.
 .PARAMETER Title

@@ -1,0 +1,9 @@
+// A listKeys success is a control-plane event, not proof of a blob read or usable Shared Key.
+// Caller IPs stay out of the output.
+AzureActivity
+| where TimeGenerated > ago(7d)
+| where OperationNameValue =~ "MICROSOFT.STORAGE/STORAGEACCOUNTS/LISTKEYS/ACTION"
+| where _ResourceId contains "stservicehubexports"
+| where ActivityStatusValue == "Success"
+| project TimeGenerated, Caller, OperationNameValue, ActivityStatusValue, CorrelationId, ResourceGroup
+| order by TimeGenerated desc

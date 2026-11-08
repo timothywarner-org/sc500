@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Opens or closes the Lesson 4 Defender window around a recording: plans, account settings, vulnerability assessment.
+Opens or closes the Lesson 4 Defender window around a demo: plans, account settings, vulnerability assessment.
 
 .DESCRIPTION
 Sections 4.2 and 4.4 show live Defender for Storage and Defender for Azure SQL evidence. On 2026-10-10 the
@@ -15,7 +15,7 @@ when that plan is off. The September 26 storage malware alert and SQL sample ale
           state=TakeReady, deploys infra/lesson-04/sql-vulnerability-assessment.bicep with state=Enabled, runs
           Reset-L04Lab.ps1 (CTSO-L04-BASELINE, which applies the plan to both accounts explicitly), then starts an
           on-demand vulnerability assessment scan. Idempotent: run it again if a step reports it isn't ready yet.
-  Close   Runs Reset-L04Lab.ps1 while the Storage plan is still on (removes the take's test uploads, the
+  Close   Runs Reset-L04Lab.ps1 while the Storage plan is still on (removes the demo's test uploads, the
           workstation IP rule and the intake override), then deploys defender-plans.bicep with state=Parked.
 
 The templates are the single declaration of both states (see infra/DEMO-STATE-L04.md). With -WhatIf, the script
@@ -137,7 +137,7 @@ function Set-L04VulnerabilityAssessment {
 }
 
 function Start-L04VaScan {
-    # On-demand scan of servicehub-records, so VaResults has a scan to read on take day. The service answers
+    # On-demand scan of servicehub-records, so VaResults has a scan to read on demo day. The service answers
     # 202 Accepted and scans in the background; a failure here is reported, never treated as a finding.
     $path = "$($lab.sqlServerId)/databases/$($lab.sqlDatabase)/sqlVulnerabilityAssessments/default/initiateScan?api-version=2025-01-01"
     try {
@@ -171,7 +171,7 @@ if ($State -eq 'Open') {
     Invoke-L04Reset
     if ($WhatIfPreference) { Write-Host '  would start an on-demand vulnerability assessment scan on servicehub-records'; return }
     Start-L04VaScan
-    Write-Host "`nDefender window OPEN. About 10 minutes later, before the take:"
+    Write-Host "`nDefender window OPEN. About 10 minutes later, before the demo:"
     Write-Host '  pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\lesson-04\Test-L04Lab.ps1'
     Write-Host '  (every check should PASS; then Invoke-L04DefenderDemo.ps1 -Mode VaResults should list VA1143)'
 }

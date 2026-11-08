@@ -1,7 +1,7 @@
 // SC-500 Lesson 9, retained part: Contoso ServiceHub's application platform surfaces
 // (resource group scope).
 //
-// Everything here costs little or nothing idle. The AKS cluster is stopped between takes, and the
+// Everything here costs little or nothing idle. The AKS cluster is stopped between runs, and the
 // consumption-billed services (Container Apps, Flex Consumption Functions, a Consumption logic
 // app, Consumption API Management) charge nothing while idle. The public edge (Application
 // Gateway WAF, Front Door WAF), the App Service origin and the Container Instances worker are the

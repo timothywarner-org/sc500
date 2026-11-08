@@ -11,7 +11,7 @@
 //   https://learn.microsoft.com/azure/defender-for-cloud/sql-azure-vulnerability-assessment-enable-classic
 targetScope = 'subscription'
 
-@description('TakeReady for a recording window, Parked otherwise.')
+@description('TakeReady for a demo window, Parked otherwise.')
 @allowed([
   'TakeReady'
   'Parked'

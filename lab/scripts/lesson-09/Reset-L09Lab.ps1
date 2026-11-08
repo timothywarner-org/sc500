@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Resets the Lesson 9 demos between takes, or returns the lab to CTSO-L09-BASELINE after the
+    Resets the Lesson 9 demos between runs, or returns the lab to CTSO-L09-BASELINE after the
     recording session.
 
 .DESCRIPTION
     Puts ca-status-prod-001's allow list back to the operator's address (demo 9.1's Block mode
     swaps it), deletes the servicehub namespace from aks-servicehub-prod-eastus2-001 if it's
-    running (so the next take shows the workloads arriving and the privileged pod being refused),
+    running (so the next run shows the workloads arriving and the privileged pod being refused),
     and, unless -KeepEdge is given, removes the bounded edge with Remove-L09Edge.ps1. With -Stop it
     then stops the AKS cluster.
 
@@ -14,7 +14,7 @@
       After the session ships:  Reset-L09Lab.ps1 -Stop       (edge removed, cluster stopped)
 
 .PARAMETER KeepEdge
-    Leave the bounded edge in place (the next take needs it, and Front Door takes about 17 minutes
+    Leave the bounded edge in place (the next run needs it, and Front Door takes about 17 minutes
     to answer after a fresh deployment).
 
 .PARAMETER Stop
@@ -50,5 +50,5 @@ if ($state -eq 'Running') {
     Write-Host "servicehub namespace: $($r.Logs)"
 }
 if ($Stop) { & (Join-Path $PSScriptRoot 'Start-L09Lab.ps1') -Stop }
-if ($KeepEdge) { Write-Host 'Reset complete. Run Test-L09Lab.ps1 -TakeReady to confirm the next take can start.' }
+if ($KeepEdge) { Write-Host 'Reset complete. Run Test-L09Lab.ps1 -TakeReady to confirm the next run can start.' }
 else { Write-Host 'Reset complete. Run Test-L09Lab.ps1 to confirm the baseline.' }

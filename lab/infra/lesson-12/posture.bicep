@@ -47,7 +47,7 @@ resource archive 'Microsoft.Storage/storageAccounts@2023-05-01' = {
 
 // No blob container here on purpose. Defender CSPM doesn't bill a storage account that has no
 // containers, so the idle baseline costs nothing; Deploy-L12Lab.ps1 -Stage creates the export store's
-// container and the fictional export before a take, and Reset-L12Lab.ps1 removes them again.
+// container and the fictional export before the demo, and Reset-L12Lab.ps1 removes them again.
 
 // Idle baseline: the export store opts out of the subscription's Defender for Storage plan, which bills
 // per storage account. The plan demo turns it back on for this account with a small malware-scanning cap,

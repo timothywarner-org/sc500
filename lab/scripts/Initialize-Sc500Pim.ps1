@@ -90,4 +90,4 @@ if ($RoleSystem -in @('All','Entra')) {
 Write-Sc500Evidence -Name 'pim-eligibility' -Value $record | Write-Host
 if ($record.Contains('azure')) { Write-Host 'Contoso VM Maintenance eligibility exists at vm-maint-01. The legacy standing grant is removed; verify effective access separately.' }
 if ($record.Contains('entra')) { Write-Host 'Directory Readers eligibility exists. See the evidence file for status and dates.' }
-Write-Host 'Eligibility is not activation. Rehearse actual policy, approval/MFA, expiration, and fresh-session access before recording.'
+Write-Host 'Eligibility is not activation. Rehearse actual policy, approval/MFA, expiration, and fresh-session access before the demo.'

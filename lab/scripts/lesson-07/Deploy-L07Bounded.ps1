@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     The firewall bills about 1.75 USD an hour from the moment it exists, so it exists only for a
-    rehearsal or a take. Creation takes roughly 10 minutes; deploy it before you set up the
+    a practice run or a demo. Creation takes roughly 10 minutes; deploy it before you set up the
     camera. Remove-L07Bounded.ps1 deletes it afterward.
 
     It attaches to the retained policy and public IP (so the DNAT address never changes) and

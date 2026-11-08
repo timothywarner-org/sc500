@@ -49,18 +49,18 @@
     "pullIdentity": "id-servicehub-prod-eastus2-001",
     "functionIdentity": "id-partsapi-prod-eastus2-001",
     "apimIdentity": "id-apigateway-prod-eastus2-001",
-    "registry": "crservicehubprod001",
+    "registry": "crservicehubprod<your-name-suffix>",
     "aks": "aks-servicehub-prod-eastus2-001",
     "aksNodeResourceGroup": "rg-servicehubnodes-prod-eastus2",
     "containerEnv": "cae-servicehub-prod-eastus2-001",
     "containerApp": "ca-status-prod-001",
-    "storage": "stpartsapifunc001",
+    "storage": "stpartsapifunc<your-name-suffix>",
     "functionPlan": "asp-partsapi-prod-eastus2-001",
-    "functionApp": "func-partsapi-prod-001",
+    "functionApp": "func-partsapi-prod-<your-name-suffix>",
     "logicApp": "logic-intake-prod-eastus2-001",
     "webPlan": "asp-servicehub-prod-southcentralus-001",
-    "webApp": "app-servicehub-prod-001",
-    "apim": "apim-servicehub-prod-001",
+    "webApp": "app-servicehub-prod-<your-name-suffix>",
+    "apim": "apim-servicehub-prod-<your-name-suffix>",
     "vnet": "vnet-appplatform-prod-eastus2-001",
     "gatewaySubnet": "snet-agw",
     "aciSubnet": "snet-aci",
@@ -92,7 +92,7 @@
   },
   "autoShutdown": {
     "enabled": false,
-    "why": "Doesn't apply: this lab has no virtual machines. AKS nodes belong to a scale set that AKS manages, and a DevTest Labs shutdown schedule can't target them. Start-L09Lab.ps1 -Stop stops the whole cluster between takes (no node or Defender for Containers charges while it's stopped), and Test-L09Lab.ps1 warns when it's running."
+    "why": "Doesn't apply: this lab has no virtual machines. AKS nodes belong to a scale set that AKS manages, and a DevTest Labs shutdown schedule can't target them. Start-L09Lab.ps1 -Stop stops the whole cluster between runs (no node or Defender for Containers charges while it's stopped), and Test-L09Lab.ps1 warns when it's running."
   },
   "images": {
     "status": {
@@ -132,6 +132,6 @@
     "appGatewayWafV2FixedPerHourEastus2": 0.36,
     "appGatewayWafV2CapacityUnitPerHourEastus2": 0.0144,
     "appServiceB1LinuxPerHour": 0.02,
-    "notes": "Retained, with the cluster stopped: the Basic registry (about 0.17 USD a day), plus the cluster's node resource group, which keeps a Standard load balancer and a Standard public IP that bill hourly while the cluster is stopped. Container Apps (Consumption profile), Flex Consumption Functions, the Consumption logic app, and API Management Consumption cost nothing idle. Running, the AKS node adds about 0.19 USD an hour, plus Defender for Containers at about 7 USD per vCore a month for its four vCores. The lab subscription had both the Containers and App Service plans' 30-day trials unused on November 1, 2026; Set-L09DefenderWindow.ps1 -State Open started them UTC. The bounded edge costs about 0.65 USD an hour while it exists: Application Gateway WAF_v2 (0.36 USD an hour fixed plus capacity units), Front Door Standard with its WAF policy and rule (monthly charges, prorated), the B1 Linux origin, the gateway's public IP, and the Container Instances worker. Deploy it with Deploy-L09Edge.ps1 and remove it with Remove-L09Edge.ps1."
+    "notes": "Retained, with the cluster stopped: the Basic registry (about 0.17 USD a day), plus the cluster's node resource group, which keeps a Standard load balancer and a Standard public IP that bill hourly while the cluster is stopped. Container Apps (Consumption profile), Flex Consumption Functions, the Consumption logic app, and API Management Consumption cost nothing idle. Running, the AKS node adds about 0.19 USD an hour, plus Defender for Containers at about 7 USD per vCore a month for its four vCores. The lab subscription had both the Containers and App Service plans' 30-day trials unused on November 1, 2026; Set-L09DefenderWindow.ps1 -State Open started them at 22:02 UTC. The bounded edge costs about 0.65 USD an hour while it exists: Application Gateway WAF_v2 (0.36 USD an hour fixed plus capacity units), Front Door Standard with its WAF policy and rule (monthly charges, prorated), the B1 Linux origin, the gateway's public IP, and the Container Instances worker. Deploy it with Deploy-L09Edge.ps1 and remove it with Remove-L09Edge.ps1."
   }
 }

@@ -1,5 +1,5 @@
 // SC-500 Lesson 9, bounded part (resource group scope): the public edge in front of the App
-// Service origin, and a Container Instances worker. Created for a take and deleted right after
+// Service origin, and a Container Instances worker. Created for the demo and deleted right after
 // (Deploy-L09Edge.ps1, Remove-L09Edge.ps1). Application Gateway WAF_v2 bills by the hour while it
 // exists; Front Door Standard's base fee and WAF policy bill by the month, prorated.
 //

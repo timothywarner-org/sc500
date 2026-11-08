@@ -85,7 +85,7 @@ function Get-L04Outputs {
 }
 
 function Get-L04OperatorIp {
-    # The recording workstation's public address, for firewall rules. Azure sees this
+    # Your workstation's public address, for firewall rules. Azure sees this
     # address, not the machine's private one.
     $ip = (Invoke-RestMethod -Uri 'https://api.ipify.org?format=json' -TimeoutSec 15).ip
     if ($ip -notmatch '^\d{1,3}(\.\d{1,3}){3}$') { throw "Unexpected public IP lookup result: $ip" }

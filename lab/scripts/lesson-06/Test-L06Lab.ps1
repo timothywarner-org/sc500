@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     PASS means the check matches the baseline the demos start from. WARN means something costs
-    money or needs attention before a take but doesn't break the baseline (a running VM, a
+    money or needs attention before the demo but doesn't break the baseline (a running VM, a
     bounded lab that still exists). FAIL means a demo would start from the wrong state; run
     Reset-L06Lab.ps1 and check again. Changes nothing.
 
@@ -61,7 +61,7 @@ Add-Check "$($lab.appVm) power state" 'VM deallocated' $vm.powerState -WarnOnly
 # Why this check exists: Defender for Servers pushes the MDE.Linux extension after a VM starts,
 # and it can't finish without internet egress. While any extension is Updating, Run Command
 # queues behind it, so a demo step that looks hung is really waiting (13 minutes in the
-# September 26 rehearsal). Wait for this to read Succeeded before a take.
+# September 26 rehearsal). Wait for this to read Succeeded before the demo.
 $busy = @(Invoke-L06Az @('vm', 'extension', 'list', '--resource-group', $rg, '--vm-name', $lab.appVm) |
         Where-Object { $_.provisioningState -ne 'Succeeded' } | ForEach-Object { "$($_.name) $($_.provisioningState)" })
 Add-Check "$($lab.appVm) extension provisioning (Failed is not ready)" 'all succeeded' $(if ($busy.Count) { $busy -join '; ' } else { 'all succeeded' })

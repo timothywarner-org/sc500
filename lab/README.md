@@ -1,14 +1,14 @@
 # Lab files
 
-This folder holds every script and Bicep template from the demos in Lessons 1 through 13. These are the same files the course runs on screen, with the instructor's tenant values swapped for placeholders you fill in once. Lessons 14 and 15 land here after they publish.
+This folder holds every script and Bicep template from the demos in all 15 lessons. These are the same files the course runs on screen, with the instructor's tenant values swapped for placeholders you fill in once.
 
 - [`scripts/`](scripts/): PowerShell and Python, one folder per lesson. Lesson 1 sits in the `scripts` root.
 - [`infra/`](infra/): Bicep templates and one `config.json` per lesson. Every resource name comes from that lesson's `config.json`, so a rename is one edit in one file.
-- [`Set-LabConfig.ps1`](Set-LabConfig.ps1): writes your tenant, subscription, domain, and account into every lab file.
+- [`Set-LabConfig.ps1`](Set-LabConfig.ps1): writes your tenant, subscription, domain, account, and name suffix into every lab file.
 
 Each lesson folder under [`lessons/`](../lessons/) has a `demos/README.md` that lists that lesson's scripts in run order.
 
-> **Cost warning:** these scripts create real Azure resources, and some of them bill by the hour (Azure Firewall, VPN gateways, Virtual WAN hubs, API Management, Defender plans). Use a dedicated sandbox subscription with a budget alert, and run the lesson's `Remove-` script when you finish.
+> **Cost warning:** these scripts create real Azure resources, and some of them bill by the hour (Azure Firewall, VPN gateways, Virtual WAN hubs, API Management, Defender plans, and Lesson 15's Security Copilot capacity, which bills each provisioned SCU for every clock hour it exists). Microsoft Sentinel in Lessons 13 and 14 bills for the data you ingest. Use a dedicated sandbox subscription with a budget alert, and run the lesson's `Remove-` script when you finish.
 
 ## One-time setup
 
@@ -40,11 +40,13 @@ Each lesson folder under [`lessons/`](../lessons/) has a `demos/README.md` that 
    az login --tenant <your-tenant-id>
    ```
 
-5. **Preview your values, then write them.** The first command changes nothing and lists every file it would change. The second one writes.
+5. **Pick a name suffix.** Three to five lowercase letters or digits, such as your initials and two digits (`tw26`). It goes on the end of every resource name Azure requires to be unique across all customers, so your storage accounts and key vaults never collide with another learner's.
+
+6. **Preview your values, then write them.** The first command changes nothing and lists every file it would change. The second one writes.
 
    ```powershell
-   pwsh -NoProfile -ExecutionPolicy Bypass -File C:\github\sc500\lab\Set-LabConfig.ps1 -SubscriptionId <your-subscription-id> -TenantId <your-tenant-id> -Domain <your-domain> -AdminUpn <your-admin-upn> -GitHubOwner <your-github-owner> -WhatIf
-   pwsh -NoProfile -ExecutionPolicy Bypass -File C:\github\sc500\lab\Set-LabConfig.ps1 -SubscriptionId <your-subscription-id> -TenantId <your-tenant-id> -Domain <your-domain> -AdminUpn <your-admin-upn> -GitHubOwner <your-github-owner>
+   pwsh -NoProfile -ExecutionPolicy Bypass -File C:\github\sc500\lab\Set-LabConfig.ps1 -SubscriptionId <your-subscription-id> -TenantId <your-tenant-id> -Domain <your-domain> -AdminUpn <your-admin-upn> -NameSuffix <your-name-suffix> -GitHubOwner <your-github-owner> -WhatIf
+   pwsh -NoProfile -ExecutionPolicy Bypass -File C:\github\sc500\lab\Set-LabConfig.ps1 -SubscriptionId <your-subscription-id> -TenantId <your-tenant-id> -Domain <your-domain> -AdminUpn <your-admin-upn> -NameSuffix <your-name-suffix> -GitHubOwner <your-github-owner>
    ```
 
    To change your values later, restore the originals with `git -C C:\github\sc500 checkout -- lab` and run it again.
@@ -57,6 +59,7 @@ Each lesson folder under [`lessons/`](../lessons/) has a `demos/README.md` that 
 | `<your-tenant-id>` | The Microsoft Entra tenant that owns it | `Set-LabConfig.ps1` |
 | `<your-domain>` | A verified domain in that tenant. Lab users become `sc500.<name>@<your-domain>`, and Lesson 12 uses it as the Defender EASM discovery seed, so only use a domain you own. | `Set-LabConfig.ps1` |
 | `<your-admin-upn>` | The account you run the labs as | `Set-LabConfig.ps1` |
+| `<your-name-suffix>` | Three to five lowercase letters or digits on the end of globally unique names (storage accounts, key vaults, container registries, App Service and Functions apps, API Management, Foundry accounts). Names Azure scopes to your subscription keep the course's `001`, so they match the video. | `Set-LabConfig.ps1` |
 | `<your-github-owner>` | Your GitHub user or organization (Lesson 2 federation subject) | `Set-LabConfig.ps1` |
 | `<your-access-review-id>` | The ID of the Lesson 1 access review, after you create it | You, by hand |
 | `<your-lab-user-object-id>` | The object ID of the Lesson 1 lab user that the access review fixture targets | You, by hand |
@@ -66,6 +69,7 @@ Each lesson folder under [`lessons/`](../lessons/) has a `demos/README.md` that 
 - **They check before they change.** Each lesson's common file pins the subscription and tenant from `config.json` and refuses to run against anything else.
 - **Read the help first.** Every script starts with comment-based help that says what it reads and what it changes. Run `Get-Help C:\github\sc500\lab\scripts\lesson-05\Deploy-L05Lab.ps1 -Full` for any of them.
 - **Local state stays local.** Evidence files and deployment outputs land in `lab\.azure\`, which Git ignores. Generated passwords go to `%LOCALAPPDATA%`, protected with DPAPI, and are never printed.
+- **Region is one edit.** Every lab deploys to the `location` in its `config.json` (East US 2; Lesson 15's Security Copilot capacity uses `capacityLocation`, East US). If your subscription lacks quota or a service there, change those values before you deploy. Resource names carry the region the course used, so they keep reading `eastus2`; that's cosmetic.
 - **Data is fictional.** Contoso, Fabrikam, and the ServiceHub app are made up. See [NOTICE.md](../NOTICE.md).
 
 Found a script that no longer matches the portal or the API? Open an issue with the *Content question or demo issue* template.

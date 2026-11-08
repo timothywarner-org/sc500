@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     PASS means the check matches the baseline the demos start from. WARN means something costs
-    money or needs attention before a take but doesn't break the baseline (a running VM, the
+    money or needs attention before the demo but doesn't break the baseline (a running VM, the
     legacy VM or its JIT policy still present, the Arc machine not connected yet). FAIL means a
     demo would start from the wrong state; run Reset-L08Lab.ps1 (or Deploy-L08Lab.ps1 -Deploy)
     and check again. Changes nothing.
@@ -52,7 +52,7 @@ Add-Check "Budget $($n.budget)" "$($cfg.budget.monthlyAmountUsd)" $(if ($budget.
 foreach ($vmName in @($n.appVm, $n.onpremVm)) {
     $s = Invoke-L08Arm -Path "/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.DevTestLab/schedules/shutdown-computevm-$vmName`?api-version=2018-09-15" -AllowNotFound
     Add-Check "Shutdown schedule for $vmName" 'present' $(if ($s) { 'present' } else { 'missing' })
-    # Disabled is the pre-take soak (Deploy-L08Lab.ps1 -Soak): a warning, because it costs money.
+    # Disabled is the pre-demo soak (Deploy-L08Lab.ps1 -Soak): a warning, because it costs money.
     if ($s) { Add-Check "Shutdown schedule for $vmName status" 'Enabled' $s.properties.status -WarnOnly }
 }
 

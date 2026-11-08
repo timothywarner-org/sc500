@@ -15,13 +15,13 @@ param location string
 @description('Lesson-owned resource group.')
 param resourceGroupName string = 'rg-sc500-l04-data'
 
-@description('Object ID of the operator who plays Kim Akers on camera (the signed-in admin).')
+@description('Object ID of the operator who plays Kim Akers in the Contoso story (the signed-in admin).')
 param operatorObjectId string
 
 @description('UPN of that operator, used as the SQL Microsoft Entra admin login name.')
 param operatorUpn string
 
-@description('Public IPv4 address of the recording workstation. Used for the SQL firewall rule only; the storage IP rule is added live in demo 4.1.')
+@description('Public IPv4 address of your workstation. Used for the SQL firewall rule only; the storage IP rule is added live in demo 4.1.')
 param operatorIp string
 
 @description('Region for the SQL server and database. See data.bicep for why it can differ from location.')

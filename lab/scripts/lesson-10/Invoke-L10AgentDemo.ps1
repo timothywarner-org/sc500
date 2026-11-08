@@ -19,7 +19,7 @@
                   to the knowledge container, then proves finance is refused.
       Disable     Disables the assistant, shows its token request refused, and enables it again.
       All         Inventory, Policies, Token, Reach.
-    Reset-L10Lab.ps1 puts the too-broad role back for the next take.
+    Reset-L10Lab.ps1 puts the too-broad role back for the next run.
 .PARAMETER Mode Which step to run.
 .EXAMPLE
     pwsh -NoProfile -ExecutionPolicy Bypass -File C:\github\sc500\lab\scripts\lesson-10\Invoke-L10AgentDemo.ps1 -Mode Token
@@ -219,7 +219,7 @@ if ($Mode -eq 'Scope') {
     finally { Remove-L10BlueprintSecret -BlueprintObjectId $bp.id -KeyId $sec.KeyId }
     $r.Reads | ForEach-Object { [pscustomobject]@{ Agent = 'assistant'; Blob = $_.Blob; Status = $_.Status; Result = $_.Result } } | Format-Table -AutoSize | Out-String -Width 200 | Out-Host
     $secs = [int]([DateTime]::UtcNow - $start).TotalSeconds
-    Write-Host "  Took $secs seconds to take effect. Reset-L10Lab.ps1 puts the too-broad role back for the next take."
+    Write-Host "  Took $secs seconds to take effect. Reset-L10Lab.ps1 puts the too-broad role back for the next run."
     [void](Write-L10Evidence 'agent-scope' ([ordered]@{ newScope = 'container knowledge'; removed = $lab.assistantRoleAssignmentId; secondsToEffect = $secs; reads = $r.Reads }))
 }
 

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Opens or closes the Lesson 3 Defender scan window around a recording: plans, runner power, auto-shutdown.
+Opens or closes the Lesson 3 Defender scan window around a demo: plans, runner power, auto-shutdown.
 
 .DESCRIPTION
 Sections 3.2 and 3.3 show live Defender evidence. On 2026-10-10 the CloudPosture, VirtualMachines and
@@ -141,7 +141,7 @@ if ($State -eq 'Open') {
     Set-L03Shutdown 'Disabled'
     if ($WhatIfPreference) { Write-Host "  would start $vmName (no NAT; scanning reads disk snapshots)"; return }
     if ($before.power -ne 'VM running') { [void](Invoke-L03Az @('vm', 'start', '--name', $vmName, '--resource-group', $rg)) }
-    Write-Host "`nScan window OPEN. Allow up to 24 hours, then check before the take:"
+    Write-Host "`nScan window OPEN. Allow up to 24 hours, then check before the demo:"
     Write-Host '  pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\lesson-03\Get-L03DetectionEvidence.ps1'
     Write-Host '  (secretFindingCount should be 1 or more; zero means the scan has not reported yet)'
 }

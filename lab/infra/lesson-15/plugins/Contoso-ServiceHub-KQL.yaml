@@ -1,0 +1,69 @@
+# Contoso ServiceHub investigation: a custom KQL plugin for Microsoft Security Copilot.
+#
+# Why this plugin exists: ServiceHub writes its audit events to a custom table, ServiceHubAudit_CL,
+# in the Lesson 13 workspace. Microsoft documents that the Natural language to KQL for Microsoft
+# Sentinel plugin doesn't support every table, so Katie gets two purpose-built skills that ask
+# exactly the questions Lesson 14's case raises, with the KQL written and reviewed in advance.
+#
+# How it runs: Target Sentinel means Security Copilot queries the workspace named in the four
+# settings below with the signed-in user's own permissions (SupportedAuthTypes: None). The plugin
+# grants nothing. A user without read access to the workspace gets an error, not the rows.
+#
+# Format reference: https://learn.microsoft.com/en-us/copilot/security/plugin-kql
+# Upload: Security Copilot > Sources > Custom > Add plugin > Security Copilot plugin > upload this file.
+# The four setting values come from Test-L15Lab.ps1 (they're printed, not stored in this file).
+Descriptor:
+  Name: ContosoServiceHubInvestigation
+  DisplayName: Contoso ServiceHub investigation
+  Description: Reads Contoso ServiceHub parts-export audit events from the Microsoft Sentinel workspace so an analyst can check which accounts exported parts data and whether each export carried a service case.
+  Settings:
+    - Name: TenantId
+      Required: true
+    - Name: SubscriptionId
+      Required: true
+    - Name: ResourceGroupName
+      Required: true
+    - Name: WorkspaceName
+      Required: true
+  SupportedAuthTypes:
+    - None
+
+SkillGroups:
+  - Format: KQL
+    Skills:
+      - Name: GetServiceHubExportsByActor
+        DisplayName: Get ServiceHub exports by actor
+        Description: Lists the ServiceHub parts-export events for one actor over the last 7 days, newest first, with the client IP address, the service case (empty when there was none), the exported file, and the evidence class that labels synthetic lab events.
+        Inputs:
+          - Name: actor
+            Description: The ServiceHub actor name, for example svc-servicehub-parts
+            Required: true
+        Settings:
+          Target: Sentinel
+          TenantId: '{{TenantId}}'
+          SubscriptionId: '{{SubscriptionId}}'
+          ResourceGroupName: '{{ResourceGroupName}}'
+          WorkspaceName: '{{WorkspaceName}}'
+          Template: |-
+            ServiceHubAudit_CL
+            | where TimeGenerated > ago(7d)
+            | where Operation == "PartsExportRead" and Actor =~ '{{actor}}'
+            | extend FileName = extract(@"([^/]+)$", 1, TargetResource)
+            | project TimeGenerated, Actor, ClientIp, CaseId, FileName, Result, EvidenceClass, FixtureId
+            | order by TimeGenerated desc
+            | take 50
+      - Name: GetServiceHubExportsWithoutCase
+        DisplayName: Get ServiceHub exports without a service case
+        Description: Summarizes ServiceHub parts exports over the last 7 days that carried no service case, by actor and client IP address, so an analyst can see who exported without a case and from where.
+        Settings:
+          Target: Sentinel
+          TenantId: '{{TenantId}}'
+          SubscriptionId: '{{SubscriptionId}}'
+          ResourceGroupName: '{{ResourceGroupName}}'
+          WorkspaceName: '{{WorkspaceName}}'
+          Template: |-
+            ServiceHubAudit_CL
+            | where TimeGenerated > ago(7d)
+            | where Operation == "PartsExportRead" and isempty(CaseId)
+            | summarize Exports = count(), FirstSeen = min(TimeGenerated), LastSeen = max(TimeGenerated) by Actor, ClientIp
+            | order by Exports desc

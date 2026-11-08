@@ -1,0 +1,85 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "triggers": {
+    "Every_interval": {
+      "type": "Recurrence",
+      "recurrence": {
+        "frequency": "Minute",
+        "interval": __RECURRENCE__
+      }
+    }
+  },
+  "actions": {
+    "List_targets": {
+      "type": "Http",
+      "runAfter": {},
+      "inputs": {
+        "method": "GET",
+        "uri": "__LIST_URI__",
+        "authentication": {
+          "type": "ManagedServiceIdentity",
+          "audience": "https://management.azure.com/"
+        }
+      }
+    },
+    "For_each_target": {
+      "type": "Foreach",
+      "foreach": "@body('List_targets')?['value']",
+      "runAfter": {
+        "List_targets": [
+          "Succeeded"
+        ]
+      },
+      "runtimeConfiguration": {
+        "concurrency": {
+          "repetitions": 1
+        }
+      },
+      "actions": {
+        "Deadline": {
+          "type": "Compose",
+          "runAfter": {},
+          "inputs": "@if(contains(coalesce(item()?['tags'], json('{}')), '__EXPIRY_TAG__'), item()?['tags']?['__EXPIRY_TAG__'], addHours(item()?['createdTime'], __MAX_HOURS__))"
+        },
+        "If_past_deadline": {
+          "type": "If",
+          "runAfter": {
+            "Deadline": [
+              "Succeeded"
+            ]
+          },
+          "expression": {
+            "and": [
+              {
+                "less": [
+                  "@ticks(outputs('Deadline'))",
+                  "@ticks(utcNow())"
+                ]
+              }
+            ]
+          },
+          "actions": {
+            "Delete_target": {
+              "type": "Http",
+              "runAfter": {},
+              "inputs": {
+                "method": "DELETE",
+                "uri": "@{concat('https://management.azure.com', item()?['id'], '?api-version=__API_VERSION__')}",
+                "authentication": {
+                  "type": "ManagedServiceIdentity",
+                  "audience": "https://management.azure.com/"
+                }
+              }
+            }
+          },
+          "else": {
+            "actions": {}
+          }
+        }
+      }
+    }
+  },
+  "outputs": {}
+}

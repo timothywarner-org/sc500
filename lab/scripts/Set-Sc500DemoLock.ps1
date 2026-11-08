@@ -3,7 +3,7 @@
 Adds, reads, or removes the named CanNotDelete lock on the empty SC500 lock-demo group.
 .DESCRIPTION
 Never issues a group DELETE. The guarded deletion attempt belongs to the separately rehearsed recording step.
-Refuses a nonempty or incorrectly tagged group and leaves the empty group available for another take.
+Refuses a nonempty or incorrectly tagged group and leaves the empty group available for another run.
 #>
 [CmdletBinding(SupportsShouldProcess)]
 param([ValidateSet('Status','Lock','Unlock')][string]$State='Status')

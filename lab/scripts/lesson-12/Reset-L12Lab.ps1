@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
     Returns the SC-500 Lesson 12 lab to its idle baseline (CTSO-L12-BASELINE) after a rehearsal or
-    a take, and reads back that every change is undone.
+    a demo run, and reads back that every change is undone.
 .DESCRIPTION
     Undoes what the demos and -Stage change, in this order:
       1. Removes only the configured lesson governance assignment (demo 12.1).
@@ -10,7 +10,7 @@
       3. Deletes the parts-exports container and its fictional export (Deploy-L12Lab.ps1 -Stage), so
          Defender CSPM stops counting the store as billable.
       4. Turns Shared Key authorization back on (demo 12.1 Remediate). That's the deliberate fault
-         the next take fixes. It's safe to restore because the store holds no data.
+         the next run fixes. It's safe to restore because the store holds no data.
     Retained and untouched: the store itself, your data role, the EASM workspace and its discovery
     group, and every Defender plan. Remove-L12Lab.ps1 (your step) deletes the lab.
 .PARAMETER WhatIf Show what would change and change nothing.

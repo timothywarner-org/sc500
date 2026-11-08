@@ -12,7 +12,7 @@ Build first, check, run the demos, then reset or clean up. Within a stage, follo
 | Stage | Script | What it does (from the script's own help) |
 | --- | --- | --- |
 | Build | [`Deploy-L04Lab.ps1`](../../../lab/scripts/lesson-04/Deploy-L04Lab.ps1) | Previews, or deploys and seeds, the SC-500 Lesson 4 storage and SQL lab in the course subscription. |
-| Build | [`Set-L04DefenderWindow.ps1`](../../../lab/scripts/lesson-04/Set-L04DefenderWindow.ps1) | Opens or closes the Lesson 4 Defender window around a recording: plans, account settings, vulnerability assessment. |
+| Build | [`Set-L04DefenderWindow.ps1`](../../../lab/scripts/lesson-04/Set-L04DefenderWindow.ps1) | Opens or closes the Lesson 4 Defender window around a demo: plans, account settings, vulnerability assessment. |
 | Build | [`Set-L04SharedKeyGuardrail.ps1`](../../../lab/scripts/lesson-04/Set-L04SharedKeyGuardrail.ps1) | Demonstrates Audit and Deny on the Lesson 4 records account only. Modes: `Audit`, `Deny`, `Probe`, `Inspect`. |
 | Check | [`Test-L04Lab.ps1`](../../../lab/scripts/lesson-04/Test-L04Lab.ps1) | Read-only readiness check: is the Lesson 4 lab at CTSO-L04-BASELINE, ready to record? |
 | Demo | [`Invoke-L04DefenderDemo.ps1`](../../../lab/scripts/lesson-04/Invoke-L04DefenderDemo.ps1) | Demos 4.2 and 4.4 helper: Defender for Storage and Defender for Databases coverage, configuration, and evidence for the Lesson 4 resources. Modes: `Plans`, `StorageSettings`, `OverrideIntake`, `UploadClean`, `ScanResults`, `SqlCoverage`, `VaResults`. |

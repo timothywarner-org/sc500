@@ -1,0 +1,113 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "operatorUpn": "<your-admin-upn>",
+  "location": "eastus2",
+  "capacityLocation": "eastus",
+  "resourceGroup": "rg-secopscopilot-shared-eastus2",
+  "deploymentName": "sc500-lesson15",
+  "managedBy": "sc500-l15-iac",
+  "tags": {
+    "workload": "secopscopilot",
+    "env": "shared",
+    "region": "eastus2",
+    "criticality": "low",
+    "dataclass": "synthetic",
+    "costcenter": "sc500-video-course",
+    "managedby": "sc500-l15-iac",
+    "lesson": "15",
+    "scenario": "Contoso ServiceHub",
+    "lifecycle": "retain the reaper until the course ships; the capacity lives one session at a time"
+  },
+  "budget": {
+    "enabled": false
+  },
+  "baseline": "CTSO-L15-BASELINE",
+  "names": {
+    "reaper": "logic-copilotreaper-shared-eastus2-001",
+    "reaperRole": "Contoso Security Copilot capacity reaper",
+    "capacity": "copilot-secops-shared-eastus-001",
+    "reaperTestGroup": "rg-copilotreapertest-shared-eastus2",
+    "probeExpired": "id-reaperprobeexpired-shared-eastus2-001",
+    "probeKept": "id-reaperprobekept-shared-eastus2-001"
+  },
+  "naming": {
+    "region": "eastus2",
+    "note": "Lesson 15's guard serves the same shared SOC as Lessons 13 and 14, so it takes workload secopscopilot in a group of its own, which Remove-L15Lab.ps1 deletes whole. The reaper is a logic app (logic-, as Lesson 14's playbook). Standard: Cloud Adoption Framework naming guidance, https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming.",
+    "exempt": {
+      "reaperRole": "A custom role definition's display name; its resource name is a GUID",
+      "capacity": "CAF lists no abbreviation for a Microsoft Security Copilot capacity. The name keeps the {workload}-{env}-{region}-{###} order, and its region token is the capacity's own region (capacityLocation), because Security Copilot capacity regions differ from the lab's."
+    }
+  },
+  "l13": {
+    "note": "Lesson 15 reads Lesson 13's workspace and custom table. It never changes them.",
+    "resourceGroup": "rg-secops-shared-eastus2",
+    "deploymentName": "sc500-lesson13",
+    "workspace": "log-secops-shared-eastus2-001",
+    "customTable": "ServiceHubAudit_CL"
+  },
+  "l14": {
+    "note": "Lesson 15 investigates the case Lesson 14 left open: incident 1 in the workspace, Defender incident 99, created November 6, 2026 from fixture c8e264f5. Lesson 15 reads Lesson 14's files and never edits them. A handoff pin (handoffFile) wins when it exists; today it doesn't, so the case comes from last-incident.json and last-fixture.json.",
+    "config": "infra/lesson-14/config.json",
+    "handoffFile": ".azure/lesson-14/handoff-case.json",
+    "lastIncidentFile": ".azure/lesson-14/last-incident.json",
+    "lastFixtureFile": ".azure/lesson-14/last-fixture.json"
+  },
+  "copilot": {
+    "portalUrl": "https://securitycopilot.microsoft.com",
+    "capacityResourceType": "Microsoft.SecurityCopilot/capacities",
+    "capacityApiVersion": "2023-12-01-preview",
+    "capacityName": "copilot-secops-shared-eastus-001",
+    "capacityRegion": "eastus",
+    "promptEvaluationLocation": "United States (US)",
+    "workspaceName": "default",
+    "session": {
+      "provisionedUnits": 1,
+      "overageUnitsCap": 0,
+      "defaultHours": 1,
+      "maxHours": 8
+    },
+    "retailUsdChecked": "2026-11-07, the Security Copilot portal's Create a Security capacity form ($4 USD per unit per hour); overage per Learn's inclusion FAQ ($6 per SCU)",
+    "provisionedUsdPerUnitHour": 4,
+    "overageUsdPerUnit": 6,
+    "ownerInheritingEntraRoles": [
+      "Global Administrator",
+      "Security Administrator",
+      "Billing Administrator",
+      "Intune Administrator",
+      "Compliance Administrator"
+    ],
+    "sentinelReadRoles": [
+      "Owner",
+      "Contributor",
+      "Reader",
+      "Microsoft Sentinel Reader",
+      "Microsoft Sentinel Responder",
+      "Microsoft Sentinel Contributor",
+      "Log Analytics Reader",
+      "Log Analytics Contributor"
+    ]
+  },
+  "reaper": {
+    "note": "A Consumption logic app with a system-assigned managed identity. Every 30 minutes it lists the capacities in the guarded group and deletes any whose expiry tag has passed, or, with no tag, any older than defaultMaxHours. Microsoft bills provisioned SCUs by the clock hour and recommends deleting capacity when you're not using it during testing. The reaper's custom role can read and delete only that resource type, only in this group.",
+    "name": "logic-copilotreaper-shared-eastus2-001",
+    "roleName": "Contoso Security Copilot capacity reaper",
+    "expiryTag": "expiresutc",
+    "defaultMaxHours": 3,
+    "recurrenceMinutes": 30
+  },
+  "plugin": {
+    "note": "A custom KQL plugin for Security Copilot. You upload it for yourself (Just me). It runs with your own Microsoft Sentinel permissions, because a Sentinel-target KQL skill supports no other authentication.",
+    "file": "infra/lesson-15/plugins/Contoso-ServiceHub-KQL.yaml",
+    "sampleInputs": {
+      "actor": "svc-servicehub-parts"
+    }
+  },
+  "fixture": {
+    "note": "The same synthetic ServiceHub actors and RFC 5737 documentation addresses as Lesson 14.",
+    "intendedActor": "svc-servicehub-parts",
+    "intendedIp": "198.51.100.77",
+    "benignActor": "svc-parts-replication",
+    "caseId": "SR-1043"
+  }
+}

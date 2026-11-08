@@ -5,9 +5,9 @@
 // an account-scope grant also reaches the finance container. The triage agent is scoped
 // correctly, to the tickets container only, so the two agents from one blueprint show different
 // reach. Invoke-L10AgentDemo.ps1 -Mode Scope narrows the assistant during the demo, and
-// Reset-L10Lab.ps1 (or a redeploy) puts the mistake back for the next take.
+// Reset-L10Lab.ps1 (or a redeploy) puts the mistake back for the next run.
 param location string
-@description('Storage account name (CAF, Contoso): stservicehubkbprod001.')
+@description('Storage account name (CAF, Contoso): stservicehubkbprod<your-name-suffix>.')
 param storageName string
 param containers array
 param assistantPrincipalId string
@@ -16,7 +16,7 @@ param operatorObjectId string
 param roles object
 param managedBy string
 
-// The name comes from config.json names.storageAccount, so the runbook's tab URL can name it exactly.
+// The name comes from config.json names.storageAccount, so the demo's portal link can name it exactly.
 
 resource st 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: storageName

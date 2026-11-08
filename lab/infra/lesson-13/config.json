@@ -49,7 +49,7 @@
     "managedby": "sc500-l13-iac",
     "lesson": "13",
     "scenario": "Contoso ServiceHub",
-    "lifecycle": "retain through Lesson 14; VMs deallocated between takes (Stop-L13Lab.ps1)"
+    "lifecycle": "retain through Lesson 14; VMs deallocated between runs (Stop-L13Lab.ps1)"
   },
   "workspace": {
     "note": "90 days of analytics retention is included for Sentinel-enabled workspaces. The daily cap is a cost guard for a lab that ingests kilobytes, not a production setting: when a cap is reached, security data stops too.",
@@ -90,7 +90,7 @@
     "wefNote": "Open item. The single-VM loopback WEF lane delivered no event on September 28 or November 6: two failed sign-ins (one after a collector restart) reached SecurityEvent within a minute and never reached ForwardedEvents, while the subscription and its one source read Active. The host trace expects none on that row until a run delivers one; then set this to found."
   },
   "vm": {
-    "note": "Both VMs are private (no public IP, no inbound rule) and are managed through Run Command. They are deallocated at idle; Start-L13Lab.ps1 adds a temporary NAT gateway for outbound agent traffic and Stop-L13Lab.ps1 removes it. sub-ttt-labs-primary had never run a VM before 2026-11-06 (Microsoft.Compute was NotRegistered), so the two VMs are its only regional vCPUs. The daily auto-shutdown is a backstop for a forgotten Stop-L13Lab.ps1: it deallocates but leaves the NAT gateway, which Stop-L13Lab.ps1 removes.",
+    "note": "Both VMs are private (no public IP, no inbound rule) and are managed through Run Command. They are deallocated at idle; Start-L13Lab.ps1 adds a temporary NAT gateway for outbound agent traffic and Stop-L13Lab.ps1 removes it. A new subscription may never have run a VM before 2026-11-06 (Microsoft.Compute was NotRegistered), so the two VMs are its only regional vCPUs. The daily auto-shutdown is a backstop for a forgotten Stop-L13Lab.ps1: it deallocates but leaves the NAT gateway, which Stop-L13Lab.ps1 removes.",
     "sizeNote": "On 2026-11-06 ARM refused Standard_B1ms and Standard_B2als_v2 in eastus2 for this subscription (SkuNotAvailable, capacity restrictions), and no B-series size was offered. Standard_D2als_v6 (2 vCPUs, 4 GB) was the smallest size available; it supports only the NVMe disk controller, and both images list SCSI and NVMe. Regional quota read 0 of 65 vCPUs.",
     "linuxSize": "Standard_D2als_v6",
     "windowsSize": "Standard_D2als_v6",
@@ -123,7 +123,7 @@
     "logAnalyticsContributor": "92aaf0da-9dab-42b6-94a3-d43ce8d16293"
   },
   "l12Handoff": {
-    "note": "Lesson 12 prioritized the ServiceHub export store and left public network access Enabled. Lesson 13 asks who touched it, when, from where, and with what result. The prefix matches stservicehubexports001 and not its sibling stservicehubarchive001.",
+    "note": "Lesson 12 prioritized the ServiceHub export store and left public network access Enabled. Lesson 13 asks who touched it, when, from where, and with what result. The prefix matches stservicehubexports<your-name-suffix> and not its sibling stservicehubarchive<your-name-suffix>.",
     "resourceGroup": "rg-servicehub-prod-eastus2",
     "storagePrefix": "stservicehubexports"
   },

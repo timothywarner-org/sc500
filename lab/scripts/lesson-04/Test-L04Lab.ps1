@@ -22,7 +22,7 @@
     For rehearsals and status checks with the Defender window closed. The Defender checks
     (the five plans, protection on both accounts, the vulnerability assessment scanner) report
     PARKED when they read their parked values (Free, False, Disabled), instead of FAIL. PARKED
-    is not PASS: it means "closed on purpose", and a take still needs the window open and a
+    is not PASS: it means "closed on purpose", and the demo still needs the window open and a
     run without this switch.
 
 .EXAMPLE

@@ -15,7 +15,7 @@ Build first, check, run the demos, then reset or clean up. Within a stage, follo
 | Check | [`Test-L10Lab.ps1`](../../../lab/scripts/lesson-10/Test-L10Lab.ps1) | Read-only readiness check for the Lesson 10 lab at CTSO-L10-BASELINE. |
 | Demo | [`Invoke-L10AgentDemo.ps1`](../../../lab/scripts/lesson-10/Invoke-L10AgentDemo.ps1) | Demos 10.3 and 10.4: ServiceHub's agent identities in Microsoft Entra Agent ID, the Conditional Access policies that apply to them, what each agent can reach, and the lifecycle controls that stop it. Modes: `Inventory`, `Policies`, `Token`, `SignIns`, `Reach`, `Scope`, `Disable`, `All`. |
 | Demo | [`Invoke-L10DataDemo.ps1`](../../../lab/scripts/lesson-10/Invoke-L10DataDemo.ps1) | Demos 10.1 and 10.2, the scripted half: who can use Microsoft 365 Copilot in the tenant, and how every Copilot Studio agent in each Power Platform environment authenticates its users. Modes: `Copilot`, `Agents`, `All`. |
-| Reset | [`Reset-L10Lab.ps1`](../../../lab/scripts/lesson-10/Reset-L10Lab.ps1) | Puts the Lesson 10 lab back at CTSO-L10-BASELINE between takes. |
+| Reset | [`Reset-L10Lab.ps1`](../../../lab/scripts/lesson-10/Reset-L10Lab.ps1) | Puts the Lesson 10 lab back at CTSO-L10-BASELINE between runs. |
 | Clean up | [`Remove-L10Lab.ps1`](../../../lab/scripts/lesson-10/Remove-L10Lab.ps1) | Deletes the whole Lesson 10 lab. Your call, not a routine step. |
 | Helper | [`L10.Common.ps1`](../../../lab/scripts/lesson-10/L10.Common.ps1) | Shared helpers for the SC-500 Lesson 10 lab: pin the subscription and tenant, call Azure CLI safely, save private evidence, call ARM and Microsoft Graph, find the lab's agent identity objects, and run the Microsoft Entra Agent ID autonomous token flow. |
 

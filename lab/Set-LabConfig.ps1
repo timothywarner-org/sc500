@@ -37,17 +37,27 @@
 .PARAMETER AdminUpn
     The account you sign in with to run the labs, for example admin@contoso.onmicrosoft.com.
 
+.PARAMETER NameSuffix
+    Three to five lowercase letters or digits that make your globally unique resource names yours,
+    for example your initials and two digits (tw26). Storage accounts, key vaults, container
+    registries, App Service and Functions apps, API Management and Foundry accounts need names no
+    other Azure customer holds, so the course's names end in <your-name-suffix> instead of 001.
+    WHY it matters: without it, the first learner to deploy a storage account with the course's
+    instance number owns that name, and every other learner's deployment fails with "already
+    taken". A deleted key vault keeps its name reserved for 90 days. Names Azure scopes to your
+    subscription keep 001 and match the video.
+
 .PARAMETER GitHubOwner
     Your GitHub user or organization, for the Lesson 2 workload identity federation subject.
     Only Lesson 2 uses it. Default: the placeholder stays.
 
 .EXAMPLE
-    pwsh -NoProfile -ExecutionPolicy Bypass -File C:\github\sc500\lab\Set-LabConfig.ps1 -SubscriptionId 00000000-0000-0000-0000-000000000000 -TenantId 11111111-1111-1111-1111-111111111111 -Domain contoso.onmicrosoft.com -AdminUpn admin@contoso.onmicrosoft.com -WhatIf
+    pwsh -NoProfile -ExecutionPolicy Bypass -File C:\github\sc500\lab\Set-LabConfig.ps1 -SubscriptionId 00000000-0000-0000-0000-000000000000 -TenantId 11111111-1111-1111-1111-111111111111 -Domain contoso.onmicrosoft.com -AdminUpn admin@contoso.onmicrosoft.com -NameSuffix tw26 -WhatIf
 
     Shows every file that would change, and changes nothing.
 
 .EXAMPLE
-    pwsh -NoProfile -ExecutionPolicy Bypass -File C:\github\sc500\lab\Set-LabConfig.ps1 -SubscriptionId 00000000-0000-0000-0000-000000000000 -TenantId 11111111-1111-1111-1111-111111111111 -Domain contoso.onmicrosoft.com -AdminUpn admin@contoso.onmicrosoft.com -GitHubOwner my-github-name
+    pwsh -NoProfile -ExecutionPolicy Bypass -File C:\github\sc500\lab\Set-LabConfig.ps1 -SubscriptionId 00000000-0000-0000-0000-000000000000 -TenantId 11111111-1111-1111-1111-111111111111 -Domain contoso.onmicrosoft.com -AdminUpn admin@contoso.onmicrosoft.com -NameSuffix tw26 -GitHubOwner my-github-name
 
     Writes your values into the lab files and prints a count for each placeholder.
 
@@ -62,6 +72,9 @@ param(
     [Parameter(Mandatory)][guid]$TenantId,
     [Parameter(Mandatory)][ValidatePattern('^(?=.{4,253}$)([a-z0-9-]+\.)+[a-z]{2,}$')][string]$Domain,
     [Parameter(Mandatory)][ValidatePattern('^[^@\s]+@[^@\s]+\.[^@\s]+$')][string]$AdminUpn,
+    # Lowercase only: storage account and registry names reject capitals, and 5 characters keeps
+    # the longest name (kv-hubtlsca-shared-<suffix>) at the 24-character key vault limit.
+    [Parameter(Mandatory)][ValidatePattern('^[a-z0-9]{3,5}$')][string]$NameSuffix,
     [ValidatePattern('^[A-Za-z0-9-]{1,39}$')][string]$GitHubOwner
 )
 Set-StrictMode -Version Latest
@@ -77,6 +90,7 @@ $map = [ordered]@{
     '<your-tenant-id>'       = $TenantId.ToString()
     '<your-admin-upn>'       = $AdminUpn.ToLowerInvariant()
     '<your-domain>'          = $Domain.ToLowerInvariant()
+    '<your-name-suffix>'     = $NameSuffix
 }
 if ($GitHubOwner) { $map['<your-github-owner>'] = $GitHubOwner }
 $manual = '<your-access-review-id>', '<your-lab-user-object-id>'

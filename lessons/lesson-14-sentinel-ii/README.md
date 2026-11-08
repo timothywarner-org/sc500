@@ -14,13 +14,14 @@
 
 Every demo in this lesson is work you can repeat in your own subscription, mostly in the Azure portal or the Microsoft admin centers. Do each one yourself after you watch it, because clicking through a configuration sticks far better than reading about it.
 
-The step-by-step walkthrough and any lab files for this lesson land in [`demos/`](demos/) after the lesson publishes. Watch the [changelog](../../CHANGELOG.md) for updates.
+The scripts and Bicep templates from this lesson's demos are published: [`demos/`](demos/) lists them by stage and links to their folders under `lab/`. Do the [one-time lab setup](../../lab/README.md) first.
 
 ## Before you start
 
 - An Azure subscription you control, ideally a dedicated sandbox with a budget alert
 - A resource group just for this lesson, so cleanup is a single delete
 - This lesson builds on your Lesson 13 Microsoft Sentinel workspace. Logic Apps playbooks bill per run.
+- The Purview Audit demo needs auditing turned on for your tenant. [Turning it on](https://learn.microsoft.com/purview/audit-log-enable-disable#turn-on-auditing) can take up to 60 minutes to take effect, and a new activity can take longer still to reach search, so stage the audit file well ahead.
 
 ## Go deeper
 

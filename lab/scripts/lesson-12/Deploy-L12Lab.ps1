@@ -6,17 +6,17 @@
     Design goal: keep idle cost at or near zero until you need it. So the lab has two
     states, and this script builds each one:
       -Deploy  Idle baseline. main.bicep creates rg-servicehub-prod-eastus2 with the export store
-               stservicehubexports001 (Shared Key allowed on purpose, public network access on, no
+               stservicehubexports<your-name-suffix> (Shared Key allowed on purpose, public network access on, no
                containers, Defender for Storage excluded at the resource level, your Storage Blob Data
-               Owner role on the store) and the archive store stservicehubarchive001 (the same Shared
+               Owner role on the store) and the archive store stservicehubarchive<your-name-suffix> (the same Shared
                Key fault, public network access disabled), and rg-attacksurface-shared-eastus with the
                EASM workspace easmattacksurface001. Then the EASM discovery group gets its seed and one
                run starts, unless a run is already pending, running, or completed (use -RunDiscovery to
                force one). Names come from config.json (CAF applied to Contoso, 2026-11-05 move).
-      -Stage   Recording prep, the day before a take: creates the parts-exports container and uploads
+      -Stage   Prep, the day before the demo: creates the parts-exports container and uploads
                one fictional CSV with your Entra identity (never a key). That makes the store look
                like the real thing. From then on Defender CSPM counts it as a billable resource, so
-               Reset-L12Lab.ps1 removes the container after the take.
+               Reset-L12Lab.ps1 removes the container after the demo.
     With neither switch it runs an ARM what-if and changes nothing. Nothing here changes a Defender
     plan or a tenant setting.
     Costs: an empty store with Defender for Storage excluded costs effectively nothing. Defender EASM

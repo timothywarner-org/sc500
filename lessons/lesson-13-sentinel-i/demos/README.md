@@ -13,7 +13,7 @@ Build first, check, run the demos, then reset or clean up. Within a stage, follo
 | --- | --- | --- |
 | Build | [`Deploy-L13Lab.ps1`](../../../lab/scripts/lesson-13/Deploy-L13Lab.ps1) | Deploys the SC-500 Lesson 13 lab: a Microsoft Sentinel workspace for ServiceHub, every ingestion route the lesson demonstrates, and two private collector VMs. |
 | Build | [`Start-L13Lab.ps1`](../../../lab/scripts/lesson-13/Start-L13Lab.ps1) | Starts the Lesson 13 collectors for a session: recreates the temporary NAT gateway, attaches it to the collectors' subnet, and starts both VMs. |
-| Check | [`Test-L13Contracts.ps1`](../../../lab/scripts/lesson-13/Test-L13Contracts.ps1) | Offline regression tests for cumulative RBAC grants and the recording evidence boundary. |
+| Check | [`Test-L13Contracts.ps1`](../../../lab/scripts/lesson-13/Test-L13Contracts.ps1) | Offline regression tests for cumulative RBAC grants and the demo evidence boundary. |
 | Check | [`Test-L13Lab.ps1`](../../../lab/scripts/lesson-13/Test-L13Lab.ps1) | Read-only readiness check for the Lesson 13 lab. Exits 1 on any FAIL. |
 | Demo | [`Invoke-L13ConnectorDemo.ps1`](../../../lab/scripts/lesson-13/Invoke-L13ConnectorDemo.ps1) | Demo 13.2: which sources reach the ServiceHub workspace, by which route, into which table. Modes: `Sources`, `Routes`, `Probe`, `Trace`. |
 | Demo | [`Invoke-L13HostDemo.ps1`](../../../lab/scripts/lesson-13/Invoke-L13HostDemo.ps1) | Demo 13.3: Syslog and CEF through the Linux forwarder, and Windows Security events directly and through Windows Event Forwarding (WEF). Modes: `Routes`, `Send`, `Failure`, `Wef`, `Trace`. |

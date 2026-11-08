@@ -4,6 +4,16 @@ All notable changes to this course companion repository are tracked here. This p
 
 ## [Unreleased]
 
+### Added (2026-11-08, Lessons 14 and 15)
+- `lab/scripts/lesson-14`, `lab/infra/lesson-14`: the Microsoft Sentinel analytics rule, automation rule, response playbook, hunting queries, workbook, and Purview Audit demo scripts.
+- `lab/scripts/lesson-15`, `lab/infra/lesson-15`: the Security Copilot cost guard (a deadline tag plus a reaper logic app that deletes an expired capacity), the ServiceHub KQL plugin manifest, and the read-only demo readouts.
+- A `demos/README.md` page for Lessons 14 and 15.
+
+### Changed (2026-11-08, easier to adapt)
+- `Set-LabConfig.ps1` takes a required `-NameSuffix` (3 to 5 lowercase letters or digits). Storage accounts, key vaults, container registries, App Service and Functions apps, API Management, and Foundry accounts now end in `<your-name-suffix>` instead of `001`, so two learners can't collide on a name Azure requires to be unique across all customers. Names Azure scopes to your subscription keep `001` and match the video.
+- `lab/README.md` covers the name suffix, Security Copilot and Sentinel costs, and how to change a lab's region.
+- Script help and comments speak to you. The instructor's subscription name is gone, and recording-session wording such as takes and demo cards now reads as demo steps.
+
 ### Added (2026-11-08, lab files)
 - `lab/`: the scripts and Bicep templates from the demos in Lessons 1 through 13, as the lessons promise. Tenant, subscription, domain, and account values are placeholders.
 - `lab/Set-LabConfig.ps1`: writes your own values into every lab file in one step, with `-WhatIf`.

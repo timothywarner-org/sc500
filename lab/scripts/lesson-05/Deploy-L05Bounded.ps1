@@ -5,7 +5,7 @@
 
 .DESCRIPTION
     Both labs bill by the hour, so they exist only while you work through the demo. Deploy about an
-    hour before recording; Remove-L05Bounded.ps1 takes them down afterward.
+    hour before the demo; Remove-L05Bounded.ps1 takes them down afterward.
       Wan  rg-sc500-l05-wan: Standard Virtual WAN, hub, Azure Firewall Basic with a Firewall
            Policy, two spokes with one test VM each, and routing intent for private traffic.
            About 0.66 USD an hour. The hub and firewall take 30 to 45 minutes to provision.
