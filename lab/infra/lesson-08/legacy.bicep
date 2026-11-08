@@ -5,7 +5,7 @@
 // standing access into just-in-time access through Defender for Cloud; the host demo shows it as
 // the encryption-at-host policy's exception.
 //
-// lifecycle says bounded. Remove-L08Bounded.ps1 deletes it, and its JIT policy, after a take.
+// lifecycle says bounded. Remove-L08Bounded.ps1 deletes it, and its JIT policy, after the demo.
 
 @description('Azure region, from config.json.')
 param location string

@@ -15,7 +15,7 @@ Build first, check, run the demos, then reset or clean up. Within a stage, follo
 | Build | [`Enable-L03Backup.ps1`](../../../lab/scripts/lesson-03/Enable-L03Backup.ps1) | Protects the existing Lesson 3 VM with a bounded daily backup policy. |
 | Build | [`New-L03RestoreStaging.ps1`](../../../lab/scripts/lesson-03/New-L03RestoreStaging.ps1) | Creates the small LRS staging account required by the Lesson 3 managed-disk restore. |
 | Build | [`Set-L03ResourceGuard.ps1`](../../../lab/scripts/lesson-03/Set-L03ResourceGuard.ps1) | Creates the lesson-owned Resource Guard and enables MUA on the retained recovery vault. |
-| Build | [`Set-L03ScanWindow.ps1`](../../../lab/scripts/lesson-03/Set-L03ScanWindow.ps1) | Opens or closes the Lesson 3 Defender scan window around a recording: plans, runner power, auto-shutdown. |
+| Build | [`Set-L03ScanWindow.ps1`](../../../lab/scripts/lesson-03/Set-L03ScanWindow.ps1) | Opens or closes the Lesson 3 Defender scan window around a demo: plans, runner power, auto-shutdown. |
 | Build | [`Start-L03Backup.ps1`](../../../lab/scripts/lesson-03/Start-L03Backup.ps1) | Starts one on-demand backup of the already-protected Lesson 3 runner and preserves its job identifier. |
 | Build | [`Start-L03Lab.ps1`](../../../lab/scripts/lesson-03/Start-L03Lab.ps1) | Restores Lesson 3 outbound management connectivity, then starts its private runner. |
 | Build | [`Start-L03Restore.ps1`](../../../lab/scripts/lesson-03/Start-L03Restore.ps1) | Restores the newest Lesson 3 VM recovery point to a separate managed disk. |

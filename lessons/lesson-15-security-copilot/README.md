@@ -14,13 +14,15 @@
 
 Every demo in this lesson is work you can repeat in your own subscription, mostly in the Azure portal or the Microsoft admin centers. Do each one yourself after you watch it, because clicking through a configuration sticks far better than reading about it.
 
-The step-by-step walkthrough and any lab files for this lesson land in [`demos/`](demos/) after the lesson publishes. Watch the [changelog](../../CHANGELOG.md) for updates.
+The scripts and Bicep templates from this lesson's demos are published: [`demos/`](demos/) lists them by stage and links to their folders under `lab/`. Do the [one-time lab setup](../../lab/README.md) first.
 
 ## Before you start
 
 - An Azure subscription you control, ideally a dedicated sandbox with a budget alert
 - A resource group just for this lesson, so cleanup is a single delete
 - Microsoft Security Copilot runs on Security Compute Units (SCUs). Find out how your organization gets capacity before you provision any, because provisioned SCUs bill by the hour.
+- This lesson investigates the incident your Lesson 14 lab raises, in your Lesson 13 workspace, so build those first.
+- Deploy the lesson's guard first (`Deploy-L15Lab.ps1`), then create one provisioned SCU with overage at 0 and run `Start-L15CopilotSession.ps1` to put a deadline on it. A small logic app deletes the capacity once the deadline passes, so a forgotten capacity stops billing on its own. Run `Stop-L15CopilotSession.ps1` the moment you finish.
 
 ## Go deeper
 

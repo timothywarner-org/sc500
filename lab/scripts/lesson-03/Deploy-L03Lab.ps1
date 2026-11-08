@@ -56,7 +56,7 @@ try {
     [void](Write-L03Evidence 'disk-export-controls' $disk)
     if($disk.networkAccessPolicy -ne 'DenyAll' -or $disk.publicNetworkAccess -ne 'Disabled'){throw 'Managed disk export controls did not read back as intended.'}
     $result.properties.outputs|ConvertTo-Json -Depth 20|Set-Content (Join-Path $stateDir 'outputs.json') -Encoding utf8
-    Write-Host 'Lesson 3 infrastructure deployed. Run the preparation and request probes before recording.'
+    Write-Host 'Lesson 3 infrastructure deployed. Run the preparation and request probes before the demo.'
 } catch {
     # A partial deployment can still have running compute. Preserve its resources but stop its costs.
     $original=$_

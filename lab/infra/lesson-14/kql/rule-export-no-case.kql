@@ -1,0 +1,15 @@
+// ServiceHub parts export with no service case (Lesson 14 analytics rule).
+// The lookback covers up to 15 minutes of ingestion delay, and ingestion_time() keeps
+// normal runs from repeatedly selecting arrivals. Schedule restarts can still overlap windows.
+let ingestion_delay = 15m;
+let rule_look_back = 5m;
+// Tuning: approved jobs that export without a service case by design.
+let approved_export_jobs = dynamic(["svc-parts-replication"]);
+ServiceHubAudit_CL
+| where TimeGenerated >= ago(ingestion_delay + rule_look_back)
+| where ingestion_time() > ago(rule_look_back)
+| where Operation == "PartsExportRead" and Result == "Allowed"
+| where isempty(CaseId)
+| where Actor !in (approved_export_jobs)
+| extend FileName = extract(@"([^/]+)$", 1, TargetResource)
+| project TimeGenerated, Actor, ClientIp, FileName, TargetResource, FixtureId, Detail

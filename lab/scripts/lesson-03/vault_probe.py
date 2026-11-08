@@ -62,7 +62,7 @@ result={'mode':args.mode,'vault':args.vault,'privateAddresses':ips,'principalId'
 try:
     if args.mode=='Objects':
         operation('check-bootstrap-data-access','GET','secrets',retry=True)
-        # Resume a take interrupted between delete and recover instead of colliding with a soft-deleted name.
+        # Resume a run interrupted between delete and recover instead of colliding with a soft-deleted name.
         # Listing active secrets can succeed before the separate deleted-object permission propagates.
         prior=operation('inspect-deleted-fixture','GET','deletedsecrets/servicehub-maintenance-demo',expected=(200,404),retry=True)
         if not prior.get('error'):

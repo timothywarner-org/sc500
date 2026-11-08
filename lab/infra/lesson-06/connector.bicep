@@ -7,7 +7,7 @@
 // lab) and for operator-only RDP. Setup uses delegated registration after your interactive
 // sign-in. Registration credentials travel only through protected Run Command parameters.
 // The NSG allows RDP only from the operator's current public IP. Retain the registered host
-// deallocated between takes. The connector NIC sits in the hub, so it can reach the app VM
+// deallocated between runs. The connector NIC sits in the hub, so it can reach the app VM
 // (10.60.16.4:8080) over the hub-to-spoke peering.
 // Cost while deployed: about 0.05 USD an hour.
 

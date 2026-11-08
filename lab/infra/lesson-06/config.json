@@ -18,7 +18,7 @@
     "hubVnet": "vnet-hub-prod-eastus2-001",
     "servicehubVnet": "vnet-servicehub-prod-eastus2-001",
     "appVm": "vm-servicehub-prod-001",
-    "recordsAccount": "stservicehubrecords001",
+    "recordsAccount": "stservicehubrecords<your-name-suffix>",
     "hubZoneLink": "link-vnet-hub-prod-eastus2-001",
     "servicehubZoneLink": "link-vnet-servicehub-prod-eastus2-001",
     "fieldOfficeIdentity": "id-fieldoffice-prod-eastus2-001",
@@ -112,6 +112,6 @@
     "maintenanceNatPerGb": 0.045,
     "clientWindowsEastUsPerHour": 0.0468,
     "clientStandardSsdE10EastUsPerMonth": 9.6,
-    "notes": "Retain app, registered connector and joined Windows 11 client deallocated between takes. Added Windows disks and two Standard public IPs increase retained cost to roughly 1 USD/day including the original baseline, plus transactions; this is a planning estimate, not billed usage. The client VM retail Windows rate is 0.0468 USD/hour in East US. Temporary NAT plus its public IP costs 0.05 USD/hour per VNet plus 0.045 USD/GB processed; partial NAT hours round up. Enable egress before running Linux guests and remove after deallocation. PLS and DNS remain bounded and should be removed after takes. The September 26 Cost Management query returned no rows yet; this is billing latency, not evidence of zero cost."
+    "notes": "Retain app, registered connector and joined Windows 11 client deallocated between runs. Added Windows disks and two Standard public IPs increase retained cost to roughly 1 USD/day including the original baseline, plus transactions; this is a planning estimate, not billed usage. The client VM retail Windows rate is 0.0468 USD/hour in East US. Temporary NAT plus its public IP costs 0.05 USD/hour per VNet plus 0.045 USD/GB processed; partial NAT hours round up. Enable egress before running Linux guests and remove after deallocation. PLS and DNS remain bounded and should be removed after takes. The September 26 Cost Management query returned no rows yet; this is billing latency, not evidence of zero cost."
   }
 }

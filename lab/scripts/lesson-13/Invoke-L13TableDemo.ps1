@@ -23,7 +23,7 @@
 param(
     [Parameter(Mandatory)][ValidateSet('Schema', 'Send', 'Trace', 'Retention', 'SetTotal')][string]$Mode,
     [int]$TotalDays = 730,
-    # Retention's verdict compares total retention with this; the runbook passes 730 after the portal change.
+    # Retention's verdict compares total retention with this; the demo passes 730 after the portal change.
     [int]$ExpectTotalDays = 0
 )
 . (Join-Path $PSScriptRoot 'L13.Common.ps1')

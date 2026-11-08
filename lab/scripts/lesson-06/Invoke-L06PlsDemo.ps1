@@ -4,7 +4,7 @@
     service, Contoso approves it, and the partner connects.
 
 .DESCRIPTION
-    Needs the bounded Pls lab (Deploy-L06Bounded.ps1 -Lab Pls). Each -Mode is one on-camera step
+    Needs the bounded Pls lab (Deploy-L06Bounded.ps1 -Lab Pls). Each -Mode is one demo step
     and saves its result under lab/.azure/lesson-06/evidence.
       Settings           The Private Link service: alias, visibility, auto-approval, NAT IP, the
                          load balancer frontend it's attached to, and its connections.

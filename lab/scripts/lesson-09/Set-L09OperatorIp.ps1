@@ -19,7 +19,7 @@
                stops on a mismatch. AKS must be running for its update (a few minutes); the other
                two take seconds.
 
-    Run it after an overnight IP change (a home router or ISP lease renewal), before the take.
+    Run it after an overnight IP change (a home router or ISP lease renewal), before the demo.
 
 .PARAMETER Apply
     Update the mismatched allow lists to the current public IP.

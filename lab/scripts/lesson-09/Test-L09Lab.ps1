@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     PASS means the check matches the baseline the demos start from. WARN means something costs
-    money or needs attention before a take but doesn't break the baseline (AKS running, the edge
+    money or needs attention before the demo but doesn't break the baseline (AKS running, the edge
     part still present, an AKS-managed resource without the CAF tags). FAIL means a demo would
     start from the wrong state; run Reset-L09Lab.ps1 (or Deploy-L09Lab.ps1 -Deploy) and check
     again. Changes nothing.
@@ -17,7 +17,7 @@
     Set-L09OperatorIp.ps1 -Apply fixes a stale one.
 
 .PARAMETER TakeReady
-    Check the state a take starts from instead of the idle baseline: the cluster running, the
+    Check the state the demo starts from instead of the idle baseline: the cluster running, the
     bounded edge present, and live probes through Application Gateway (200), Front Door (200), and
     straight to the origin (403).
 
@@ -120,8 +120,8 @@ Add-Check "$($n.aks) image cleaner" 'True' ([bool](Get-L09Value $aks 'securityPr
 $operatorCidr = "$(Get-L09OperatorIp)/32"
 $ipWord = { param($list) if (@($list).Count -eq 1 -and @($list)[0] -eq $operatorCidr) { 'Your current IP' } else { "$(@($list).Count) other address(es)" } }
 Add-Check "$($n.aks) API server allow list (Set-L09OperatorIp.ps1 -Apply if stale)" 'Your current IP' (& $ipWord @(Get-L09Value $aks 'apiServerAccessProfile.authorizedIpRanges'))
-if ($TakeReady) { Add-Check "$($n.aks) power state (running for the take)" 'Running' $aks.powerState.code }
-else { Add-Check "$($n.aks) power state (stopped between takes)" 'Stopped' $aks.powerState.code -WarnOnly }
+if ($TakeReady) { Add-Check "$($n.aks) power state (running for the demo)" 'Running' $aks.powerState.code }
+else { Add-Check "$($n.aks) power state (stopped between runs)" 'Stopped' $aks.powerState.code -WarnOnly }
 $pa = Invoke-L09Az -AllowFailure @('policy', 'assignment', 'show', '--name', $n.privilegedPolicy, '--resource-group', $rg)
 Add-Check "Policy $($n.privilegedPolicy) effect" 'Deny' $(if ($pa.ExitCode -eq 0) { ($pa.Stdout | ConvertFrom-Json).parameters.effect.value } else { 'missing' })
 $ca = Invoke-L09Rest -Path "$(Get-L09ResourceId 'Microsoft.App/containerApps' $n.containerApp)?api-version=2024-03-01" -AllowNotFound
@@ -162,7 +162,7 @@ foreach ($tag in 'validate-azure-ad-token', 'rate-limit', 'authentication-manage
 $apiDef = Invoke-L09Rest -Path "$apimId/apis/servicehub-parts?api-version=2024-05-01"
 Add-Check 'API subscription required' 'True' $apiDef.properties.subscriptionRequired
 
-# The bounded edge: gone between takes, present (and answering) for one.
+# The bounded edge: gone between runs, present (and answering) for one.
 $bounded = @($all | Where-Object { Test-L09Bounded $_ })
 if (-not $TakeReady) {
     Add-Check 'Edge part (bounded, about 0.65 USD an hour)' 'absent' $(if ($bounded.Count) { "$($bounded.Count) resource(s) present: $(@($bounded | ForEach-Object name) -join ', ')" } else { 'absent' }) -WarnOnly

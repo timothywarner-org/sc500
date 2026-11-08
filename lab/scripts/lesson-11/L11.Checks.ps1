@@ -3,7 +3,7 @@
     Pure Lesson 11 contract checks, shared by live readiness and offline regression cases.
 .DESCRIPTION
     These functions inspect supplied service responses. They never authenticate or change Azure.
-    Keeping assertions separate lets a disabled log or incorrect threshold fail before recording.
+    Keeping assertions separate lets a disabled log or incorrect threshold fail before the demo.
 #>
 function ConvertTo-L11UtcTime {
     param([Parameter(Mandatory)]$Value)

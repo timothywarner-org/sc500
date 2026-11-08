@@ -32,7 +32,7 @@
     Create or update the resources after the preview passes.
 
 .PARAMETER Soak
-    Deploy the auto-shutdown schedules Disabled, so the VMs run until the take. Agentless scanning
+    Deploy the auto-shutdown schedules Disabled, so the VMs run until the demo. Agentless scanning
     runs once a day and skips a machine that's stopped during its cycle. The next deploy without
     -Soak turns the schedules back on.
 
@@ -97,5 +97,5 @@ $result = Invoke-L08Az (@('deployment', 'sub', 'create') + $base)
 if ($result.properties.provisioningState -ne 'Succeeded') { throw 'ARM did not report success.' }
 Write-Host ("Retained lab deployed in {0:N0} minutes. The VMs are running." -f ((Get-Date) - $started).TotalMinutes)
 Set-L08DiskTags -VmName $cfg.names.appVm, $cfg.names.onpremVm
-if ($Soak) { Write-Host 'Soak: the shutdown schedules are Disabled. Redeploy without -Soak after the take, then Start-L08Lab.ps1 -Stop.' }
+if ($Soak) { Write-Host 'Soak: the shutdown schedules are Disabled. Redeploy without -Soak after the demo, then Start-L08Lab.ps1 -Stop.' }
 Write-Host "Bastion's private key file for contosoadmin: $(Get-L08AdminKeyPath)"

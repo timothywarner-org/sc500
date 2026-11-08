@@ -18,9 +18,9 @@
          secret, no certificate, no API permissions. An Entra object, so it keeps its name.
       3. Deploys rg-appplatform-prod-eastus2 and budget-rg-appplatform-prod-eastus2 (see
          infra/lesson-09/README.md). First pass, before the images exist: the workspace, the three
-         identities, the VNet, registry crservicehubprod001, the Container Apps environment, the
-         Flex Consumption function func-partsapi-prod-001 with Easy Auth, the Consumption logic app,
-         Consumption API Management apim-servicehub-prod-001, and the privileged-container Deny
+         identities, the VNet, registry crservicehubprod<your-name-suffix>, the Container Apps environment, the
+         Flex Consumption function func-partsapi-prod-<your-name-suffix> with Easy Auth, the Consumption logic app,
+         Consumption API Management apim-servicehub-prod-<your-name-suffix>, and the privileged-container Deny
          policy.
       4. Imports the two lab images from mcr.microsoft.com into the registry (no credentials),
          then a second pass adds aks-servicehub-prod-eastus2-001 (one D4s_v3 node, node resource

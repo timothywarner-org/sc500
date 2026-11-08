@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Decommissions the whole Lesson 5 lab after the take: records what exists, then deletes the VPN lab, the network
+    Decommissions the whole Lesson 5 lab after the demo: records what exists, then deletes the VPN lab, the network
     lab and the Lesson 5 flow logs, and proves they're gone.
 
 .DESCRIPTION

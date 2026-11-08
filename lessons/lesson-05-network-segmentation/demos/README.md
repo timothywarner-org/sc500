@@ -20,9 +20,9 @@ Build first, check, run the demos, then reset or clean up. Within a stage, follo
 | Demo | [`Invoke-L05SegmentDemo.ps1`](../../../lab/scripts/lesson-05/Invoke-L05SegmentDemo.ps1) | Demo 5.1: segment the ServiceHub tiers with an NSG that names application security groups, then prove and audit the result. Modes: `Settings`, `Probe`, `ApplyLeastPrivilege`, `FlowVerify`, `EffectiveRules`, `FlowLogs`, `TrafficAnalytics`. |
 | Demo | [`Invoke-L05VpnDemo.ps1`](../../../lab/scripts/lesson-05/Invoke-L05VpnDemo.ps1) | Demo 5.4: secure site-to-site and point-to-site VPN connections. Modes: `Settings`, `Status`, `IkeLogs`, `FixBranch`, `Probe`, `Break`. |
 | Demo | [`Invoke-L05WanDemo.ps1`](../../../lab/scripts/lesson-05/Invoke-L05WanDemo.ps1) | Demo 5.3: show that the secured Virtual WAN hub inspects spoke-to-spoke traffic. Modes: `Settings`, `Routes`, `Probe`, `FirewallLogs`. |
-| Reset | [`Reset-L05Lab.ps1`](../../../lab/scripts/lesson-05/Reset-L05Lab.ps1) | Returns the retained Lesson 5 lab to CTSO-L05-BASELINE after a take. |
+| Reset | [`Reset-L05Lab.ps1`](../../../lab/scripts/lesson-05/Reset-L05Lab.ps1) | Returns the retained Lesson 5 lab to CTSO-L05-BASELINE after the demo. |
 | Clean up | [`Remove-L05Bounded.ps1`](../../../lab/scripts/lesson-05/Remove-L05Bounded.ps1) | Removes one bounded Lesson 5 lab after you finish, and proves it's gone. |
-| Clean up | [`Remove-L05Lab.ps1`](../../../lab/scripts/lesson-05/Remove-L05Lab.ps1) | Decommissions the whole Lesson 5 lab after the take: records what exists, then deletes the VPN lab, the network lab and the Lesson 5 flow logs, and proves they're gone. |
+| Clean up | [`Remove-L05Lab.ps1`](../../../lab/scripts/lesson-05/Remove-L05Lab.ps1) | Decommissions the whole Lesson 5 lab after the demo: records what exists, then deletes the VPN lab, the network lab and the Lesson 5 flow logs, and proves they're gone. |
 | Helper | [`L05.Common.ps1`](../../../lab/scripts/lesson-05/L05.Common.ps1) | Shared helpers for the SC-500 Lesson 5 lab: pin the subscription, call Azure CLI safely, save private evidence, read deployment outputs, and run connection probes inside VMs. |
 
 ## Commands

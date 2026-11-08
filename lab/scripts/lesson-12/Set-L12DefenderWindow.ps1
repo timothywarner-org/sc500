@@ -6,7 +6,7 @@
     on one account. Risk levels and governance need the Defender CSPM plan, and the override needs the
     subscription's Defender for Storage plan to override. Defender needs time after a plan turns on (up to
     24 hours for Defender for Storage at subscription scope, and assessment cycles for new resources), so the
-    project rule is to open the window at least 24 hours before a take.
+    project rule is to open the window at least 24 hours before the demo.
 
       Status  Reads both plans: tier, subplan, components, and free-trial time left. Changes nothing. (Default.)
       Open    Saves the current plan payloads as private evidence, then sets CloudPosture to Standard and
@@ -19,8 +19,8 @@
 
     Cost (checked 2026-11-05 on Microsoft Learn, Check the status of your free trial and the Defender for
     Storage FAQ): Azure gives a 30-day trial the first time each plan is activated on a subscription. On
-    sub-ttt-labs-primary both plans read Free with 30 days of trial unused, so the first Open starts both
-    trials. Malware scanning isn't in the trial and bills per GB scanned from day one; a take scans a few KB.
+    the lab subscription both plans read Free with 30 days of trial unused, so the first Open starts both
+    trials. Malware scanning isn't in the trial and bills per GB scanned from day one; a demo run scans a few KB.
     After the trial, Defender CSPM bills per billable resource and Defender for Storage per storage account.
 
     Grounding:

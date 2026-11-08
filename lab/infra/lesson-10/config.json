@@ -22,7 +22,7 @@
   },
   "names": {
     "storagePrefix": "stsc500l10",
-    "storageAccount": "stservicehubkbprod001",
+    "storageAccount": "stservicehubkbprod<your-name-suffix>",
     "containers": [
       "knowledge",
       "finance",

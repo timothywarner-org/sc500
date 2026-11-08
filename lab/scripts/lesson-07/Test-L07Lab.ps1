@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     PASS means the check matches the baseline the demos start from. WARN means something costs
-    money or needs attention before a take but doesn't break the baseline (a running VM, a
+    money or needs attention before the demo but doesn't break the baseline (a running VM, a
     firewall that still exists, a DNAT source that's no longer your IP). FAIL means a demo
     would start from the wrong state. Reset repairs policy drift; failed extensions require
     working egress and agent diagnosis. Changes nothing.

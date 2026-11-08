@@ -113,7 +113,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2024-07-01' = {
   }
 }
 
-// Cost guardrail: a VM left running after a take stops Central. Notifications are off,
+// Cost guardrail: a VM left running after the demo stops at 23:00 Central. Notifications are off,
 // because a shutdown of a lab fixture needs no warning.
 resource shutdown 'Microsoft.DevTestLab/schedules@2018-09-15' = if (autoShutdown.enabled) {
   name: 'shutdown-computevm-${name}'

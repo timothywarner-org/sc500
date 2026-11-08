@@ -22,7 +22,7 @@
                   level. It never reads or prints the secret itself.
       All         Score, Findings, Compliance, Governance, and Secrets (read-only).
     Only ServiceHub's own resource groups (config.json, servicehubResourceGroups) are printed, so
-    labs from other courses in the same subscription stay off camera.
+    labs from other courses in the same subscription stay out of the demo output.
 .PARAMETER Mode One of the modes above.
 .EXAMPLE
     pwsh -NoProfile -ExecutionPolicy Bypass -File C:\github\sc500\lab\scripts\lesson-12\Invoke-L12PostureDemo.ps1 -Mode Findings
@@ -257,7 +257,7 @@ if ($Mode -eq 'Assign') {
 }
 
 if (($Mode -in 'Secrets', 'All') -and -not $pc.secretFindingVm) {
-    # The November 5 lab on sub-ttt-labs-primary deploys no VM, so there's nothing for secret scanning to read.
+    # This lab deploys no VM, so there's nothing for secret scanning to read.
     Write-Host '== Secret scanning: no virtual machine in this lab, so there is no machine finding to read.'
 }
 if (($Mode -in 'Secrets', 'All') -and $pc.secretFindingVm) {

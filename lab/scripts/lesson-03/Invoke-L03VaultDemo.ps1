@@ -20,7 +20,7 @@ try {
         $role=@(Invoke-L03Az @('role','definition','list','--name','Key Vault Administrator','--subscription',$script:L03Config.subscriptionId))
         if($role.Count -ne 1){throw 'The bootstrap role did not resolve.'}
         $existing=@(Invoke-L03Az @('role','assignment','list','--assignee',$lab.bootstrapPrincipalId,'--scope',$lab.vaultId,'--role',$role[0].name,'--subscription',$script:L03Config.subscriptionId))
-        if($existing.Count){throw 'A bootstrap admin grant already exists. Inspect and remove it before a new take.'}
+        if($existing.Count){throw 'A bootstrap admin grant already exists. Inspect and remove it before a new run.'}
         $grant=Invoke-L03Az @('role','assignment','create','--assignee-object-id',$lab.bootstrapPrincipalId,'--assignee-principal-type','ServicePrincipal','--role',$role[0].name,'--scope',$lab.vaultId,'--subscription',$script:L03Config.subscriptionId)
         $grantId=$grant.id
     }

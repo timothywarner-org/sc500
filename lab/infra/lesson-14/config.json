@@ -1,0 +1,107 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "operatorUpn": "<your-admin-upn>",
+  "location": "eastus2",
+  "resourceGroup": "rg-secopsresponse-shared-eastus2",
+  "deploymentName": "sc500-lesson14",
+  "managedBy": "sc500-l14-iac",
+  "tags": {
+    "workload": "secops",
+    "env": "shared",
+    "region": "eastus2",
+    "criticality": "low",
+    "dataclass": "synthetic",
+    "costcenter": "sc500-video-course",
+    "managedby": "sc500-l14-iac",
+    "lesson": "14",
+    "scenario": "Contoso ServiceHub",
+    "lifecycle": "retain until the course ships; no standing compute"
+  },
+  "budget": {
+    "enabled": false
+  },
+  "baseline": "CTSO-L14-BASELINE",
+  "l13": {
+    "note": "Lesson 14 builds on Lesson 13's workspace and custom table; it never redeploys them. Its detection resources are extension resources on that workspace, so they deploy into the Lesson 13 resource group and are removed by Remove-L14Lab.ps1, not by Lesson 13's scripts.",
+    "resourceGroup": "rg-secops-shared-eastus2",
+    "deploymentName": "sc500-lesson13",
+    "workspace": "log-secops-shared-eastus2-001",
+    "customTable": "ServiceHubAudit_CL"
+  },
+  "l12Handoff": {
+    "note": "Lesson 12's export store, which the fixture's TargetResource names and the store-keys hunting query watches",
+    "resourceGroup": "rg-servicehub-prod-eastus2",
+    "storagePrefix": "stservicehubexports"
+  },
+  "names": {
+    "analyticsRuleId": "6c26b84a-9d23-5acd-8c20-dd6d5cf86a1a",
+    "analyticsRule": "ServiceHub parts export with no service case",
+    "automationRuleId": "fb494c68-4ab4-5cc5-a2e1-c4bd28a299c9",
+    "automationRule": "ServiceHub export incidents: tag and run the response playbook",
+    "playbook": "logic-exportresponse-shared-eastus2-001",
+    "sentinelConnection": "azuresentinel-exportresponse",
+    "workbookId": "573be9ce-f747-5a9a-ad83-89c04523cdbe",
+    "workbook": "ServiceHub export investigation",
+    "huntExportActor": "servicehub-hunt-export-actor",
+    "huntStoreKeys": "servicehub-hunt-store-keys",
+    "incidentTags": [
+      "ServiceHub",
+      "parts-export"
+    ]
+  },
+  "naming": {
+    "region": "eastus2",
+    "note": "Lesson 14's response pieces serve the same shared SOC as Lesson 13, so they take workload secops in a group of their own, rg-secopsresponse-shared-eastus2, which Remove-L14Lab.ps1 deletes whole. The playbook is a logic app (logic-, as Lesson 9's intake app). Standard: Cloud Adoption Framework naming guidance, https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming.",
+    "exempt": {
+      "sentinelConnection": "A Logic Apps API connection, named for the connector it uses; CAF lists no abbreviation for it",
+      "huntExportActor": "A saved search ID inside the workspace, not a top-level Azure resource",
+      "huntStoreKeys": "A saved search ID inside the workspace, not a top-level Azure resource",
+      "analyticsRule": "A Sentinel analytics rule display name; its resource name is analyticsRuleId, a GUID",
+      "automationRule": "A Sentinel automation rule display name; its resource name is automationRuleId, a GUID",
+      "workbook": "A workbook display name; its resource name is workbookId, a GUID",
+      "analyticsRuleId": "A GUID: Sentinel analytics rules are named by ID, and Lesson 14's scripts find the rule by it",
+      "automationRuleId": "A GUID: Sentinel automation rules are named by ID",
+      "workbookId": "A GUID: Azure Monitor workbooks are named by ID; the display name is workbook",
+      "incidentTags": "Incident tag values the automation rule writes, not resource names"
+    }
+  },
+  "detection": {
+    "note": "Five-minute schedule, 20-minute event lookback and five-minute ingestion filter. Normal runs reduce duplicate matching; schedule restarts can overlap and duplicate alerts. A different file name does not guarantee a distinct correlated incident.",
+    "queryFrequency": "PT5M",
+    "queryPeriod": "PT20M",
+    "severity": "Medium",
+    "tactics": [
+      "Collection",
+      "Exfiltration"
+    ],
+    "techniques": [
+      "T1530"
+    ],
+    "groupingLookback": "PT5H",
+    "approvedExportJobs": [
+      "svc-parts-replication"
+    ]
+  },
+  "fixture": {
+    "note": "Synthetic ServiceHub application audit events, labeled in EvidenceClass. Documentation IP ranges only (RFC 5737). The file name is chosen by the lab, and Lesson 14 says so: a matching name in Microsoft Purview Audit is a lead, not proof that the bytes match.",
+    "caseId": "SR-1043",
+    "fileNamePrefix": "parts-export",
+    "intendedActor": "svc-servicehub-parts",
+    "intendedIp": "198.51.100.77",
+    "benignActor": "svc-parts-replication",
+    "benignIp": "192.0.2.20",
+    "caseIp": "192.0.2.10"
+  },
+  "roles": {
+    "note": "Built-in role IDs. The Azure Security Insights service principal (app ID 98785600-1bb7-4fb9-b9fa-19afe2c8a360, Microsoft's documented first-party app for Microsoft Sentinel) needs Automation Contributor on the playbook's resource group so automation rules can run the playbook. The playbook's own managed identity needs Responder on the workspace so it can comment on incidents. Neither is a tenant setting or a Microsoft Graph consent.",
+    "azureSecurityInsightsAppId": "98785600-1bb7-4fb9-b9fa-19afe2c8a360",
+    "sentinelAutomationContributor": "f4c81013-99ee-4d62-a7ee-b3f1f648599a",
+    "sentinelResponder": "3e150937-b8fe-4cfb-8069-0eaf05ecd056"
+  },
+  "audit": {
+    "note": "Purview UI or Exchange Online delegated search can retrieve Audit records using existing permissions. New Graph or Management Activity API consent is not granted by this lab. Auditing must be enabled first; core-service delivery is typically 60 to 90 minutes, not guaranteed. Recording requires a captured export and matching incident comment.",
+    "operation": "FileUploaded",
+    "defenderAuditUrl": "https://security.microsoft.com/auditlogsearch"
+  }
+}

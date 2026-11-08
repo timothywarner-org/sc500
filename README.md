@@ -15,7 +15,7 @@ How do you prove that a managed identity can read a resource group but not chang
 
 **Studying without the videos?** Start with the [exam objective map](docs/exam-objectives.md). Rate yourself on every skill, then spend your time on anything below a 4.
 
-**Want the code?** Every script and Bicep template from the demos in Lessons 1 through 13 is in [`lab/`](lab/). Do the [one-time setup](lab/README.md), then open a lesson's `demos/` page for its scripts. Lessons 14 and 15 land after they publish; the [changelog](CHANGELOG.md) tracks it.
+**Want the code?** Every script and Bicep template from the demos in all 15 lessons is in [`lab/`](lab/). Do the [one-time setup](lab/README.md), then open a lesson's `demos/` page for its scripts. The [changelog](CHANGELOG.md) tracks every change.
 
 ## Course outline
 
@@ -63,7 +63,7 @@ Lesson 8 shows up twice because Defender Vulnerability Management for Azure VMs 
 
 ## How the hands-on work runs
 
-Most demos happen in the Azure portal and the Microsoft admin centers, because that is where you build the muscle memory the exam rewards. When a demo uses a Bicep template or a script, you get the same file the lesson runs on screen, and its help says what it reads and what it changes. Your tenant, subscription, and domain go in once with [`lab/Set-LabConfig.ps1`](lab/Set-LabConfig.ps1), and every resource name comes from the lesson's `config.json`.
+Most demos happen in the Azure portal and the Microsoft admin centers, because that is where you build the muscle memory the exam rewards. When a demo uses a Bicep template or a script, you get the same file the lesson runs on screen, and its help says what it reads and what it changes. Your tenant, subscription, domain, and a short name suffix go in once with [`lab/Set-LabConfig.ps1`](lab/Set-LabConfig.ps1), and every resource name comes from the lesson's `config.json`.
 
 Every lesson has a `Remove-` script that deletes what its lab created. Several lessons use paid Defender plans and hourly resources, so each lesson README lists what to watch before you start.
 
@@ -89,7 +89,7 @@ The [study plan template](docs/study-plan-template.md) lays out 30-, 60-, and 90
 ## What is in this repository
 
 - [`lessons/`](lessons/): one folder per lesson, each with a README and a `demos/` page that lists its lab files
-- [`lab/`](lab/): every script and Bicep template from the demos in Lessons 1 through 13, plus the one-time setup
+- [`lab/`](lab/): every script and Bicep template from the demos in all 15 lessons, plus the one-time setup
 - [`docs/exam-objectives.md`](docs/exam-objectives.md): every study guide skill mapped to a lesson, with a self-rating column
 - [`docs/study-plan-template.md`](docs/study-plan-template.md): 30-, 60-, and 90-day schedules
 - [`docs/resources.md`](docs/resources.md): curated Microsoft Learn links by exam domain

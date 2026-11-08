@@ -8,7 +8,7 @@
     about 0.02 USD an hour for the ServiceHub app server (vm-servicehub-prod-001) and for the connected Arc machine. Deallocated, only the
     disks bill, and the Arc machine shows Disconnected, which Defender doesn't bill.
 
-    Start the VMs about 20 minutes before a take: the Arc agent reconnects in a few minutes, but
+    Start the VMs about 20 minutes before the demo: the Arc agent reconnects in a few minutes, but
     Defender and machine configuration report on their own schedules. Nothing is deleted here.
 
 .PARAMETER Stop

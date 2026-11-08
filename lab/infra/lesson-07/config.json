@@ -54,7 +54,7 @@
     "firewallIdentity": "id-afw-hub-shared-eastus2-001",
     "firewallDiagnostics": "diag-afw-hub-shared-eastus2-001",
     "workspace": "log-hub-shared-eastus2-001",
-    "keyVault": "kv-hubtlsca-shared-001",
+    "keyVault": "kv-hubtlsca-shared-<your-name-suffix>",
     "keyVaultDiagnostics": "diag-kv-hubtlsca-shared-001",
     "budget": "budget-rg-perimeter-shared-eastus2",
     "inspectionCaCertificate": "contoso-perimeter-inspection-ca"

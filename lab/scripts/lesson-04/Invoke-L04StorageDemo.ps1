@@ -29,7 +29,7 @@
 
 .NOTES
     Keys and SAS tokens stay in memory for one call and are never printed or saved.
-    Reset-L04Lab.ps1 restores the starting state for another take.
+    Reset-L04Lab.ps1 restores the starting state for another run.
 #>
 [CmdletBinding()]
 param(

@@ -8,7 +8,7 @@
 
     With -Deploy, adds to rg-appplatform-prod-eastus2 (every resource tagged with this lesson's
     managedby and lifecycle "bounded: remove after the rehearsal or take"):
-      - app-servicehub-prod-001 on asp-servicehub-prod-southcentralus-001 (B1 Linux, southcentralus,
+      - app-servicehub-prod-<your-name-suffix> on asp-servicehub-prod-southcentralus-001 (B1 Linux, southcentralus,
         because the lab subscription has no App Service plan quota in eastus2): HTTPS only,
         TLS 1.3 minimum, no FTP or basic-auth publishing, default-deny inbound with allow rules for
         this gateway's address and for this Front Door profile (service tag plus X-Azure-FDID header).

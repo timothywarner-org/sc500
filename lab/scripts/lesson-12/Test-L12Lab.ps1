@@ -5,7 +5,7 @@
     Prints PASS, WARN, or FAIL for what the demos depend on:
       - the deployment record, the export store, and its deliberate Shared Key fault
       - the store's Defender for Storage exclusion (idle) and your data role on it
-      - whether the store is staged for a take (container present) and anything left from a take
+      - whether the store is staged for the demo (container present) and anything left from an earlier run
         (governance assignment, override on)
       - Defender CSPM and Defender for Storage on for the subscription, and whether Defender has
         assessed the store yet
@@ -13,7 +13,7 @@
     Without -Recording, the idle baseline is expected and staged items are WARNs (they bill).
     With -Recording, the store must be staged, so a missing container is a FAIL.
     Exits 1 if any check fails.
-.PARAMETER Recording Check readiness for a take instead of the idle baseline.
+.PARAMETER Recording Check readiness for the demo instead of the idle baseline.
 .EXAMPLE
     pwsh -NoProfile -ExecutionPolicy Bypass -File C:\github\sc500\lab\scripts\lesson-12\Test-L12Lab.ps1
 .EXAMPLE
@@ -53,7 +53,7 @@ $retired = @(Invoke-L12Az @('role', 'assignment', 'list', '--assignee', $me, '--
 Check 'No leftover Contributor assignment' ($retired.Count -eq 0) "$($retired.Count) found; Deploy-L12Lab.ps1 -Deploy removes it" -WarnOnly
 
 $containers = @(Invoke-L12Az @('storage', 'container-rm', 'list', '--resource-group', $lab.resourceGroup, '--storage-account', $lab.storage, '--query', '[].name'))
-if ($Recording) { Check 'Store staged for a take' ($containers -contains $lab.container) "containers: $(if ($containers) { $containers -join ', ' } else { 'none; run Deploy-L12Lab.ps1 -Stage' })" }
+if ($Recording) { Check 'Store staged for the demo' ($containers -contains $lab.container) "containers: $(if ($containers) { $containers -join ', ' } else { 'none; run Deploy-L12Lab.ps1 -Stage' })" }
 else { Check 'Store idle (no containers)' ($containers.Count -eq 0) "containers: $(if ($containers) { ($containers -join ', ') + ' (Defender CSPM bills the store while one exists; Reset removes it)' } else { 'none' })" -WarnOnly }
 
 $ga = @(@(Get-L12Value (Invoke-L12Rest -AllowNotFound -Path "$($lab.storageId)/providers/Microsoft.Security/assessments/$($cfg.posture.sharedKeyAssessment)/governanceAssignments?api-version=2025-05-04") 'value') | Where-Object { $_ })

@@ -26,7 +26,7 @@
     "name": "SC500 L01 Reader review",
     "note": "Built 2026-10-17 by walkthrough I1 on this subscription. The readiness gate reads this ID and its portal receipt in .azure/evidence."
   },
-  "retention": "Retain baseline through recording. Deallocate VMs between sessions. No automatic deletion.",
+  "retention": "Retain baseline until you finish the course. Deallocate VMs between sessions. No automatic deletion.",
   "costEstimateUsd": {
     "checked": "2026-09-25",
     "computePerVmHour": 0.0416,

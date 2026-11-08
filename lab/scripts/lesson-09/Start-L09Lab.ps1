@@ -8,11 +8,11 @@
     cluster keeps its configuration (Entra and Azure RBAC, the Defender sensor profile, the Azure
     Policy add-on, workloads) and accrues no node or Defender for Containers charges; the node
     resource group's load balancer and public IP still bill. Starting it takes about five minutes.
-    Start it about 20 minutes before a take so the Defender sensor and Gatekeeper are running.
+    Start it about 20 minutes before the demo so the Defender sensor and Gatekeeper are running.
 
     This is the lab's idle-compute guardrail. CAF's auto-shutdown schedules (DevTest Labs
     shutdown-computevm-*) target virtual machines, and AKS nodes are a scale set AKS manages, so
-    the cluster is stopped between takes with -Stop instead.
+    the cluster is stopped between runs with -Stop instead.
 
 .PARAMETER Stop
     Stop the cluster instead of starting it.

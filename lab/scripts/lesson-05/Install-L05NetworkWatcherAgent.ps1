@@ -3,7 +3,7 @@
     Starts the retained Lesson 5 VMs and installs the Network Watcher agent on the four Connection troubleshoot sources.
 
 .DESCRIPTION
-    WHY: the Lesson 5 runbook tests paths with Network Watcher Connection troubleshoot from vm-servicehub-web,
+    WHY: the Lesson 5 demo tests paths with Network Watcher Connection troubleshoot from vm-servicehub-web,
     vm-servicehub-app, vm-platform-scan and vm-branch-client. The GA path for that test needs the
     NetworkWatcherAgentLinux VM extension on the SOURCE VM. Learn also lists an agentless experience, but it's in
     preview, so the course doesn't depend on it. Installing the agent doesn't reboot the VM.
@@ -37,7 +37,7 @@ try {
     pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'Start-L05Lab.ps1')
     if ($LASTEXITCODE -ne 0) { throw 'Start-L05Lab.ps1 failed.' }
 
-    # Only the SOURCE side of each runbook probe needs the agent. The data VM is a destination only.
+    # Only the SOURCE side of each demo probe needs the agent. The data VM is a destination only.
     $targets = @(
         @{ rg = $cfg.resourceGroup;    vm = 'vm-servicehub-web' },
         @{ rg = $cfg.resourceGroup;    vm = 'vm-servicehub-app' },

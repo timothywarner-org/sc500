@@ -28,7 +28,7 @@ param vmSizes object
 @description('Lab admin user name on the Linux servers, from config.json.')
 param adminUsername string
 
-@description('Public half of the lab admin key.')
+@description('Public half of the lab admin key. The private half stays on your workstation, outside the repo and OneDrive.')
 param sshPublicKey string
 
 @description('Pinned Ubuntu image version, so a redeploy never changes the OS disk image.')
@@ -49,7 +49,7 @@ param tags object
 @description('Budget settings from config.json.')
 param budget object
 
-@description('Auto-shutdown settings from config.json (enabled is false during a pre-take soak).')
+@description('Auto-shutdown settings from config.json (enabled is false during a pre-demo soak).')
 param autoShutdown object
 
 @description('First day of the current month. A budget must start on the first of a month.')

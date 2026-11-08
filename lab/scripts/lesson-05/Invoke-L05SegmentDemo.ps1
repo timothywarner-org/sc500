@@ -8,7 +8,7 @@
     default AllowVnetInBound rule (priority 65000) lets every tier reach every other tier, so
     the web tier can open the data tier's database port. That's the introduced fault.
 
-    Modes, in on-camera order:
+    Modes, in demo order:
       Settings            NSG association, custom rules, and each NIC's ASG membership.
       Probe               Connection tests from the web and app tiers (Run Command).
       ApplyLeastPrivilege Adds the ASG-based allow rules and a deny for other VNet traffic.

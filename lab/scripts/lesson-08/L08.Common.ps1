@@ -268,7 +268,7 @@ function Test-L08Preflight {
     }
 
     # 7. Another lesson's lab may hold same-named resources in its own group. Azure allows that, but
-    #    a portal picker would show both, so the runbook opens resources by full resource ID.
+    #    a portal picker would show both, so the demo opens resources by full resource ID.
     $wanted = @($cfg.names.PSObject.Properties | ForEach-Object { "$($_.Value)" })
     #    Resource Graph, not az resource list: CLI 2.85.0's list returned [] on November 1, 2026 while ARM listed 21.
     $clash = @(Invoke-L08Graph -Query 'resources | project name, group = resourceGroup' | Where-Object { $wanted -contains $_.name -and $_.group -ne $cfg.resourceGroup })

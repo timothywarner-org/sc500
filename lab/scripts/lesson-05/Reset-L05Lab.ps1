@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Returns the retained Lesson 5 lab to CTSO-L05-BASELINE after a take.
+    Returns the retained Lesson 5 lab to CTSO-L05-BASELINE after the demo.
 
 .DESCRIPTION
     Undoes what demos 5.1 and 5.2 change, in the order that avoids a window with less
     protection than the baseline intends:
       1. Removes the AVNM security admin deployment from eastus2 (the configuration itself
-         stays defined, ready for the next take).
+         stays defined, ready for the next run).
       2. Removes every custom rule from nsg-servicehub, leaving only the default rules. That's
          the demo 5.1 starting fault, by design.
     If the bounded VPN lab exists, it also puts the legacy policy back on the branch

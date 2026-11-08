@@ -3,7 +3,7 @@
     Read Defender health and service connectivity on both running Lesson 7 guests.
 .DESCRIPTION
     Preparation only. Requires the bounded firewall and settled extensions before Run Command,
-    so a configuration retry cannot silently become an on-camera stall. Changes no protection
+    so a configuration retry cannot silently become an demo stall. Changes no protection
     settings. Saves dated private evidence, including elapsed seconds and the guest result.
 .EXAMPLE
     ./scripts/lesson-07/Test-L07GuestHealth.ps1

@@ -6,7 +6,7 @@
     Deletes, in dependency order: ci-partsworker-prod-eastus2-001, the Front Door profile
     afd-servicehub-prod-001 (with its endpoint, route, origin, and security policy) and its WAF
     policy wafafdservicehubprod001, agw-servicehub-prod-eastus2-001, its WAF policy and public IP,
-    then app-servicehub-prod-001 and its B1 plan asp-servicehub-prod-southcentralus-001. Each deletion
+    then app-servicehub-prod-<your-name-suffix> and its B1 plan asp-servicehub-prod-southcentralus-001. Each deletion
     checks the resource's tags first (managedby sc500-l09-iac and a lifecycle that starts
     "bounded"), so a same-named resource from anywhere else is never touched. Safe to run when the
     edge is already gone.

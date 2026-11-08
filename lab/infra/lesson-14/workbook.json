@@ -1,0 +1,97 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": "## ServiceHub export investigation\nServiceHub rows are a **synthetic fixture** (see EvidenceClass). Incidents and alerts are what Microsoft Sentinel actually created from them."
+      },
+      "name": "intro"
+    },
+    {
+      "type": 9,
+      "name": "parameters",
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "b1f0c2de-14a0-4f5e-9a51-0c5e5c500014",
+            "version": "KqlParameterItem/1.0",
+            "name": "TimeRange",
+            "label": "Time range",
+            "type": 4,
+            "isRequired": true,
+            "value": {
+              "durationMs": 604800000
+            },
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                }
+              ],
+              "allowCustom": true
+            }
+          }
+        ],
+        "style": "pills",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      }
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "ServiceHubAudit_CL\n| where Operation == \"PartsExportRead\"\n| extend CaseStatus = iff(isempty(CaseId), \"No service case\", \"Service case\")\n| summarize Exports = count() by bin(TimeGenerated, 1h), CaseStatus",
+        "size": 0,
+        "title": "Parts exports by case status",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "barchart"
+      },
+      "name": "exports-by-case"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "ServiceHubAudit_CL\n| where Operation == \"PartsExportRead\" and isempty(CaseId)\n| project TimeGenerated, Actor, ClientIp, FileName = extract(@\"([^/]+)$\", 1, TargetResource), EvidenceClass, FixtureId\n| order by TimeGenerated desc",
+        "size": 0,
+        "title": "Exports with no service case",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "table"
+      },
+      "name": "no-case-exports"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "SecurityIncident\n| where RelatedAnalyticRuleIds has \"__RULEID__\"\n| summarize arg_max(TimeGenerated, *) by IncidentNumber\n| project IncidentNumber, Title, Severity, Status, Owner = tostring(Owner.assignedTo), Tags = tostring(Labels), CreatedTime, IncidentUrl\n| order by CreatedTime desc",
+        "size": 0,
+        "title": "Incidents from the export rule",
+        "timeContextFromParameter": "TimeRange",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "table"
+      },
+      "name": "rule-incidents"
+    }
+  ],
+  "isLocked": false,
+  "fallbackResourceIds": [
+    "__WORKSPACEID__"
+  ],
+  "fromTemplateId": "sentinel-UserWorkbook",
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}

@@ -10,8 +10,8 @@
   "managedBy": "sc500-l12-iac",
   "baseline": "CTSO-L12-BASELINE",
   "names": {
-    "exportStorage": "stservicehubexports001",
-    "archiveStorage": "stservicehubarchive001",
+    "exportStorage": "stservicehubexports<your-name-suffix>",
+    "archiveStorage": "stservicehubarchive<your-name-suffix>",
     "container": "parts-exports",
     "exportBlob": "parts-export-2026-11-05.csv",
     "easmWorkspace": "easmattacksurface001",
@@ -20,10 +20,10 @@
   "naming": {
     "region": "eastus2",
     "exempt": {
-      "container": "Blob container, a child object of the export store; the slides and runbook show it",
+      "container": "Blob container, a child object of the export store; the demo show it",
       "exportBlob": "Blob name of the fictional nightly export, not an Azure resource",
       "easmWorkspace": "CAF lists no abbreviation for a Defender EASM workspace, and the name takes letters and digits only, so it reads easm + workload + ###",
-      "discoveryGroup": "EASM data-plane object (discovery group), not an Azure resource; the runbook shows it"
+      "discoveryGroup": "EASM data-plane object (discovery group), not an Azure resource; the demo shows it"
     }
   },
   "tags": {
@@ -36,7 +36,7 @@
     "managedby": "sc500-l12-iac",
     "lesson": "12",
     "scenario": "Contoso ServiceHub",
-    "lifecycle": "retain through Lesson 14; idle between takes (Reset-L12Lab.ps1)"
+    "lifecycle": "retain through Lesson 14; idle between runs (Reset-L12Lab.ps1)"
   },
   "easm": {
     "seeds": [
@@ -54,7 +54,7 @@
     "malwareScanningCapGBPerMonth": 5
   },
   "defenderWindow": {
-    "note": "Set-L12DefenderWindow.ps1 opens these subscription plans at least 24 hours before a take and closes them after the last lesson that needs them. On sub-ttt-labs-primary both read Free with a 30-day trial unused on 2026-11-05, so the first Open starts each trial (Learn: Azure gives a 30-day trial each time a plan is first activated on a subscription). Malware scanning isn't covered by the trial and bills per GB scanned from day one.",
+    "note": "Set-L12DefenderWindow.ps1 opens these subscription plans at least 24 hours before the demo and closes them after the last lesson that needs them. On a new subscription both read Free with a 30-day trial unused on 2026-11-05, so the first Open starts each trial (Learn: Azure gives a 30-day trial each time a plan is first activated on a subscription). Malware scanning isn't covered by the trial and bills per GB scanned from day one.",
     "plans": {
       "CloudPosture": {
         "pricingTier": "Standard"
@@ -76,12 +76,12 @@
     "retiredStorageBlobDataContributor": "ba92f5b4-2d11-453d-a403-e96b0029c9fe"
   },
   "costPosture": {
-    "note": "you, 2026-09-28: keep idle cost at or near zero until you need it. Idle baseline: both stores exist, the export store has Defender for Storage excluded at the resource level, and the EASM workspace holds a small discovery (your one domain). Deploy-L12Lab.ps1 -Stage creates the container and export before a take; Reset-L12Lab.ps1 returns to the idle baseline."
+    "note": "you, 2026-09-28: keep idle cost at or near zero until you need it. Idle baseline: both stores exist, the export store has Defender for Storage excluded at the resource level, and the EASM workspace holds a small discovery (your one domain). Deploy-L12Lab.ps1 -Stage creates the container and export before the demo; Reset-L12Lab.ps1 returns to the idle baseline."
   },
   "costEstimateUsd": {
     "checked": "2026-11-05",
     "retained": "Two Standard_LRS storage accounts holding a few KB bill fractions of a cent a month. Defender CSPM and Defender for Storage are inside their 30-day trials on this subscription.",
-    "perRun": "Malware scanning bills per GB scanned (a few KB per take). EASM bills per Approved asset per day if no trial applies; four or five assets cost cents a day.",
+    "perRun": "Malware scanning bills per GB scanned (a few KB per run). EASM bills per Approved asset per day if no trial applies; four or five assets cost cents a day.",
     "notes": "Retail estimate before credits and tax. Missing billing rows don't prove zero cost."
   },
   "budget": {

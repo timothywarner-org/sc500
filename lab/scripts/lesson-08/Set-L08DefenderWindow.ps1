@@ -6,7 +6,7 @@
     Lesson 8 shows just-in-time VM access, Defender for Endpoint's automatic onboarding, agentless
     scanning and the vulnerability assessment settings, and all of them need Defender for Servers
     Plan 2 on the subscription. Agentless scanning runs once every 24 hours and only scans a machine
-    that's running during its cycle, so Open goes at least 24 hours before the take, with the VMs
+    that's running during its cycle, so Open goes at least 24 hours before the demo, with the VMs
     running (Deploy-L08Lab.ps1 -Soak keeps them up overnight).
     https://learn.microsoft.com/azure/defender-for-cloud/enable-agentless-scanning-vms
 

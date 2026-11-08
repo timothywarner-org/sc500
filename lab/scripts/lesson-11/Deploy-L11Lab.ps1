@@ -14,7 +14,7 @@
       servicehub-assistant subscription, the synthetic servicehub-parts API for the agent's tool,
       and gateway and LLM logs to the workspace. Basic v2 usually provisions in 5 to 10 minutes.
     Without -Deploy or -Gateway it runs an ARM what-if for the retained half and changes nothing.
-    Reset-L11Lab.ps1 removes the gateway after a take.
+    Reset-L11Lab.ps1 removes the gateway after the demo.
 .PARAMETER Deploy Create or update the retained half.
 .PARAMETER Gateway Create or update the bounded gateway (the retained half must exist).
 .EXAMPLE

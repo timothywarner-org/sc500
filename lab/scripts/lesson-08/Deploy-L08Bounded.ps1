@@ -15,8 +15,8 @@
     Create or update the legacy VM after the preview passes.
 
 .PARAMETER Soak
-    Deploy the legacy VM's shutdown schedule Disabled, so it keeps running until the take. Without
-    it, the schedule deallocates the VM Central and card 2.2's probe would print False.
+    Deploy the legacy VM's shutdown schedule Disabled, so it keeps running until the demo. Without
+    it, the schedule deallocates the VM at 23:00 Central and demo step 2.2's probe would print False.
     The next deploy without -Soak turns the guardrail back on.
 
 .EXAMPLE
@@ -45,7 +45,7 @@ $values = [ordered]@{
     legacySubnetId   = $lab.legacySubnetId
     tags             = $cfg.tags
     # The legacy server is bounded and short-lived. Its schedule always exists; -Soak deploys it
-    # Disabled for the night before a take, the same way Deploy-L08Lab.ps1 -Soak does.
+    # Disabled for the night before the demo, the same way Deploy-L08Lab.ps1 -Soak does.
     autoShutdown     = [ordered]@{ enabled = ($cfg.autoShutdown.enabled -and -not $Soak); time = $cfg.autoShutdown.time; timeZoneId = $cfg.autoShutdown.timeZoneId }
 }
 $parameters = [ordered]@{}; foreach ($k in $values.Keys) { $parameters[$k] = @{ value = $values[$k] } }

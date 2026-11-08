@@ -4,7 +4,7 @@
     public network access.
 
 .DESCRIPTION
-    Each -Mode is one on-camera step and saves its result under lab/.azure/lesson-06/evidence.
+    Each -Mode is one demo step and saves its result under lab/.azure/lesson-06/evidence.
       Settings        The records account's network and authentication settings, its private
                       endpoint connections, and the private DNS zone's VNet links.
       Resolve         How the account name resolves from the workstation (public DNS) and from

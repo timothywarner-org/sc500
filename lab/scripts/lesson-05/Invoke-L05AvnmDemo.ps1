@@ -14,7 +14,7 @@
     an Always Allow rule for the scanner at priority 100 and a Deny for SSH and RDP from
     everywhere else at priority 200. Deploying it changes both results without touching the NSG.
 
-    Modes, in on-camera order:
+    Modes, in demo order:
       Settings        Manager scope, network group members, the admin rules, deployment state.
       AddTeamRule     Adds Garth's troubleshooting rule to nsg-servicehub (the fault).
       Probe           SSH from the web tier and from the platform scanner to the data tier.

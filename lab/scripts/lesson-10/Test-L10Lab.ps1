@@ -3,7 +3,7 @@
     Read-only readiness check for the Lesson 10 lab at CTSO-L10-BASELINE.
 .DESCRIPTION
     PASS means the check matches the baseline the demos start from. WARN means something needs a
-    look before a take but doesn't break a demo. FAIL means a demo would start from the wrong state;
+    look before the demo but doesn't break a demo. FAIL means a demo would start from the wrong state;
     run Reset-L10Lab.ps1 (or Deploy-L10Lab.ps1 -Deploy) and check again. Changes nothing, creates
     no credential, and requests no agent token; -Mode Token is the proof that the flow works.
 .EXAMPLE

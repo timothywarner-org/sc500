@@ -56,7 +56,7 @@ param publicIpId string = ''
 @description('Resource ID of an NSG for the NIC, or empty to rely on the subnet NSG.')
 param nicNsgId string = ''
 
-@description('Auto-shutdown settings from config.json. enabled false deploys the schedule Disabled (the pre-take soak).')
+@description('Auto-shutdown settings from config.json. enabled false deploys the schedule Disabled (the pre-demo soak).')
 param autoShutdown object
 
 resource nic 'Microsoft.Network/networkInterfaces@2024-05-01' = {
@@ -135,7 +135,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2024-11-01' = {
   }
 }
 
-// Cost guardrail (CAF G1): a VM left running after a take stops Central. The schedule
+// Cost guardrail (CAF G1): a VM left running after the demo stops at 23:00 Central. The schedule
 // always exists, so the guardrail can't be forgotten; a soak deploys it Disabled. Notifications are
 // off, because a lab fixture's shutdown needs no warning.
 resource shutdown 'Microsoft.DevTestLab/schedules@2018-09-15' = {

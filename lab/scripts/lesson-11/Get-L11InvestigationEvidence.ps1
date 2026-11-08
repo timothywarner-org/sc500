@@ -25,7 +25,7 @@ if ($LatestJailbreak) {
     # Resolve a saved receipt explicitly; a random recent log row is not an attack identifier.
     $latest = Get-ChildItem -LiteralPath (Join-Path $script:L11State 'evidence') -Filter '*-guardrail-jailbreak.json' |
         Sort-Object Name -Descending | Select-Object -First 1
-    if (-not $latest) { throw 'No saved jailbreak receipt. Run Mode Jailbreak off camera first.' }
+    if (-not $latest) { throw 'No saved jailbreak receipt. Run Mode Jailbreak first.' }
     $RequestEvidenceFile = $latest.FullName
 }
 $receipt = Get-Content -LiteralPath $RequestEvidenceFile -Raw | ConvertFrom-Json -Depth 100
