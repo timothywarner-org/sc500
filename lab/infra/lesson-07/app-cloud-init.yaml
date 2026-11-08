@@ -1,0 +1,202 @@
+#cloud-config
+# Synthetic Contoso ServiceHub workload for the SC-500 Lesson 7 lab.
+#
+# Every VM gets the listener: GET / answers with the role and the address the request came from
+# (behind a DNAT rule that's a firewall instance address, not the client's, because Azure
+# Firewall SNATs inbound DNAT traffic). GET /status returns the probe results as JSON.
+#
+# The production VM also gets the probe: a systemd timer that, once a minute, sends the lesson's
+# test traffic out through the hub firewall and records what came back. That lets the workstation
+# read the results through the DNAT rule instead of using Azure Run Command, which waits minutes
+# on these VMs while Defender for Servers tries to install its extension.
+#
+# Nothing is downloaded: the spoke subnets have no default outbound access, and the only path out
+# is the firewall. The templates replace these tokens:
+#   __ROLE__            "ServiceHub production" or "ServiceHub non-production"
+#   __PORT__            the listener port
+#   __PROBE__           "true" on the production VM, "false" elsewhere
+#   __ROOT_CA_B64__     base64 of the lab root CA's PUBLIC certificate (PEM)
+#   __INTER_CA_B64__    base64 of the inspection CA's PUBLIC certificate (PEM)
+#   __TI_FQDN__         Microsoft's threat intelligence test FQDN
+#   __TESTS_B64__       base64 of the probe's test list (JSON)
+# The firewall re-signs inspected HTTPS with the inspection CA, so the VM must trust it. Only
+# public certificates cross into the VM; no private key is ever in this file.
+users:
+  - default
+  - name: contoso
+    system: true
+    shell: /usr/sbin/nologin
+write_files:
+  - path: /usr/local/share/ca-certificates/contoso-perimeter-lab-root.crt
+    encoding: b64
+    permissions: '0644'
+    content: __ROOT_CA_B64__
+  - path: /usr/local/share/ca-certificates/contoso-perimeter-inspection-ca.crt
+    encoding: b64
+    permissions: '0644'
+    content: __INTER_CA_B64__
+  - path: /etc/contoso/tests.json
+    encoding: b64
+    permissions: '0644'
+    content: __TESTS_B64__
+  - path: /usr/local/lib/contoso/listen.py
+    permissions: '0755'
+    content: |
+      #!/usr/bin/python3
+      """GET / names the role and the peer address. GET /status adds the latest probe results."""
+      import http.server, json, sys
+      ROLE = "__ROLE__"
+      STATUS = "/var/lib/contoso/status.json"
+      class Handler(http.server.BaseHTTPRequestHandler):
+          def do_GET(self):
+              peer = self.client_address[0]
+              if self.path.startswith("/status"):
+                  try:
+                      with open(STATUS, encoding="utf-8") as f:
+                          status = json.load(f)
+                  except (OSError, ValueError):
+                      status = {"results": [], "note": "No probe results yet."}
+                  # servedTo is the address this request came from. Through the DNAT rule it's a
+                  # firewall instance in AzureFirewallSubnet, not the operator's own address.
+                  body = json.dumps({"role": ROLE, "servedTo": peer, **status}, indent=2).encode()
+                  ctype = "application/json"
+              else:
+                  body = f"Contoso {ROLE} (synthetic lab fixture). Request arrived from {peer}.\n".encode()
+                  ctype = "text/plain"
+              self.send_response(200)
+              self.send_header("Content-Type", ctype)
+              self.send_header("Content-Length", str(len(body)))
+              self.end_headers()
+              self.wfile.write(body)
+          def log_message(self, fmt, *args):
+              pass
+      http.server.ThreadingHTTPServer(("0.0.0.0", int(sys.argv[1])), Handler).serve_forever()
+  - path: /usr/local/lib/contoso/probe.py
+    permissions: '0755'
+    content: |
+      #!/usr/bin/python3
+      """Send the lesson's test traffic out through the hub firewall once and record the outcome.
+
+      Each result says what the client saw: an HTTP response (with the certificate issuer for
+      HTTPS, which shows whether the firewall re-signed the session), a reset, a timeout, or an
+      untrusted certificate. The firewall's own logs say why; this file says what happened.
+      """
+      import datetime, http.client, json, os, socket, ssl, time
+      TESTS = json.load(open("/etc/contoso/tests.json", encoding="utf-8"))
+      OUT = "/var/lib/contoso/status.json"
+
+      def issuer_cn(cert):
+          for rdn in (cert or {}).get("issuer", ()):
+              for key, value in rdn:
+                  if key == "commonName":
+                      return value
+          return ""
+
+      def classify(exc):
+          if isinstance(exc, ssl.SSLCertVerificationError):
+              return "tls-untrusted"
+          if isinstance(exc, (socket.timeout, TimeoutError)):
+              return "timeout"
+          if isinstance(exc, (ConnectionResetError, ssl.SSLEOFError, ssl.SSLZeroReturnError, BrokenPipeError)):
+              return "reset"
+          if isinstance(exc, ConnectionRefusedError):
+              return "refused"
+          return "error"
+
+      def http_test(t):
+          r = {"name": t["name"], "url": f"{t['scheme']}://{t['host']}{t['path']}"}
+          start = time.monotonic()
+          try:
+              if t["scheme"] == "https":
+                  conn = http.client.HTTPSConnection(t["host"], timeout=10, context=ssl.create_default_context())
+              else:
+                  conn = http.client.HTTPConnection(t["host"], timeout=10)
+              conn.connect()
+              if t["scheme"] == "https":
+                  r["certificateIssuer"] = issuer_cn(conn.sock.getpeercert())
+              conn.request("GET", t["path"], headers={"User-Agent": t.get("userAgent", "ContosoServiceHubProbe/1.0")})
+              resp = conn.getresponse()
+              body = resp.read(4096).decode("utf-8", "replace")
+              r.update(outcome="response", status=resp.status, reason=resp.reason, body=" ".join(body.split())[:200])
+              conn.close()
+          except Exception as exc:  # the outcome IS the test result, so record it and move on
+              r.update(outcome=classify(exc), error=f"{type(exc).__name__}: {exc}"[:200])
+          r["ms"] = int((time.monotonic() - start) * 1000)
+          return r
+
+      def tcp_test(t):
+          r = {"name": t["name"], "url": f"tcp://{t['host']}:{t['port']}"}
+          start = time.monotonic()
+          try:
+              socket.create_connection((t["host"], int(t["port"])), timeout=8).close()
+              r["outcome"] = "connected"
+          except Exception as exc:
+              r.update(outcome=classify(exc), error=f"{type(exc).__name__}: {exc}"[:200])
+          r["ms"] = int((time.monotonic() - start) * 1000)
+          return r
+
+      results = [tcp_test(t) if t["scheme"] == "tcp" else http_test(t) for t in TESTS]
+      doc = {"generatedUtc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "results": results}
+      tmp = OUT + ".tmp"
+      with open(tmp, "w", encoding="utf-8") as f:
+          json.dump(doc, f, indent=2)
+      os.replace(tmp, OUT)
+  - path: /etc/systemd/system/contoso-listener.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=Contoso __ROLE__ test listener
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      ExecStart=/usr/bin/python3 /usr/local/lib/contoso/listen.py __PORT__
+      User=contoso
+      Restart=always
+      NoNewPrivileges=yes
+      ProtectSystem=strict
+      ProtectHome=yes
+
+      [Install]
+      WantedBy=multi-user.target
+  - path: /etc/systemd/system/contoso-probe.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=Contoso egress probe (one pass through the hub firewall)
+      After=network-online.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/bin/python3 /usr/local/lib/contoso/probe.py
+      User=contoso
+      NoNewPrivileges=yes
+      ProtectSystem=strict
+      ProtectHome=yes
+      ReadWritePaths=/var/lib/contoso
+      TimeoutStartSec=120
+  - path: /etc/systemd/system/contoso-probe.timer
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=Run the Contoso egress probe every minute
+
+      [Timer]
+      OnBootSec=60
+      OnUnitActiveSec=60
+      AccuracySec=5s
+
+      [Install]
+      WantedBy=timers.target
+# Keep the threat intelligence test record below: cloud-init must not rewrite /etc/hosts.
+manage_etc_hosts: false
+runcmd:
+  - [mkdir, -p, /var/lib/contoso]
+  - [chown, 'contoso:', /var/lib/contoso]
+  - [update-ca-certificates]
+  # Microsoft's test procedure: a dummy hosts record so the client never fails on DNS. The
+  # address doesn't matter; the route sends the request to the firewall, which reads the name.
+  - [sh, -c, 'grep -q "__TI_FQDN__" /etc/hosts || echo "1.2.3.4 __TI_FQDN__" >> /etc/hosts']
+  - [systemctl, daemon-reload]
+  - [systemctl, enable, --now, contoso-listener.service]
+  - [sh, -c, '[ "__PROBE__" = "true" ] && systemctl enable --now contoso-probe.timer || true']

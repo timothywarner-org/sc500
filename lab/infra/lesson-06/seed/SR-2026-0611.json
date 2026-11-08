@@ -1,0 +1,8 @@
+{
+  "record": "SR-2026-0611",
+  "customer": "CTSO-CUST-2217 (synthetic)",
+  "site": "Contoso field office, Nashville",
+  "asset": "Chiller unit CH-4",
+  "status": "Scheduled",
+  "note": "Synthetic SC-500 lab record. No real customer information."
+}

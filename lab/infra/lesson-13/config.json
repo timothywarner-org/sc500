@@ -1,0 +1,144 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "operatorUpn": "<your-admin-upn>",
+  "location": "eastus2",
+  "resourceGroup": "rg-secops-shared-eastus2",
+  "deploymentName": "sc500-lesson13",
+  "managedBy": "sc500-l13-iac",
+  "baseline": "CTSO-L13-BASELINE",
+  "names": {
+    "workspace": "log-secops-shared-eastus2-001",
+    "vnet": "vnet-secops-shared-eastus2-001",
+    "subnet": "snet-collectors",
+    "nsg": "nsg-secops-shared-eastus2-001",
+    "forwarderVm": "vm-logfwd-shared-001",
+    "forwarderComputer": "logfwd-001",
+    "collectorVm": "vm-wec-shared-001",
+    "collectorComputer": "wec-001",
+    "nat": "ng-secops-shared-eastus2-001",
+    "natIp": "pip-ng-secops-shared-eastus2-001",
+    "dcrSyslog": "dcr-syslog-shared-eastus2-001",
+    "dcrCef": "dcr-cef-shared-eastus2-001",
+    "dcrWindowsSecurity": "dcr-winsecurity-shared-eastus2-001",
+    "dcrForwarded": "dcr-wef-shared-eastus2-001",
+    "dcrServiceHub": "dcr-appaudit-prod-eastus2-001",
+    "customTable": "ServiceHubAudit_CL",
+    "activityDiagnosticSetting": "diag-activitylog-to-secops",
+    "analystGroup": "SC500 SOC Analysts",
+    "engineerGroup": "SC500 SOC Engineers",
+    "wefSubscription": "Contoso-ForwardedSecurity"
+  },
+  "naming": {
+    "region": "eastus2",
+    "note": "Contoso's security operations workload is secops, and it's shared: one SOC serves ServiceHub's prod and test estates. The ServiceHub audit rule is prod because it carries the production app's events, and its workload reads appaudit because a Direct-kind DCR name stops at 30 characters (ARM refused dcr-servicehubaudit-prod-eastus2-001 on 2026-11-06). Standard: Cloud Adoption Framework naming guidance, https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming.",
+    "exempt": {
+      "customTable": "A Log Analytics custom table: the platform requires the _CL suffix, and the slides, Lesson 14's rule and the hunting queries name it",
+      "analystGroup": "Microsoft Entra group, not an Azure resource; CAF resource naming doesn't govern Entra objects (CONTOSO-AZURE-NAMING.md, Not covered)",
+      "engineerGroup": "Microsoft Entra group, not an Azure resource",
+      "wefSubscription": "A Windows Event Forwarding subscription inside the collector's guest OS, not an Azure resource"
+    }
+  },
+  "tags": {
+    "workload": "secops",
+    "env": "shared",
+    "region": "eastus2",
+    "criticality": "low",
+    "dataclass": "synthetic",
+    "costcenter": "sc500-video-course",
+    "managedby": "sc500-l13-iac",
+    "lesson": "13",
+    "scenario": "Contoso ServiceHub",
+    "lifecycle": "retain through Lesson 14; VMs deallocated between takes (Stop-L13Lab.ps1)"
+  },
+  "workspace": {
+    "note": "90 days of analytics retention is included for Sentinel-enabled workspaces. The daily cap is a cost guard for a lab that ingests kilobytes, not a production setting: when a cap is reached, security data stops too.",
+    "retentionInDays": 90,
+    "dailyQuotaGb": 1
+  },
+  "customTable": {
+    "note": "ServiceHub's application audit, a synthetic fixture. Stays on the Analytics plan so Lesson 14's scheduled rule can query it. Total retention is longer than analytics retention to show the two numbers separately.",
+    "plan": "Analytics",
+    "retentionInDays": 90,
+    "totalRetentionInDays": 365,
+    "transformKql": "source | where Operation != 'Heartbeat'"
+  },
+  "collection": {
+    "note": "Syslog and CEF use separate facilities so the same message can't land in both Syslog and CommonSecurityLog. The Windows Security DCR is a narrow custom XPath set, filtered at the agent. The WEF DCR reads the collector's ForwardedEvents channel, which lands in WindowsEvent, not SecurityEvent.",
+    "syslogFacilities": [
+      "auth",
+      "authpriv",
+      "daemon",
+      "syslog",
+      "user"
+    ],
+    "syslogLevels": [
+      "Warning",
+      "Error",
+      "Critical",
+      "Alert",
+      "Emergency"
+    ],
+    "cefFacilities": [
+      "local4"
+    ],
+    "windowsSecurityXPath": "Security!*[System[(EventID=1102 or EventID=4625 or EventID=4720 or EventID=4732 or EventID=4740)]]",
+    "forwardedXPath": "ForwardedEvents!*",
+    "wefQuery": "*[System[(EventID=4625)]]",
+    "probeAccount": "contoso-probe",
+    "wefExpected": "none",
+    "wefNote": "Open item. The single-VM loopback WEF lane delivered no event on September 28 or November 6: two failed sign-ins (one after a collector restart) reached SecurityEvent within a minute and never reached ForwardedEvents, while the subscription and its one source read Active. The host trace expects none on that row until a run delivers one; then set this to found."
+  },
+  "vm": {
+    "note": "Both VMs are private (no public IP, no inbound rule) and are managed through Run Command. They are deallocated at idle; Start-L13Lab.ps1 adds a temporary NAT gateway for outbound agent traffic and Stop-L13Lab.ps1 removes it. sub-ttt-labs-primary had never run a VM before 2026-11-06 (Microsoft.Compute was NotRegistered), so the two VMs are its only regional vCPUs. The daily auto-shutdown is a backstop for a forgotten Stop-L13Lab.ps1: it deallocates but leaves the NAT gateway, which Stop-L13Lab.ps1 removes.",
+    "sizeNote": "On 2026-11-06 ARM refused Standard_B1ms and Standard_B2als_v2 in eastus2 for this subscription (SkuNotAvailable, capacity restrictions), and no B-series size was offered. Standard_D2als_v6 (2 vCPUs, 4 GB) was the smallest size available; it supports only the NVMe disk controller, and both images list SCSI and NVMe. Regional quota read 0 of 65 vCPUs.",
+    "linuxSize": "Standard_D2als_v6",
+    "windowsSize": "Standard_D2als_v6",
+    "diskControllerType": "NVMe",
+    "linuxImage": {
+      "publisher": "Canonical",
+      "offer": "0001-com-ubuntu-server-jammy",
+      "sku": "22_04-lts-gen2",
+      "version": "latest"
+    },
+    "windowsImage": {
+      "publisher": "MicrosoftWindowsServer",
+      "offer": "WindowsServer",
+      "sku": "2022-datacenter-azure-edition-smalldisk",
+      "version": "latest"
+    },
+    "adminUsername": "contosoadmin",
+    "autoShutdown": {
+      "enabled": true,
+      "time": "2330",
+      "timeZoneId": "Central Standard Time"
+    }
+  },
+  "roles": {
+    "note": "Built-in role IDs read from Azure on 2026-09-28. Analysts get Responder and engineers get Contributor at the resource group, which Microsoft recommends over the workspace scope.",
+    "sentinelReader": "8d289c81-5878-46d4-8554-54e1e3d8b5cb",
+    "sentinelResponder": "3e150937-b8fe-4cfb-8069-0eaf05ecd056",
+    "sentinelContributor": "ab8e14d6-4a74-4a29-9ba8-549422addade",
+    "monitoringMetricsPublisher": "3913510d-42f4-4e42-8a64-420c390055eb",
+    "logAnalyticsContributor": "92aaf0da-9dab-42b6-94a3-d43ce8d16293"
+  },
+  "l12Handoff": {
+    "note": "Lesson 12 prioritized the ServiceHub export store and left public network access Enabled. Lesson 13 asks who touched it, when, from where, and with what result. The prefix matches stservicehubexports001 and not its sibling stservicehubarchive001.",
+    "resourceGroup": "rg-servicehub-prod-eastus2",
+    "storagePrefix": "stservicehubexports"
+  },
+  "servicehubResourceGroups": [
+    "rg-servicehub-prod-eastus2",
+    "rg-servicehubai-prod-eastus2",
+    "rg-secops-shared-eastus2"
+  ],
+  "budget": {
+    "enabled": false
+  },
+  "costEstimateUsd": {
+    "checked": "2026-11-06",
+    "retained": "Two StandardSSD_LRS OS disks (about 2.40 USD a month each at retail) and the workspace. Sentinel's free trial covers the first 10 GB a day of Analytics ingestion for 31 days; Activity log ingestion is free.",
+    "perRun": "Two Standard_D2als_v6 VMs bill only while running, and the NAT gateway and its public IP exist only between Start-L13Lab.ps1 and Stop-L13Lab.ps1.",
+    "notes": "Retail estimate before credits and tax. Missing billing rows don't prove zero cost."
+  }
+}

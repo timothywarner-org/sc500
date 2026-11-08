@@ -1,0 +1,55 @@
+# ServiceHub workloads for SC-500 Lesson 9, demo 9.1. Invoke-L09ContainerDemo.ps1 replaces
+# __REGISTRY__ with the lab registry's login server and applies this with az aks command invoke.
+# Both images come from the lab registry, pulled by the cluster's kubelet identity (AcrPull), so
+# there's no image pull secret. servicehub-web-legacy runs an old nginx image on purpose: it's the
+# vulnerable image Defender for Containers reports on, in the registry and at runtime.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: servicehub
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicehub-status
+  namespace: servicehub
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: servicehub-status }
+  template:
+    metadata:
+      labels: { app: servicehub-status }
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: status
+          image: __REGISTRY__/servicehub/status:1.0
+          ports: [ { containerPort: 80 } ]
+          securityContext: { allowPrivilegeEscalation: false }
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }
+            limits: { cpu: 250m, memory: 128Mi }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicehub-web-legacy
+  namespace: servicehub
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: servicehub-web-legacy }
+  template:
+    metadata:
+      labels: { app: servicehub-web-legacy }
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: web
+          image: __REGISTRY__/servicehub/web:legacy
+          ports: [ { containerPort: 80 } ]
+          securityContext: { allowPrivilegeEscalation: false }
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }
+            limits: { cpu: 250m, memory: 128Mi }

@@ -1,0 +1,13 @@
+{
+  "displayName": "Contoso Application Basic Editor",
+  "description": "SC500 Lesson 1: read and update basic properties of one assigned app registration. Does not manage credentials, owners, or consent.",
+  "isEnabled": true,
+  "rolePermissions": [
+    {
+      "allowedResourceActions": [
+        "microsoft.directory/applications/standard/read",
+        "microsoft.directory/applications/basic/update"
+      ]
+    }
+  ]
+}

@@ -27,7 +27,7 @@ Thank you for helping make this course companion better. Fixes are welcome from 
 ## Style
 
 - Walkthroughs lead with portal steps. Command-line steps are optional and say so.
-- Every name, region, and subscription a learner would change lives in one settings block at the top of the walkthrough or script, never buried in a later step.
+- Every name, region, and subscription a learner would change lives in the lesson's `config.json` or behind a `Set-LabConfig.ps1` placeholder, never hardcoded in a script.
 - PowerShell uses approved `Verb-Noun` names, `[CmdletBinding()]`, comment-based help, and parameter validation. Bash uses `set -euo pipefail`.
 - Every walkthrough and script ends with cleanup, so learners do not pay for leftover resources.
 - No secrets, keys, connection strings, or real tenant data in any file.

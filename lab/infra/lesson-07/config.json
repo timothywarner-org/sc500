@@ -1,0 +1,122 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "location": "eastus2",
+  "resourceGroup": "rg-perimeter-shared-eastus2",
+  "deploymentName": "contoso-perimeter-retained",
+  "policyDeploymentName": "contoso-perimeter-policy",
+  "firewallDeploymentName": "contoso-perimeter-firewall",
+  "managedBy": "sc500-l07-iac",
+  "baseline": "CTSO-L07-BASELINE",
+  "vmSize": "Standard_B1s",
+  "vmFamily": "standardBSFamily",
+  "naming": {
+    "standard": "Cloud Adoption Framework naming guidance, https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming",
+    "pattern": "{type}-{workload}-{env}-{region}-{###}",
+    "region": "eastus2",
+    "instance": "001",
+    "workloads": {
+      "hub": "The perimeter hub: Azure Firewall, its policy, public IP, identity, Key Vault and workspace. Serves both environments, so its env is shared.",
+      "servicehub": "Contoso's ServiceHub app, in a production spoke and a test spoke."
+    },
+    "exempt": {
+      "inspectionCaCertificate": "A Key Vault certificate object, not an Azure resource, so CAF resource naming doesn't govern it."
+    }
+  },
+  "tags": {
+    "managedby": "sc500-l07-iac",
+    "lesson": "7",
+    "scenario": "Contoso ServiceHub",
+    "region": "eastus2",
+    "criticality": "low",
+    "dataclass": "synthetic",
+    "costcenter": "sc500-video-course",
+    "lifecycle": "retain-deallocated"
+  },
+  "names": {
+    "hubVnet": "vnet-hub-shared-eastus2-001",
+    "prodVnet": "vnet-servicehub-prod-eastus2-001",
+    "nonprodVnet": "vnet-servicehub-test-eastus2-001",
+    "appSubnet": "snet-app",
+    "prodVm": "vm-servicehub-prod-001",
+    "nonprodVm": "vm-servicehub-test-001",
+    "prodNsg": "nsg-servicehub-prod-eastus2-001",
+    "nonprodNsg": "nsg-servicehub-test-eastus2-001",
+    "prodRouteTable": "rt-servicehub-prod-eastus2-001",
+    "nonprodRouteTable": "rt-servicehub-test-eastus2-001",
+    "hubToProd": "peer-hub-to-servicehub-prod",
+    "hubToNonprod": "peer-hub-to-servicehub-test",
+    "prodToHub": "peer-servicehub-prod-to-hub",
+    "nonprodToHub": "peer-servicehub-test-to-hub",
+    "firewall": "afw-hub-shared-eastus2-001",
+    "firewallPolicy": "afwp-hub-shared-eastus2-001",
+    "firewallPublicIp": "pip-afw-hub-shared-eastus2-001",
+    "firewallIdentity": "id-afw-hub-shared-eastus2-001",
+    "firewallDiagnostics": "diag-afw-hub-shared-eastus2-001",
+    "workspace": "log-hub-shared-eastus2-001",
+    "keyVault": "kv-hubtlsca-shared-001",
+    "keyVaultDiagnostics": "diag-kv-hubtlsca-shared-001",
+    "budget": "budget-rg-perimeter-shared-eastus2",
+    "inspectionCaCertificate": "contoso-perimeter-inspection-ca"
+  },
+  "budget": {
+    "enabled": true,
+    "monthlyAmountUsd": 60,
+    "actualThresholds": [
+      50,
+      80,
+      100
+    ],
+    "forecastThreshold": 100,
+    "contactRoles": [
+      "Owner"
+    ],
+    "why": "CAF governance CM01: budget alerts at the resource group level. The firewall is the cost risk: about 1.75 USD an hour, so a forgotten firewall crosses 60 USD in about a day and a half. Alerts go to the Owner role, so no email address sits in a template."
+  },
+  "autoShutdown": {
+    "enabled": true,
+    "time": "2300",
+    "timeZoneId": "Central Standard Time",
+    "why": "CAF and WAF cost guardrails: shut idle compute down. It doesn't touch the bounded firewall; the budget alert and Test-L07Lab.ps1 watch that."
+  },
+  "addressPlan": {
+    "hub": "10.70.0.0/24",
+    "hubFirewall": "10.70.0.0/26",
+    "prod": "10.70.16.0/24",
+    "prodApp": "10.70.16.0/26",
+    "nonprod": "10.70.32.0/24",
+    "nonprodApp": "10.70.32.0/26",
+    "hosts": {
+      "firewall": "10.70.0.4",
+      "prodApp": "10.70.16.4",
+      "nonprodApp": "10.70.32.4"
+    }
+  },
+  "ports": {
+    "app": 8080
+  },
+  "tests": {
+    "allowedUrl": "learn.microsoft.com/en-us/azure/firewall/*",
+    "allowedProbePath": "/en-us/azure/firewall/overview",
+    "otherProbePath": "/en-us/training/",
+    "unlistedHost": "github.com",
+    "threatIntelTestFqdn": "testmaliciousdomain.eastus.cloudapp.azure.com",
+    "idpsTestUserAgent": "HaxerMen",
+    "idpsTestSignatureId": "2032081"
+  },
+  "costEstimateUsd": {
+    "checked": "2026-09-26",
+    "source": "Azure retail prices API, eastus2, before credit or tax",
+    "firewallPremiumDeploymentPerHour": 1.75,
+    "firewallPremiumPerGbProcessed": 0.016,
+    "firewallStandardDeploymentPerHour": 1.25,
+    "firewallBasicDeploymentPerHour": 0.395,
+    "firewallPolicy": "Free with zero or one firewall association",
+    "vmB1sPerHour": 0.0104,
+    "standardPublicIpPerHour": 0.005,
+    "ddosIpProtectionPerIpPerHour": 0.2726,
+    "ddosNetworkProtectionPlanPerHour": 4.032258,
+    "ddosNetworkProtectionOveragePerIpPerHour": 0.040322,
+    "notes": "Retained baseline: two deallocated B1s VMs (disks only), the firewall policy (free with no firewall attached), one Standard public IP, a Key Vault holding one certificate, and a Log Analytics workspace, roughly 0.30 USD a day. The firewall itself is bounded: about 1.75 USD an hour while it exists. Deploy it while you work through the demo with Deploy-L07Bounded.ps1 and remove it with Remove-L07Bounded.ps1. No DDoS plan is deployed: Network Protection is about 2,940 USD a month. Budgets and auto-shutdown schedules are free."
+  }
+}

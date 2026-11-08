@@ -1,0 +1,91 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "operatorUpn": "<your-admin-upn>",
+  "location": "eastus2",
+  "resourceGroup": "rg-servicehubai-prod-eastus2",
+  "deploymentName": "sc500-lesson11",
+  "gatewayDeploymentName": "sc500-lesson11-gateway",
+  "managedBy": "sc500-l11-iac",
+  "baseline": "CTSO-L11-BASELINE",
+  "names": {
+    "foundryAccount": "aif-servicehubai-prod-eastus2-001",
+    "project": "proj-servicehubai-prod-eastus2-001",
+    "workspace": "log-servicehubai-prod-eastus2-001",
+    "apimPrefix": "apim-servicehubai-prod",
+    "apimName": "apim-servicehubai-prod-001",
+    "modelDeployment": "servicehub-chat",
+    "guardrail": "ctso-servicehub-guardrail",
+    "blocklist": "ctso-customer-ids",
+    "agent": "servicehub-assistant",
+    "llmApiPath": "servicehub-ai",
+    "partsApiPath": "servicehub-parts",
+    "product": "servicehub-assistant",
+    "subscription": "servicehub-assistant"
+  },
+  "model": {
+    "name": "gpt-4.1-mini",
+    "version": "2025-04-14",
+    "sku": "GlobalStandard",
+    "capacityThousandTpm": 20
+  },
+  "gateway": {
+    "sku": "BasicV2",
+    "tokensPerMinute": 400,
+    "remainingTokensHeader": "x-ctso-remaining-tokens"
+  },
+  "blocklistItems": [
+    {
+      "name": "customer-account-id",
+      "pattern": "CTSO-CUST-[0-9]{6}",
+      "isRegex": true
+    }
+  ],
+  "syntheticUserContext": {
+    "application_name": "Contoso ServiceHub assistant (lab)",
+    "end_user_id": "sc500-l11-synthetic-user-01",
+    "source_ip": "203.0.113.10",
+    "note": "Synthetic end-user context. 203.0.113.0/24 is the RFC 5737 documentation range; no real user or address is represented."
+  },
+  "roles": {
+    "openAiUser": "5e0bd9bd-7b93-4f28-af87-19fc36ad61bd",
+    "foundryUser": "53ca6127-db72-4b80-b1b0-d745d6d5456d"
+  },
+  "costEstimateUsd": {
+    "checked": "2026-11-04",
+    "source": "Azure Retail Prices API, eastus2, USD",
+    "retained": "Foundry resource, project, guardrail, blocklist, and a GlobalStandard model deployment bill per token only, so idle cost is zero. The Log Analytics workspace bills per GB ingested; a rehearsal ingests well under 1 MB.",
+    "bounded": "API Management Basic v2 bills 0.21 USD per unit hour whether or not traffic flows, plus calls beyond the included 10 million. Deploy it for a rehearsal or take and remove it afterward.",
+    "perRun": "One full demo run sends roughly 20 model calls of a few hundred tokens each, a fraction of a cent at gpt-4.1-mini token rates. Defender for AI Services bills per 1,000 tokens scanned, again a fraction of a cent per run; on sub-ttt-labs-primary it started a 30-day trial on 2026-11-04.",
+    "notes": "Retail estimate before credits and tax. Missing billing rows don't prove zero cost."
+  },
+  "tags": {
+    "workload": "servicehubai",
+    "env": "prod",
+    "region": "eastus2",
+    "criticality": "low",
+    "dataclass": "synthetic",
+    "costcenter": "sc500-video-course",
+    "managedby": "sc500-l11-iac",
+    "lesson": "11",
+    "scenario": "Contoso ServiceHub",
+    "lifecycle": "retain: Foundry half; bounded: remove the gateway after the rehearsal or take"
+  },
+  "naming": {
+    "region": "eastus2",
+    "exempt": {
+      "apimPrefix": "Reset-L11Lab.ps1's soft-delete filter, not a resource name",
+      "modelDeployment": "Foundry child object the slides and runbook show; CAF names Azure resources, not deployments",
+      "guardrail": "Foundry child object (RAI policy) the slides show",
+      "blocklist": "Foundry child object (RAI blocklist) the slides show",
+      "agent": "Foundry agent, a project child object the slides show",
+      "llmApiPath": "API Management API path, part of the gateway URL",
+      "partsApiPath": "API Management API path, part of the gateway URL",
+      "product": "API Management product, a child object",
+      "subscription": "API Management subscription, a child object"
+    }
+  },
+  "budget": {
+    "enabled": false
+  }
+}

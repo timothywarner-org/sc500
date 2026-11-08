@@ -1,0 +1,4 @@
+Synthetic customer upload for SC-500 Lesson 4 (Contoso, Ltd. training data).
+Customer: Fabrikam, Inc.  Service request: SR-2026-0418
+Notes: photo set of chiller unit CH-220 nameplate and condenser fan relay, site 3.
+This file is harmless. It exists so malware scanning has a clean result to compare with.

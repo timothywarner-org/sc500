@@ -14,7 +14,7 @@
 
 Every demo in this lesson is work you can repeat in your own subscription, mostly in the Azure portal or the Microsoft admin centers. Do each one yourself after you watch it, because clicking through a configuration sticks far better than reading about it.
 
-The step-by-step walkthrough and any lab files for this lesson land in [`demos/`](demos/) after the lesson publishes. Watch the [changelog](../../CHANGELOG.md) for updates.
+The scripts and Bicep templates from this lesson's demos are published: [`demos/`](demos/) lists them by stage and links to their folders under `lab/`. Do the [one-time lab setup](../../lab/README.md) first.
 
 ## Before you start
 

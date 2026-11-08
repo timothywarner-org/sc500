@@ -1,0 +1,5 @@
+customer,contract,hourly_rate_usd,discount_pct,renewal
+Fabrikam (fictional),SH-CONTRACT-1001,185,12,2027-03-31
+Northwind Traders (fictional),SH-CONTRACT-1002,160,20,2026-12-31
+Tailspin Toys (fictional),SH-CONTRACT-1003,210,5,2027-06-30
+# SC-500 Lesson 10 lab fixture. Fictional customers and rates. Confidential by label only.

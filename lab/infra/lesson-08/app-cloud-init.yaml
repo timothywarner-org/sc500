@@ -1,0 +1,49 @@
+#cloud-config
+# vm-servicehub-prod-001: Contoso ServiceHub's application server in the Lesson 8 lab (Trusted Launch,
+# encryption at host, no public IP, reached through Azure Bastion).
+#
+# At every boot it prints its own evidence to the serial console, which the lab reads through
+# boot diagnostics. That way nobody signs in and nothing waits on Run Command. The evidence is
+# what the guest itself sees: the Secure Boot state, the vTPM devices, the kernel lockdown mode
+# that Ubuntu turns on under Secure Boot, and what backs the temp disk.
+
+write_files:
+  - path: /usr/local/sbin/contoso-boot-evidence
+    permissions: '0755'
+    content: |
+      #!/bin/bash
+      # Why the serial console: managed boot diagnostics can read it without SSH or Run Command.
+      out=/dev/ttyS0
+      sb=$(mokutil --sb-state 2>/dev/null | head -n 1)
+      if [ -z "$sb" ]; then
+        # Fallback: the UEFI SecureBoot variable; its last byte is 1 when Secure Boot is on.
+        v=$(od -An -t u1 /sys/firmware/efi/efivars/SecureBoot-8be4df61-93ca-11d2-aa0d-00e098032b8c 2>/dev/null | awk '{print $NF}')
+        sb="efivar SecureBoot=${v:-unreadable}"
+      fi
+      tpm=$(ls /dev/tpm0 /dev/tpmrm0 2>/dev/null | tr '\n' ' ')
+      lockdown=$(cat /sys/kernel/security/lockdown 2>/dev/null)
+      temp=$(findmnt -n -o SOURCE /mnt 2>/dev/null)
+      {
+        echo "CONTOSO-EVIDENCE begin $(hostname) $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+        echo "CONTOSO-EVIDENCE secureboot=${sb}"
+        echo "CONTOSO-EVIDENCE tpm=${tpm:-none}"
+        echo "CONTOSO-EVIDENCE lockdown=${lockdown:-unknown}"
+        echo "CONTOSO-EVIDENCE tempdisk=${temp:-none}"
+        echo "CONTOSO-EVIDENCE end"
+      } > "$out" 2>/dev/null || true
+  - path: /etc/systemd/system/contoso-boot-evidence.service
+    content: |
+      [Unit]
+      Description=Print Contoso boot evidence to the serial console
+      After=multi-user.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/local/sbin/contoso-boot-evidence
+
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  - systemctl daemon-reload
+  - systemctl enable --now contoso-boot-evidence.service

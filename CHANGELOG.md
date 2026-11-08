@@ -4,6 +4,12 @@ All notable changes to this course companion repository are tracked here. This p
 
 ## [Unreleased]
 
+### Added (2026-11-08, lab files)
+- `lab/`: the scripts and Bicep templates from the demos in Lessons 1 through 13, as the lessons promise. Tenant, subscription, domain, and account values are placeholders.
+- `lab/Set-LabConfig.ps1`: writes your own values into every lab file in one step, with `-WhatIf`.
+- `lab/README.md`: one-time setup, tools, placeholders, and cost warnings.
+- A `demos/README.md` page for each of Lessons 1 through 13 that lists its scripts by stage, with each script's own synopsis.
+
 ### Changed (2026-11-08)
 - Lesson READMEs regenerated from the frozen course outline: exact lesson titles and objectives, the study guide sections each lesson covers, and setup and cost notes.
 - Exam objective map rebuilt from Microsoft's current study guide (last updated 2026-05-13), with every skill mapped to a lesson.

@@ -1,0 +1,25 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "location": "eastus2",
+  "sqlLocation": "centralus",
+  "resourceGroup": "rg-sc500-l04-data",
+  "deploymentName": "sc500-lesson04",
+  "managedBy": "sc500-l04-iac",
+  "recordsContainers": [
+    "service-records",
+    "customer-documents"
+  ],
+  "intakeContainer": "intake-uploads",
+  "sqlDatabase": "servicehub-records",
+  "storedAccessPolicy": "servicehub-partner-read",
+  "sqlAuditCategory": "SQLSecurityAuditEvents",
+  "costEstimateUsd": {
+    "checked": "2026-09-26",
+    "source": "Azure retail prices API: SQL Basic in centralus, security rates in eastus2, before credit or tax; checked 2026-09-26",
+    "sqlDatabaseBasicPerDay": 0.161,
+    "defenderForSqlPerServerHour": 0.020161,
+    "defenderForStoragePerAccountHour": 0.0134,
+    "malwareScanningPerGb": 0.15
+  }
+}
