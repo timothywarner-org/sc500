@@ -1,0 +1,42 @@
+#cloud-config
+# Synthetic Contoso ServiceHub tier listener for the SC-500 Lesson 5 lab.
+# It exists only so a TCP connection has something to answer: every listed port serves one
+# static line. It needs no package downloads, which matters because the lab subnets have no
+# default outbound internet access. __ROLE__ and __PORTS__ are replaced by the templates;
+# __PORTS__ is a space-separated list, for example "8080 5432".
+write_files:
+  - path: /srv/servicehub/index.html
+    permissions: '0644'
+    content: |
+      Contoso ServiceHub __ROLE__ tier (synthetic lab fixture)
+  - path: /usr/local/lib/servicehub/listen.py
+    permissions: '0755'
+    content: |
+      #!/usr/bin/python3
+      """Serve /srv/servicehub on every port given on the command line."""
+      import functools, http.server, sys, threading
+      handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory='/srv/servicehub')
+      servers = [http.server.ThreadingHTTPServer(('0.0.0.0', int(p)), handler) for p in sys.argv[1:]]
+      for s in servers[1:]:
+          threading.Thread(target=s.serve_forever, daemon=True).start()
+      servers[0].serve_forever()
+  - path: /etc/systemd/system/servicehub-listener.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=Contoso ServiceHub __ROLE__ tier test listener
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      ExecStart=/usr/bin/python3 /usr/local/lib/servicehub/listen.py __PORTS__
+      Restart=always
+      DynamicUser=yes
+      AmbientCapabilities=CAP_NET_BIND_SERVICE
+      NoNewPrivileges=yes
+
+      [Install]
+      WantedBy=multi-user.target
+runcmd:
+  - [systemctl, daemon-reload]
+  - [systemctl, enable, --now, servicehub-listener.service]

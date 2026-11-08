@@ -1,0 +1,5 @@
+ticket,site,severity,summary
+SH-4101,Fabrikam Plant 2 (fictional),2,Chiller firmware check overdue
+SH-4102,Northwind Depot (fictional),3,Door sensor reports intermittent faults
+SH-4103,Tailspin HQ (fictional),1,Backup generator failed its weekly test
+# SC-500 Lesson 10 lab fixture. Fictional sites and tickets.

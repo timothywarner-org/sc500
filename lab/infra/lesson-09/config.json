@@ -1,0 +1,137 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "location": "eastus2",
+  "aksLocation": "eastus2",
+  "webLocation": "southcentralus",
+  "webLocationWhy": "the lab subscription has no App Service plan quota (limit 0) in eastus2 for F1, B1, S1, P0v3 or P1v3, nor B1 in centralus, eastus, northcentralus, westus or westus2 (ARM preflight, November 1, 2026). B1 passed in southcentralus, westus3 and canadacentral; southcentralus is the nearest to eastus2. Only the web origin and its plan run there.",
+  "resourceGroup": "rg-appplatform-prod-eastus2",
+  "deploymentName": "contoso-appplatform-retained",
+  "edgeDeploymentName": "contoso-appplatform-edge",
+  "managedBy": "sc500-l09-iac",
+  "baseline": "CTSO-L09-BASELINE",
+  "apiAppDisplayName": "sc500-l09-servicehub-api",
+  "apiScope": "access_as_user",
+  "azureCliClientId": "04b07795-8ddb-461a-bbee-02f9e1bf7b46",
+  "aksNodeSize": "Standard_D4s_v3",
+  "vmFamily": "standardDSv3Family",
+  "vcpusNeeded": 4,
+  "naming": {
+    "standard": "Cloud Adoption Framework naming guidance, https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming",
+    "pattern": "{type}-{workload}-{env}-{region}-{###}",
+    "region": "eastus2",
+    "instance": "001",
+    "workloads": {
+      "appplatform": "Contoso's application platform that Lesson 9 secures: the resource group, network and log workspace that ServiceHub's container, serverless, web and API surfaces share.",
+      "servicehub": "Contoso ServiceHub, the production app: its registry, AKS cluster, Container Apps environment, web app, API Management gateway and public edge (Application Gateway, Front Door), and the identity that pulls its images.",
+      "status": "ServiceHub's status page, a container app.",
+      "partsapi": "ServiceHub's parts API back end: the Flex Consumption function, its plan, storage and identity.",
+      "apigateway": "API Management's own identity, the only client the parts API accepts.",
+      "intake": "ServiceHub's intake workflow, a Consumption logic app.",
+      "partsworker": "A parts worker that runs in Container Instances with a private IP only. Bounded."
+    },
+    "exempt": {
+      "privilegedPolicy": "A policy assignment. CAF's abbreviation list has no prefix for assignments, so it's named {control}-{scope workload}, as Lesson 8's are."
+    }
+  },
+  "tags": {
+    "managedby": "sc500-l09-iac",
+    "lesson": "9",
+    "scenario": "Contoso ServiceHub",
+    "region": "eastus2",
+    "criticality": "low",
+    "dataclass": "synthetic",
+    "costcenter": "sc500-video-course",
+    "lifecycle": "retain-deallocated"
+  },
+  "names": {
+    "workspace": "log-appplatform-prod-eastus2-001",
+    "pullIdentity": "id-servicehub-prod-eastus2-001",
+    "functionIdentity": "id-partsapi-prod-eastus2-001",
+    "apimIdentity": "id-apigateway-prod-eastus2-001",
+    "registry": "crservicehubprod001",
+    "aks": "aks-servicehub-prod-eastus2-001",
+    "aksNodeResourceGroup": "rg-servicehubnodes-prod-eastus2",
+    "containerEnv": "cae-servicehub-prod-eastus2-001",
+    "containerApp": "ca-status-prod-001",
+    "storage": "stpartsapifunc001",
+    "functionPlan": "asp-partsapi-prod-eastus2-001",
+    "functionApp": "func-partsapi-prod-001",
+    "logicApp": "logic-intake-prod-eastus2-001",
+    "webPlan": "asp-servicehub-prod-southcentralus-001",
+    "webApp": "app-servicehub-prod-001",
+    "apim": "apim-servicehub-prod-001",
+    "vnet": "vnet-appplatform-prod-eastus2-001",
+    "gatewaySubnet": "snet-agw",
+    "aciSubnet": "snet-aci",
+    "gateway": "agw-servicehub-prod-eastus2-001",
+    "gatewayIp": "pip-agw-servicehub-prod-eastus2-001",
+    "gatewayWaf": "waf-agw-servicehub-prod-eastus2-001",
+    "frontDoor": "afd-servicehub-prod-001",
+    "frontDoorEndpoint": "fde-servicehub-prod-001",
+    "frontDoorWaf": "wafafdservicehubprod001",
+    "containerGroup": "ci-partsworker-prod-eastus2-001",
+    "privilegedPolicy": "k8s-no-privileged-servicehub",
+    "budget": "budget-rg-appplatform-prod-eastus2",
+    "nodeBudget": "budget-rg-servicehubnodes-prod-eastus2"
+  },
+  "budget": {
+    "enabled": true,
+    "monthlyAmountUsd": 25,
+    "nodeMonthlyAmountUsd": 25,
+    "actualThresholds": [
+      50,
+      80,
+      100
+    ],
+    "forecastThreshold": 100,
+    "contactRoles": [
+      "Owner"
+    ],
+    "why": "CAF governance CM01: budget alerts at the resource group level. Two budgets, because AKS bills its node VMs, load balancer and public IP to its own node resource group, not this one: budget-rg-appplatform-prod-eastus2 watches the lab group (the registry and the bounded edge at about 0.65 USD an hour), and budget-rg-servicehubnodes-prod-eastus2 watches the node group (a running D4s_v3 node at about 0.19 USD an hour). Defender plans bill at subscription scope, so neither budget sees them. Alerts go to the Owner role, so no email address sits in a template."
+  },
+  "autoShutdown": {
+    "enabled": false,
+    "why": "Doesn't apply: this lab has no virtual machines. AKS nodes belong to a scale set that AKS manages, and a DevTest Labs shutdown schedule can't target them. Start-L09Lab.ps1 -Stop stops the whole cluster between takes (no node or Defender for Containers charges while it's stopped), and Test-L09Lab.ps1 warns when it's running."
+  },
+  "images": {
+    "status": {
+      "source": "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest",
+      "target": "servicehub/status:1.0"
+    },
+    "legacy": {
+      "source": "mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine",
+      "target": "servicehub/web:legacy"
+    }
+  },
+  "addressPlan": {
+    "vnet": "10.90.0.0/22",
+    "gateway": "10.90.0.0/24",
+    "aci": "10.90.1.0/24"
+  },
+  "policyDefinitions": {
+    "noPrivilegedContainers": "95edb821-ddaf-4404-9732-666045e056b4"
+  },
+  "apim": {
+    "rateLimitCalls": 5,
+    "rateLimitPeriodSeconds": 60
+  },
+  "costEstimateUsd": {
+    "checked": "2026-11-01",
+    "source": "Azure retail prices API, eastus2, before credit or tax (Defender figures from the Defender for Cloud pricing page)",
+    "acrBasicPerDay": 0.1666,
+    "aksNodeD4sV3Eastus2PerHour": 0.19,
+    "defenderContainersPerVcoreMonth": 7,
+    "defenderAppServicePerInstanceMonth": 15,
+    "frontDoorStandardBasePerMonth": 35,
+    "frontDoorStandardWafPolicyPerMonth": 5,
+    "frontDoorStandardWafRulePerMonth": 1,
+    "apimConsumptionPer10kCalls": 0.035,
+    "containerAppsVcoreActivePerSecond": 2.4e-05,
+    "standardPublicIpPerHour": 0.005,
+    "appGatewayWafV2FixedPerHourEastus2": 0.36,
+    "appGatewayWafV2CapacityUnitPerHourEastus2": 0.0144,
+    "appServiceB1LinuxPerHour": 0.02,
+    "notes": "Retained, with the cluster stopped: the Basic registry (about 0.17 USD a day), plus the cluster's node resource group, which keeps a Standard load balancer and a Standard public IP that bill hourly while the cluster is stopped. Container Apps (Consumption profile), Flex Consumption Functions, the Consumption logic app, and API Management Consumption cost nothing idle. Running, the AKS node adds about 0.19 USD an hour, plus Defender for Containers at about 7 USD per vCore a month for its four vCores. The lab subscription had both the Containers and App Service plans' 30-day trials unused on November 1, 2026; Set-L09DefenderWindow.ps1 -State Open started them UTC. The bounded edge costs about 0.65 USD an hour while it exists: Application Gateway WAF_v2 (0.36 USD an hour fixed plus capacity units), Front Door Standard with its WAF policy and rule (monthly charges, prorated), the B1 Linux origin, the gateway's public IP, and the Container Instances worker. Deploy it with Deploy-L09Edge.ps1 and remove it with Remove-L09Edge.ps1."
+  }
+}

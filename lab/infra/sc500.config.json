@@ -1,0 +1,37 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "subscriptionName": "the lab subscription",
+  "tenantId": "<your-tenant-id>",
+  "location": "eastus2",
+  "vmSize": "Standard_B2s",
+  "imageVersion": "24.04.202609040",
+  "resourceGroups": [
+    "rg-sc500-identity-lab",
+    "rg-sc500-comparison-lab",
+    "rg-sc500-lock-lab"
+  ],
+  "virtualMachines": [
+    {
+      "group": "rg-sc500-identity-lab",
+      "name": "vm-maint-01"
+    },
+    {
+      "group": "rg-sc500-comparison-lab",
+      "name": "vm-compare-01"
+    }
+  ],
+  "ownershipTag": "sc500-demo-iac",
+  "accessReview": {
+    "id": "<your-access-review-id>",
+    "name": "SC500 L01 Reader review",
+    "note": "Built 2026-10-17 by walkthrough I1 on this subscription. The readiness gate reads this ID and its portal receipt in .azure/evidence."
+  },
+  "retention": "Retain baseline through recording. Deallocate VMs between sessions. No automatic deletion.",
+  "costEstimateUsd": {
+    "checked": "2026-09-25",
+    "computePerVmHour": 0.0416,
+    "diskPerVmMonth": 2.4,
+    "diskMountPerVmMonthIfApplicable": 0.26,
+    "notes": "Retail estimate before credit/tax. Two VMs. Disk transactions and boot diagnostics are additional. Subscription credits are not treated as free resources."
+  }
+}

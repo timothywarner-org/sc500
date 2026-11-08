@@ -1,0 +1,79 @@
+{
+  "analyzers": {
+    "core": {
+      "enabled": true,
+      "rules": {
+        "adminusername-should-not-be-literal": {
+          "level": "error"
+        },
+        "no-hardcoded-env-urls": {
+          "level": "error"
+        },
+        "no-hardcoded-location": {
+          "level": "error"
+        },
+        "no-loc-expr-outside-params": {
+          "level": "error"
+        },
+        "no-unnecessary-dependson": {
+          "level": "error"
+        },
+        "no-unused-existing-resources": {
+          "level": "error"
+        },
+        "no-unused-params": {
+          "level": "error"
+        },
+        "no-unused-vars": {
+          "level": "error"
+        },
+        "outputs-should-not-contain-secrets": {
+          "level": "error"
+        },
+        "prefer-interpolation": {
+          "level": "error"
+        },
+        "protect-commandtoexecute-secrets": {
+          "level": "error"
+        },
+        "secure-parameter-default": {
+          "level": "error"
+        },
+        "secure-params-in-nested-deploy": {
+          "level": "error"
+        },
+        "secure-secrets-in-params": {
+          "level": "error"
+        },
+        "simplify-interpolation": {
+          "level": "error"
+        },
+        "use-description-params": {
+          "level": "error"
+        },
+        "use-description-outputs": {
+          "level": "error"
+        },
+        "use-parent-property": {
+          "level": "error"
+        },
+        "use-resource-symbol-reference": {
+          "level": "error"
+        },
+        "use-secure-value-for-secure-inputs": {
+          "level": "error"
+        },
+        "use-stable-resource-identifiers": {
+          "level": "error"
+        },
+        "use-stable-vm-image": {
+          "level": "error"
+        },
+        "use-recent-api-versions": {
+          "level": "warning",
+          "maxAgeInDays": 730
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "location": "eastus2",
+  "resourceGroup": "rg-sc500-l05-network",
+  "wanResourceGroup": "rg-sc500-l05-wan",
+  "vpnResourceGroup": "rg-sc500-l05-vpn",
+  "networkWatcherResourceGroup": "NetworkWatcherRG",
+  "networkWatcherName": "NetworkWatcher_eastus2",
+  "deploymentName": "sc500-lesson05",
+  "wanDeploymentName": "sc500-lesson05-wan",
+  "vpnDeploymentName": "sc500-lesson05-vpn",
+  "managedBy": "sc500-l05-iac",
+  "baseline": "CTSO-L05-BASELINE",
+  "vmSize": "Standard_B2s",
+  "boundedVmSize": "Standard_B1s",
+  "addressPlan": {
+    "hub": "10.55.0.0/24",
+    "hubManagement": "10.55.0.0/27",
+    "hubGateway": "10.55.0.64/27",
+    "servicehub": "10.55.16.0/24",
+    "servicehubSubnet": "10.55.16.0/26",
+    "hosts": {
+      "mgmt": "10.55.0.4",
+      "web": "10.55.16.4",
+      "app": "10.55.16.5",
+      "data": "10.55.16.6"
+    },
+    "wanHub": "10.56.0.0/23",
+    "wanServicehub": "10.56.8.0/24",
+    "wanShared": "10.56.9.0/24",
+    "wanHosts": {
+      "app": "10.56.8.4",
+      "shared": "10.56.9.4"
+    },
+    "branch": "10.57.0.0/24",
+    "branchSubnet": "10.57.0.0/27",
+    "branchGateway": "10.57.0.64/27",
+    "branchHost": "10.57.0.4",
+    "p2sPool": "172.16.55.0/24"
+  },
+  "ports": {
+    "web": 80,
+    "app": 8080,
+    "data": 5432,
+    "ssh": 22,
+    "shared": 8080
+  },
+  "p2sAudience": "c632b3df-fb67-4d84-bdcf-b95ad541b5c8",
+  "costEstimateUsd": {
+    "checked": "2026-09-26",
+    "source": "Azure retail prices API, eastus2, before credit or tax",
+    "vmB2atsV2PerHour": 0.0094,
+    "vmB1sPerHour": 0.0104,
+    "avnmPerManagedVnetHour": 0.02,
+    "vnetFlowLogsPerGb": 0.5,
+    "vnetFlowLogsFreeGbPerMonth": 5,
+    "trafficAnalyticsPerGb": 2.3,
+    "virtualWanStandardHubPerHour": 0.25,
+    "firewallBasicSecuredHubPerHour": 0.395,
+    "firewallBasicPerGbProcessed": 0.065,
+    "vpnGw1AzPerHour": 0.21,
+    "notes": "Retained baseline: four deallocated B2ats v2 VMs (disks only), a flow-log storage account, and a Log Analytics workspace, roughly 0.25 USD a day. Running the four VMs adds about 0.04 USD an hour. AVNM charges only while its security admin configuration is deployed to the ServiceHub VNet. The Virtual WAN (about 0.66 USD an hour with Firewall Basic) and the two VPN gateways (about 0.43 USD an hour) are bounded: deploy while you work through the demo, then remove."
+  }
+}

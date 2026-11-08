@@ -1,0 +1,10 @@
+{
+  "synthetic": "Fictional Contoso, Ltd. training data for SC-500 Lesson 4. No real customer information.",
+  "serviceRequest": "SR-2026-0418",
+  "customer": "Fabrikam, Inc.",
+  "equipment": "Chiller unit CH-220, site 3",
+  "status": "Scheduled",
+  "assignedTo": "Debra Garcia",
+  "window": "2026-10-02 08:00 to 10:00 local",
+  "notes": "Replace condenser fan relay. Parts ordered under maintenance contract."
+}

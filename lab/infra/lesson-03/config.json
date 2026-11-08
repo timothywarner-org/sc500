@@ -1,0 +1,11 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "location": "eastus2",
+  "resourceGroup": "rg-sc500-l03-platform",
+  "policyGroup": "rg-sc500-l03-policy",
+  "vmName": "vm-sc500-l03-runner",
+  "vmSize": "Standard_B2s",
+  "deploymentName": "sc500-lesson03",
+  "managedBy": "sc500-l03-iac"
+}

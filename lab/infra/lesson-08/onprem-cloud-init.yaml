@@ -1,0 +1,93 @@
+#cloud-config
+# vm-datacenter-prod-001 (host datacenter-001): an Azure VM prepared to behave like an on-premises server, so Lesson 8 can
+# onboard it to Azure Arc. This is Microsoft's evaluation-only procedure, "Evaluate Azure
+# Arc-enabled servers on an Azure virtual machine":
+#   1. Set MSFT_ARC_TEST so the agent's installer allows an Azure VM.
+#   2. Have no VM extensions. This VM is deployed with none, and the template turns Defender for
+#      Servers off for this VM resource so Defender doesn't push one.
+#   3. Stop and disable the Azure guest agent (walinuxagent).
+#   4. Block the Azure Instance Metadata Service (169.254.169.254, and 169.254.169.253) with UFW,
+#      so the Arc agent's own metadata service is the only one on the box.
+#   5. Install the Azure Connected Machine agent, but don't connect it. Connecting is your step:
+#      azcmagent connect with a device code, signed in as himself.
+#
+# Once the guest agent is off, Run Command and extensions stop working on this VM. So every
+# result goes to the serial console, which the lab reads through boot diagnostics.
+
+write_files:
+  - path: /etc/environment
+    append: true
+    content: |
+      MSFT_ARC_TEST=true
+  # The agent's daemons need the variable too, and systemctl set-environment doesn't survive a
+  # reboot. A manager drop-in does, so the lab can be deallocated and started between takes.
+  - path: /etc/systemd/system.conf.d/10-msft-arc-test.conf
+    content: |
+      [Manager]
+      DefaultEnvironment=MSFT_ARC_TEST=true
+  - path: /usr/local/sbin/contoso-arc-prep
+    permissions: '0755'
+    content: |
+      #!/bin/bash
+      # One-time preparation. Each step reports to the serial console so the lab can read it.
+      out=/dev/ttyS0
+      say() { echo "CONTOSO-ARC $*" > "$out" 2>/dev/null; echo "CONTOSO-ARC $*"; }
+      say "prep begin $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+      export MSFT_ARC_TEST=true
+      systemctl set-environment MSFT_ARC_TEST=true
+      systemctl daemon-reexec
+      systemctl stop walinuxagent
+      systemctl disable walinuxagent
+      systemctl mask walinuxagent
+      say "guest-agent=$(systemctl is-active walinuxagent 2>/dev/null) enabled=$(systemctl is-enabled walinuxagent 2>/dev/null)"
+      ufw --force enable
+      ufw default allow incoming
+      ufw deny out from any to 169.254.169.254
+      ufw deny out from any to 169.254.169.253
+      if curl -s -m 5 -H Metadata:true "http://169.254.169.254/metadata/instance?api-version=2021-02-01" > /dev/null; then
+        say "imds=reachable (NOT blocked)"
+      else
+        say "imds=blocked"
+      fi
+      curl -fsSL -o /tmp/install_linux_azcmagent.sh https://gbl.his.arc.azure.com/azcmagent-linux
+      if bash /tmp/install_linux_azcmagent.sh > /var/log/contoso-azcmagent-install.log 2>&1; then
+        say "agent-install=ok version=$(azcmagent version 2>/dev/null | head -n 1)"
+      else
+        say "agent-install=FAILED (see /var/log/contoso-azcmagent-install.log)"
+      fi
+      # Reachability of the Arc endpoints from this network, before anyone connects.
+      azcmagent check --location eastus2 2>&1 | sed 's/^/CONTOSO-ARC check /' > "$out" 2>/dev/null
+      # Later boots can't reach IMDS, so stop cloud-init from waiting on it every boot.
+      touch /etc/cloud/cloud-init.disabled
+      say "prep end $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  - path: /usr/local/sbin/contoso-arc-status
+    permissions: '0755'
+    content: |
+      #!/bin/bash
+      # Every boot: the Arc agent's view of itself, to the serial console.
+      out=/dev/ttyS0
+      {
+        echo "CONTOSO-ARC status begin $(hostname) $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+        azcmagent show 2>&1 | grep -E 'Resource Name|Resource Group|Agent Status|Agent Version|Cloud Provider|Last Heartbeat' | sed 's/^/CONTOSO-ARC status /'
+        echo "CONTOSO-ARC status guest-agent=$(systemctl is-active walinuxagent 2>/dev/null)"
+        echo "CONTOSO-ARC status end"
+      } > "$out" 2>/dev/null || true
+  - path: /etc/systemd/system/contoso-arc-status.service
+    content: |
+      [Unit]
+      Description=Print the Azure Arc agent status to the serial console
+      After=network-online.target himdsd.service
+      Wants=network-online.target
+
+      [Service]
+      Type=oneshot
+      ExecStartPre=/bin/sleep 60
+      ExecStart=/usr/local/sbin/contoso-arc-status
+
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  - /usr/local/sbin/contoso-arc-prep
+  - systemctl daemon-reload
+  - systemctl enable contoso-arc-status.service

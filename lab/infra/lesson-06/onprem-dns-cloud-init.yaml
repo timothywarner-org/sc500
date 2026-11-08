@@ -1,0 +1,129 @@
+#cloud-config
+# Contoso field-office DNS stand-in for the SC-500 Lesson 6 hybrid DNS lab.
+#
+# The VM plays the branch's own DNS server. It answers nothing itself and forwards every query:
+# a name that matches a line in /etc/contoso-onprem-dns/forwarders goes to that line's server
+# (a conditional forwarder), and everything else goes to the default upstream. The default
+# upstream is Azure-provided DNS for this VNet, which isn't linked to the private DNS zone, so
+# it answers exactly the way public internet DNS would. The file starts empty on purpose: that's
+# the demo 6.4 fault. The file is re-read on every query, so a new forwarder works at once.
+#
+# /usr/local/bin/onprem-lookup NAME asks this server and prints the answer chain, so the demo
+# doesn't depend on dig being installed. Nothing is downloaded; the subnet has no internet.
+write_files:
+  - path: /etc/contoso-onprem-dns/forwarders
+    permissions: '0644'
+    content: |
+      # suffix  forwarder-ip     (one conditional forwarder per line; empty at baseline)
+  - path: /usr/local/lib/contoso/onprem-dns.py
+    permissions: '0755'
+    content: |
+      #!/usr/bin/python3
+      """Forward DNS queries: conditional forwarders by suffix, everything else to the default."""
+      import socket, syslog
+      LISTEN = ("127.0.0.1", 53)
+      DEFAULT_UPSTREAM = "168.63.129.16"
+      FORWARDERS = "/etc/contoso-onprem-dns/forwarders"
+
+      def qname(packet):
+          labels, i = [], 12
+          while i < len(packet) and packet[i] != 0:
+              n = packet[i]
+              labels.append(packet[i + 1:i + 1 + n].decode("ascii", "replace"))
+              i += 1 + n
+          return ".".join(labels).lower().rstrip(".")
+
+      def upstream_for(name):
+          best, server = "", DEFAULT_UPSTREAM
+          try:
+              with open(FORWARDERS) as f:
+                  for line in f:
+                      parts = line.split("#")[0].split()
+                      if len(parts) == 2:
+                          suffix = parts[0].lower().strip(".")
+                          if (name == suffix or name.endswith("." + suffix)) and len(suffix) > len(best):
+                              best, server = suffix, parts[1]
+          except FileNotFoundError:
+              pass
+          return server, (best or "default upstream")
+
+      sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+      sock.bind(LISTEN)
+      while True:
+          data, client = sock.recvfrom(4096)
+          name = qname(data)
+          server, rule = upstream_for(name)
+          syslog.syslog(f"{name} -> {server} via {rule}")
+          try:
+              up = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+              up.settimeout(3)
+              up.sendto(data, (server, 53))
+              reply, _ = up.recvfrom(4096)
+              up.close()
+              sock.sendto(reply, client)
+          except OSError as e:
+              syslog.syslog(f"{name}: {server} failed: {e}")
+  - path: /usr/local/bin/onprem-lookup
+    permissions: '0755'
+    content: |
+      #!/usr/bin/python3
+      """Ask the field-office DNS stand-in (127.0.0.1) for an A record; print rcode, CNAMEs, and A records."""
+      import random, socket, struct, sys
+      name = sys.argv[1].rstrip(".")
+      qid = random.randint(0, 65535)
+      question = b"".join(bytes([len(p)]) + p.encode() for p in name.split(".")) + b"\x00" + struct.pack(">HH", 1, 1)
+      query = struct.pack(">HHHHHH", qid, 0x0100, 1, 0, 0, 0) + question
+      s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+      s.settimeout(5)
+      s.sendto(query, ("127.0.0.1", 53))
+      r, _ = s.recvfrom(4096)
+
+      def read_name(buf, i):
+          labels, end = [], None
+          while True:
+              n = buf[i]
+              if n == 0:
+                  i += 1
+                  break
+              if n & 0xC0 == 0xC0:
+                  if end is None:
+                      end = i + 2
+                  i = ((n & 0x3F) << 8) | buf[i + 1]
+                  continue
+              labels.append(buf[i + 1:i + 1 + n].decode())
+              i += 1 + n
+          return ".".join(labels), (end if end is not None else i)
+
+      answers = struct.unpack(">H", r[6:8])[0]
+      print(f"rcode {r[3] & 0x0F}")
+      _, i = read_name(r, 12)
+      i += 4
+      for _ in range(answers):
+          _, i = read_name(r, i)
+          rtype, _, _, rdlen = struct.unpack(">HHIH", r[i:i + 10])
+          i += 10
+          if rtype == 5:
+              print("CNAME", read_name(r, i)[0])
+          elif rtype == 1:
+              print("A", socket.inet_ntoa(r[i:i + 4]))
+          i += rdlen
+  - path: /etc/systemd/system/contoso-onprem-dns.service
+    permissions: '0644'
+    content: |
+      [Unit]
+      Description=Contoso field-office DNS stand-in (conditional forwarders)
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      ExecStart=/usr/bin/python3 /usr/local/lib/contoso/onprem-dns.py
+      Restart=always
+      DynamicUser=yes
+      AmbientCapabilities=CAP_NET_BIND_SERVICE
+      NoNewPrivileges=yes
+
+      [Install]
+      WantedBy=multi-user.target
+runcmd:
+  - [systemctl, daemon-reload]
+  - [systemctl, enable, --now, contoso-onprem-dns.service]

@@ -1,0 +1,14 @@
+{
+  "Name": "Contoso VM Maintenance",
+  "IsCustom": true,
+  "Description": "SC500 Lesson 1: read and restart the assigned maintenance VM; no write, delete, or access-administration permissions.",
+  "Actions": [
+    "Microsoft.Compute/virtualMachines/read",
+    "Microsoft.Compute/virtualMachines/instanceView/read",
+    "Microsoft.Compute/virtualMachines/restart/action"
+  ],
+  "NotActions": [],
+  "DataActions": [],
+  "NotDataActions": [],
+  "AssignableScopes": []
+}

@@ -1,0 +1,101 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "operatorUpn": "<your-admin-upn>",
+  "location": "eastus2",
+  "easmLocation": "eastus",
+  "resourceGroup": "rg-servicehub-prod-eastus2",
+  "easmResourceGroup": "rg-attacksurface-shared-eastus",
+  "deploymentName": "sc500-lesson12",
+  "managedBy": "sc500-l12-iac",
+  "baseline": "CTSO-L12-BASELINE",
+  "names": {
+    "exportStorage": "stservicehubexports001",
+    "archiveStorage": "stservicehubarchive001",
+    "container": "parts-exports",
+    "exportBlob": "parts-export-2026-11-05.csv",
+    "easmWorkspace": "easmattacksurface001",
+    "discoveryGroup": "servicehub-external"
+  },
+  "naming": {
+    "region": "eastus2",
+    "exempt": {
+      "container": "Blob container, a child object of the export store; the slides and runbook show it",
+      "exportBlob": "Blob name of the fictional nightly export, not an Azure resource",
+      "easmWorkspace": "CAF lists no abbreviation for a Defender EASM workspace, and the name takes letters and digits only, so it reads easm + workload + ###",
+      "discoveryGroup": "EASM data-plane object (discovery group), not an Azure resource; the runbook shows it"
+    }
+  },
+  "tags": {
+    "workload": "servicehub",
+    "env": "prod",
+    "region": "eastus2",
+    "criticality": "low",
+    "dataclass": "synthetic",
+    "costcenter": "sc500-video-course",
+    "managedby": "sc500-l12-iac",
+    "lesson": "12",
+    "scenario": "Contoso ServiceHub",
+    "lifecycle": "retain through Lesson 14; idle between takes (Reset-L12Lab.ps1)"
+  },
+  "easm": {
+    "seeds": [
+      {
+        "kind": "domain",
+        "name": "<your-domain>"
+      }
+    ],
+    "frequencyMilliseconds": 604800000,
+    "dataPlaneApiVersion": "2024-10-01-preview",
+    "trialDays": 30
+  },
+  "storageOverride": {
+    "note": "Resource-level Defender for Storage settings for the export store: override the subscription, keep malware scanning with a small monthly cap, keep sensitive data threat detection.",
+    "malwareScanningCapGBPerMonth": 5
+  },
+  "defenderWindow": {
+    "note": "Set-L12DefenderWindow.ps1 opens these subscription plans at least 24 hours before a take and closes them after the last lesson that needs them. On sub-ttt-labs-primary both read Free with a 30-day trial unused on 2026-11-05, so the first Open starts each trial (Learn: Azure gives a 30-day trial each time a plan is first activated on a subscription). Malware scanning isn't covered by the trial and bills per GB scanned from day one.",
+    "plans": {
+      "CloudPosture": {
+        "pricingTier": "Standard"
+      },
+      "StorageAccounts": {
+        "pricingTier": "Standard",
+        "subPlan": "DefenderForStorageV2",
+        "malwareScanningCapGBPerMonthPerAccount": 10000
+      }
+    }
+  },
+  "servicehubResourceGroups": [
+    "rg-servicehub-prod-eastus2",
+    "rg-servicehubai-prod-eastus2"
+  ],
+  "roles": {
+    "note": "your data role on the export store. Storage Blob Data Owner is the least-privileged built-in role that can read blob index tags, where Defender for Storage writes the malware scan verdict (demo 12.2). Contributor was the first choice and is removed by Deploy-L12Lab.ps1 if present.",
+    "storageBlobDataOwner": "b7e6dc6d-f1e8-4753-8033-0f276bb0955b",
+    "retiredStorageBlobDataContributor": "ba92f5b4-2d11-453d-a403-e96b0029c9fe"
+  },
+  "costPosture": {
+    "note": "you, 2026-09-28: keep idle cost at or near zero until you need it. Idle baseline: both stores exist, the export store has Defender for Storage excluded at the resource level, and the EASM workspace holds a small discovery (your one domain). Deploy-L12Lab.ps1 -Stage creates the container and export before a take; Reset-L12Lab.ps1 returns to the idle baseline."
+  },
+  "costEstimateUsd": {
+    "checked": "2026-11-05",
+    "retained": "Two Standard_LRS storage accounts holding a few KB bill fractions of a cent a month. Defender CSPM and Defender for Storage are inside their 30-day trials on this subscription.",
+    "perRun": "Malware scanning bills per GB scanned (a few KB per take). EASM bills per Approved asset per day if no trial applies; four or five assets cost cents a day.",
+    "notes": "Retail estimate before credits and tax. Missing billing rows don't prove zero cost."
+  },
+  "budget": {
+    "enabled": false
+  },
+  "posture": {
+    "note": "Assessment keys are Microsoft's fixed recommendation IDs, read live on 2026-09-28. The governance assignment key is the lab's own fixed name so Reset-L12Lab.ps1 can find and remove it. No VM is deployed in this lab, so the secret-finding keys are null and the Secrets mode says so.",
+    "sharedKeyAssessment": "3b363842-30f5-4056-980d-3a40fa5de8b3",
+    "sharedKeyDisplayName": "Storage accounts should prevent shared key access",
+    "secretFindingAssessment": null,
+    "secretFindingVm": null,
+    "secretFindingResourceGroup": null,
+    "governanceAssignmentKey": "7d3c2a1e-5b4f-4c8d-9e21-0c500a12b0f0",
+    "governanceDueDays": 14,
+    "complianceStandard": "Microsoft-cloud-security-benchmark"
+  }
+}

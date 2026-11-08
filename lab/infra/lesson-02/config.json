@@ -1,0 +1,11 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "location": "eastus2",
+  "identityGroup": "rg-sc500-l02-identity",
+  "targetGroup": "rg-sc500-l02-target",
+  "containerName": "aci-sc500-l02-identity",
+  "identityName": "id-sc500-l02-servicehub",
+  "deploymentName": "sc500-lesson02",
+  "managedBy": "sc500-l02-iac"
+}

@@ -1,0 +1,116 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "location": "eastus2",
+  "resourceGroup": "rg-servers-prod-eastus2",
+  "deploymentName": "contoso-servers-retained",
+  "legacyDeploymentName": "contoso-servers-legacy",
+  "managedBy": "sc500-l08-iac",
+  "baseline": "CTSO-L08-BASELINE",
+  "adminUsername": "contosoadmin",
+  "vmSizes": {
+    "app": "Standard_B1ms",
+    "onprem": "Standard_B1ms",
+    "legacy": "Standard_B1s"
+  },
+  "vmFamily": "standardBSFamily",
+  "vcpusNeeded": 3,
+  "naming": {
+    "standard": "Cloud Adoption Framework naming guidance, https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming",
+    "pattern": "{type}-{workload}-{env}-{region}-{###}",
+    "region": "eastus2",
+    "instance": "001",
+    "workloads": {
+      "servers": "Contoso's server estate that Lesson 8 hardens: the network, Bastion and resource group that ServiceHub's app server, the datacenter server and the legacy app server share.",
+      "servicehub": "Contoso's ServiceHub app server, the hardened one: Trusted Launch, encryption at host, no public IP.",
+      "datacenter": "A server in Contoso's datacenter. In the lab it's an Azure VM prepared, per Microsoft's evaluation procedure, to behave like an on-premises machine so it can be onboarded to Azure Arc.",
+      "legacyapp": "The legacy app server Contoso hasn't modernized: Standard security type, public IP, standing SSH. Bounded."
+    },
+    "exempt": {
+      "baselineAssignment": "A policy assignment. CAF's abbreviation list has no prefix for assignments, so it's named {control}-{scope workload}.",
+      "encryptionAtHostAssignment": "A policy assignment, named the same way."
+    }
+  },
+  "tags": {
+    "managedby": "sc500-l08-iac",
+    "lesson": "8",
+    "scenario": "Contoso ServiceHub",
+    "region": "eastus2",
+    "criticality": "low",
+    "dataclass": "synthetic",
+    "costcenter": "sc500-video-course",
+    "lifecycle": "retain-deallocated"
+  },
+  "names": {
+    "vnet": "vnet-servers-prod-eastus2-001",
+    "serversSubnet": "snet-servers",
+    "legacySubnet": "snet-legacy",
+    "serversNsg": "nsg-servers-prod-eastus2-001",
+    "bastion": "bas-servers-prod-eastus2-001",
+    "appVm": "vm-servicehub-prod-001",
+    "onpremVm": "vm-datacenter-prod-001",
+    "onpremComputer": "datacenter-001",
+    "arcMachine": "arcs-datacenter-prod-001",
+    "legacyVm": "vm-legacyapp-prod-001",
+    "legacyNsg": "nsg-vm-legacyapp-prod-001",
+    "legacyPublicIp": "pip-vm-legacyapp-prod-001",
+    "budget": "budget-rg-servers-prod-eastus2",
+    "baselineAssignment": "linux-baseline-servers",
+    "encryptionAtHostAssignment": "encryption-at-host-servers"
+  },
+  "budget": {
+    "enabled": true,
+    "monthlyAmountUsd": 25,
+    "actualThresholds": [
+      50,
+      80,
+      100
+    ],
+    "forecastThreshold": 100,
+    "contactRoles": [
+      "Owner"
+    ],
+    "why": "CAF governance CM01: budget alerts at the resource group level. The cost risk is Defender for Servers Plan 2 billing about 0.02 USD an hour per running VM or connected Arc machine once its trial ends, plus running VMs left on. Alerts go to the Owner role, so no email address sits in a template."
+  },
+  "autoShutdown": {
+    "enabled": true,
+    "time": "2300",
+    "timeZoneId": "Central Standard Time",
+    "why": "CAF and WAF cost guardrails: shut idle compute down. Deploy-L08Lab.ps1 -Soak deploys the schedules Disabled for the pre-take soak, because agentless scanning only scans a machine that's running during its daily cycle; the next deploy without -Soak turns them back on."
+  },
+  "addressPlan": {
+    "vnet": "10.80.0.0/22",
+    "servers": "10.80.1.0/24",
+    "legacy": "10.80.2.0/24",
+    "hosts": {
+      "app": "10.80.1.4",
+      "onprem": "10.80.1.5",
+      "legacy": "10.80.2.4"
+    }
+  },
+  "policyDefinitions": {
+    "linuxBaseline": "fc9b3da7-8347-4380-8e70-0a0361d8dedd",
+    "encryptionAtHost": "fc4d8e41-e223-45ea-9bf5-eada37891d87",
+    "guestConfigPrerequisitesInitiative": "12794019-7a00-42cf-95c2-882eed337cc8"
+  },
+  "jit": {
+    "port": 22,
+    "maxRequestAccessDuration": "PT3H",
+    "requestDuration": "PT1H"
+  },
+  "costEstimateUsd": {
+    "checked": "2026-09-27",
+    "source": "Azure retail prices API, eastus2, before credit or tax",
+    "vmB1msPerHour": 0.0208,
+    "vmB1sPerHour": 0.0104,
+    "standardSsdE4PerMonth": 2.4,
+    "standardPublicIpPerHour": 0.005,
+    "defenderForServersP2PerNodeHour": 0.02,
+    "defenderForServersP1PerNodeHour": 0.00672,
+    "bastionDeveloper": "No meter: free, shared pool, portal connections only",
+    "bastionBasicPerHour": 0.19,
+    "bastionStandardPerHour": 0.29,
+    "bastionPremiumPerHour": 0.45,
+    "notes": "Retained baseline: two deallocated B1ms VMs (their Standard SSD disks, about 0.17 USD a day together) and Bastion Developer (free). Running, each B1ms adds about 0.02 USD an hour, and Defender for Servers Plan 2 bills about 0.02 USD an hour for each running Azure VM it covers and each connected Arc machine; deallocated VMs and disconnected Arc machines aren't billed. The lab subscription had Plan 2's 30-day trial unused on November 1, 2026, so the first Open starts the trial. The legacy VM is bounded: a B1s and a Standard public IP, about 0.016 USD an hour while it exists. Deploy it with Deploy-L08Bounded.ps1 and remove it with Remove-L08Bounded.ps1."
+  }
+}

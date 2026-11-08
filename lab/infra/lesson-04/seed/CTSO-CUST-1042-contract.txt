@@ -1,0 +1,9 @@
+RESTRICTED: Contoso, Ltd. customer document (synthetic training data, SC-500 Lesson 4)
+
+Customer: Tailspin Toys
+Account: CTSO-CUST-1042
+Document: Maintenance contract summary, renewal 2027
+
+Coverage: quarterly preventive maintenance on two packaging lines.
+Billing contact and pricing schedule are held in the customer-documents container only.
+Service staff read service records; they don't read customer contracts.

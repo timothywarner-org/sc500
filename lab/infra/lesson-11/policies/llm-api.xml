@@ -1,0 +1,36 @@
+<!--
+  SC-500 Lesson 11: the AI gateway policy on ServiceHub's model API.
+  Inbound, in order:
+    1. Send the call to the Foundry backend (backend-id foundry-openai).
+    2. Drop the caller's api-key header. It's the gateway subscription key, not a Foundry key, and
+       the Foundry resource refuses keys anyway (disableLocalAuth).
+    3. Authenticate to Foundry as the gateway's own managed identity. The caller never holds a
+       Foundry credential for this application route. Your retained data role independently
+       permits direct Foundry calls; disabling local keys does not remove that authorization.
+    4. Enforce a tokens-per-minute budget per subscription. Over budget returns 429 with Retry-After.
+       estimate-prompt-tokens counts the prompt before the call, so an oversized prompt is refused
+       before it reaches the model. Headers report what's left and what the call consumed.
+  __TPM__ and __REMAINING_HEADER__ are filled in by gateway.bicep from config.json.
+-->
+<policies>
+  <inbound>
+    <base />
+    <set-backend-service backend-id="foundry-openai" />
+    <set-header name="api-key" exists-action="delete" />
+    <authentication-managed-identity resource="https://cognitiveservices.azure.com" />
+    <llm-token-limit counter-key="@(context.Subscription.Id)" tokens-per-minute="__TPM__" estimate-prompt-tokens="true" remaining-tokens-header-name="__REMAINING_HEADER__" tokens-consumed-header-name="x-ctso-tokens-consumed" />
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+    <!-- Foundry's apim-request-id belongs to its backend. Preserve a distinct gateway ID
+         so a caller receipt can join APIM's CorrelationId without relying on time alone. -->
+    <set-header name="x-ctso-gateway-request-id" exists-action="override"><value>@(context.RequestId.ToString())</value></set-header>
+  </outbound>
+  <on-error>
+    <base />
+    <set-header name="x-ctso-gateway-request-id" exists-action="override"><value>@(context.RequestId.ToString())</value></set-header>
+  </on-error>
+</policies>

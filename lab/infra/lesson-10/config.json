@@ -1,0 +1,62 @@
+{
+  "subscriptionId": "<your-subscription-id>",
+  "tenantId": "<your-tenant-id>",
+  "operatorUpn": "<your-admin-upn>",
+  "location": "eastus2",
+  "resourceGroup": "rg-aiagents-prod-eastus2",
+  "deploymentName": "sc500-lesson10",
+  "managedBy": "sc500-l10-iac",
+  "baseline": "CTSO-L10-BASELINE",
+  "directory": {
+    "marker": "SC-500 Lesson 10 lab; managedBy=sc500-l10-iac",
+    "tag": "sc500-l10-iac",
+    "blueprint": "SC500-L10 ServiceHub Agents Blueprint",
+    "assistant": "SC500-L10 ServiceHub Assistant",
+    "triage": "SC500-L10 ServiceHub Triage Agent",
+    "sponsorUpn": "sc500.garth@<your-domain>",
+    "secretLifetimeHours": 2
+  },
+  "conditionalAccess": {
+    "highRisk": "CTSO-L10-Agents-HighRisk-Block-ReportOnly",
+    "unapproved": "CTSO-L10-Agents-Unapproved-Block-ReportOnly"
+  },
+  "names": {
+    "storagePrefix": "stsc500l10",
+    "storageAccount": "stservicehubkbprod001",
+    "containers": [
+      "knowledge",
+      "finance",
+      "tickets"
+    ]
+  },
+  "fixtures": [
+    {
+      "container": "knowledge",
+      "blob": "servicehub-faq.md",
+      "file": "fixtures/knowledge/servicehub-faq.md"
+    },
+    {
+      "container": "knowledge",
+      "blob": "escalation-guide.md",
+      "file": "fixtures/knowledge/escalation-guide.md"
+    },
+    {
+      "container": "finance",
+      "blob": "customer-rate-card.csv",
+      "file": "fixtures/finance/customer-rate-card.csv"
+    },
+    {
+      "container": "tickets",
+      "blob": "open-tickets.csv",
+      "file": "fixtures/tickets/open-tickets.csv"
+    }
+  ],
+  "roles": {
+    "blobDataReader": "2a2b9908-6ea1-4ae2-8e65-a410df84e7d1",
+    "blobDataContributor": "ba92f5b4-2d11-453d-a403-e96b0029c9fe"
+  },
+  "costEstimateUsd": {
+    "checked": "2026-09-27",
+    "notes": "Directory objects (the agent identity blueprint, its principal, two agent identities, and two report-only Conditional Access policies) have no meter; the tenant's Agent 365 and Microsoft 365 E5 developer licenses already cover the agent features. The Azure part is one Standard_LRS storage account holding a few kilobytes of fictional fixture files, which costs well under a cent a day. The lab never keeps a credential: the token demo adds a short-lived blueprint secret, uses it in memory, and removes it before the script exits."
+  }
+}

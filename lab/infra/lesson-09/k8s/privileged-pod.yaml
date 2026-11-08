@@ -1,0 +1,14 @@
+# The misconfiguration for SC-500 Lesson 9, demo 9.1: a trusted image from the lab registry,
+# asking for a privileged container. Azure Policy for Kubernetes (Gatekeeper) should refuse it at
+# admission because of the k8s-no-privileged-servicehub assignment (Deny). It never reaches a node.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: servicehub-debug
+  namespace: servicehub
+  labels: { app: servicehub-debug }
+spec:
+  containers:
+    - name: debug
+      image: __REGISTRY__/servicehub/status:1.0
+      securityContext: { privileged: true }
