@@ -1,52 +1,30 @@
 # Lesson 01: Identity Foundations: PIM, RBAC, Custom Roles, and Governance Scope
 
-**Maps to:** FG1.1, FG1.3
-**Estimated runtime:** ~40 minutes (video) + ~30-60 minutes (hands-on)
-
----
+**Exam SC-500 domain:** Manage identity, access, and governance (20-25%)  
+**Study guide sections:** Secure access to resources by using Microsoft Entra ID; Implement governance to enforce security and regulatory compliance
 
 ## Learning objectives
 
-By the end of this lesson you can:
+- 1.1 Implement and configure Microsoft Entra PIM for Azure resources and Microsoft Entra roles
+- 1.2 Manage Azure built-in role assignments at management group, subscription, resource group, and resource scope, and create and manage custom Azure roles
+- 1.3 Manage Microsoft Entra directory roles, including creating and managing custom Microsoft Entra roles
+- 1.4 Evaluate and remediate overprivileged Azure RBAC assignments using access reviews and PIM, and implement resource locks to protect critical resources
 
-- Implement and configure Microsoft Entra Privileged Identity Management for Azure resources and Entra roles
-- Manage Azure built-in role assignments at MG/subscription/RG/resource scope, and create custom Azure roles
-- Manage Microsoft Entra directory roles
-- Evaluate and remediate overprivileged access using Azure RBAC tooling and PIM access reviews, and apply resource locks
+## Hands-on practice
 
----
+Every demo in this lesson is work you can repeat in your own subscription, mostly in the Azure portal or the Microsoft admin centers. Do each one yourself after you watch it, because clicking through a configuration sticks far better than reading about it.
 
-## Why this lesson matters on the exam
+The step-by-step walkthrough and any lab files for this lesson land in [`demos/`](demos/) after the lesson publishes. Watch the [changelog](../../CHANGELOG.md) for updates.
 
-The SC-500 exam tests these objectives in scenario-based items. Expect questions that give you a business requirement and ask you to pick the right Microsoft service, the right configuration, or the right remediation. The demos in this folder are designed to make those decisions feel obvious.
+## Before you start
 
----
+- An Azure subscription you control, ideally a dedicated sandbox with a budget alert
+- A resource group just for this lesson, so cleanup is a single delete
+- Microsoft Entra ID P2 (or Microsoft Entra ID Governance) for Privileged Identity Management and access reviews.
 
-## Demo runbook
+## Go deeper
 
-The `demos/` subfolder will contain hands-on scripts as the video course is recorded. Planned demos:
+- [Exam SC-500 study guide](https://learn.microsoft.com/credentials/certifications/resources/study-guides/sc-500)
+- [Curated Microsoft Learn links for this course](../../docs/resources.md)
 
-- [ ] **01.1** — Implement and configure Microsoft Entra Privileged Identity Management for Azure resources and Entra roles
-- [ ] **01.2** — Manage Azure built-in role assignments at MG/subscription/RG/resource scope, and create custom Azure roles
-- [ ] **01.3** — Manage Microsoft Entra directory roles
-- [ ] **01.4** — Evaluate and remediate overprivileged access using Azure RBAC tooling and PIM access reviews, and apply resource locks
-
-Each demo lands as an idempotent script (PowerShell + Azure CLI equivalents) with cleanup at the end. Watch this repo's [CHANGELOG](../../CHANGELOG.md) for the publication schedule.
-
----
-
-## Prerequisites for the demos
-
-- Azure subscription with Owner or Contributor at the subscription scope
-- A resource group dedicated to this lesson (the demos will create one named `rg-sc500-l01`)
-- Tools: Azure CLI 2.60+, Azure PowerShell Az 11+, the active subscription set to your sandbox
-
----
-
-## Further reading
-
-See [docs/resources.md](../../docs/resources.md) for the curated Microsoft Learn links that back this lesson.
-
----
-
-[← Course README](../../README.md) · [Full objective map →](../../docs/exam-objectives.md)
+[Course README](../../README.md) | [Exam objective map](../../docs/exam-objectives.md)

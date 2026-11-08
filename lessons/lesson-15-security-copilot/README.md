@@ -1,52 +1,30 @@
 # Lesson 15: Microsoft Security Copilot for Cloud and AI Defenders
 
-**Maps to:** FG4.3
-**Estimated runtime:** ~40 minutes (video) + ~30-60 minutes (hands-on)
-
----
+**Exam SC-500 domain:** Manage and monitor security posture (20-25%)  
+**Study guide sections:** Implement Microsoft Security Copilot
 
 ## Learning objectives
 
-By the end of this lesson you can:
+- 15.1 Configure workspaces for Microsoft Security Copilot
+- 15.2 Manage permissions and roles in Microsoft Security Copilot
+- 15.3 Enable and configure Security Copilot plugins for Microsoft Defender XDR, Microsoft Sentinel, Microsoft Intune, Microsoft Entra, and selected third-party security products
+- 15.4 Enable and configure Microsoft agents and Security Store agents in Security Copilot for triage, KQL generation, incident summarization, and assisted response
 
-- Configure workspaces for Microsoft Security Copilot
-- Manage permissions and roles in Security Copilot
-- Enable plugins for Microsoft Defender XDR, Sentinel, Intune, Entra, and selected third-party security products
-- Enable Microsoft agents and Security Store agents for triage, KQL generation, incident summarization, and AI-assisted response
+## Hands-on practice
 
----
+Every demo in this lesson is work you can repeat in your own subscription, mostly in the Azure portal or the Microsoft admin centers. Do each one yourself after you watch it, because clicking through a configuration sticks far better than reading about it.
 
-## Why this lesson matters on the exam
+The step-by-step walkthrough and any lab files for this lesson land in [`demos/`](demos/) after the lesson publishes. Watch the [changelog](../../CHANGELOG.md) for updates.
 
-The SC-500 exam tests these objectives in scenario-based items. Expect questions that give you a business requirement and ask you to pick the right Microsoft service, the right configuration, or the right remediation. The demos in this folder are designed to make those decisions feel obvious.
+## Before you start
 
----
+- An Azure subscription you control, ideally a dedicated sandbox with a budget alert
+- A resource group just for this lesson, so cleanup is a single delete
+- Microsoft Security Copilot runs on Security Compute Units (SCUs). Find out how your organization gets capacity before you provision any, because provisioned SCUs bill by the hour.
 
-## Demo runbook
+## Go deeper
 
-The `demos/` subfolder will contain hands-on scripts as the video course is recorded. Planned demos:
+- [Exam SC-500 study guide](https://learn.microsoft.com/credentials/certifications/resources/study-guides/sc-500)
+- [Curated Microsoft Learn links for this course](../../docs/resources.md)
 
-- [ ] **15.1** — Configure workspaces for Microsoft Security Copilot
-- [ ] **15.2** — Manage permissions and roles in Security Copilot
-- [ ] **15.3** — Enable plugins for Microsoft Defender XDR, Sentinel, Intune, Entra, and selected third-party security products
-- [ ] **15.4** — Enable Microsoft agents and Security Store agents for triage, KQL generation, incident summarization, and AI-assisted response
-
-Each demo lands as an idempotent script (PowerShell + Azure CLI equivalents) with cleanup at the end. Watch this repo's [CHANGELOG](../../CHANGELOG.md) for the publication schedule.
-
----
-
-## Prerequisites for the demos
-
-- Azure subscription with Owner or Contributor at the subscription scope
-- A resource group dedicated to this lesson (the demos will create one named `rg-sc500-l15`)
-- Tools: Azure CLI 2.60+, Azure PowerShell Az 11+, the active subscription set to your sandbox
-
----
-
-## Further reading
-
-See [docs/resources.md](../../docs/resources.md) for the curated Microsoft Learn links that back this lesson.
-
----
-
-[← Course README](../../README.md) · [Full objective map →](../../docs/exam-objectives.md)
+[Course README](../../README.md) | [Exam objective map](../../docs/exam-objectives.md)

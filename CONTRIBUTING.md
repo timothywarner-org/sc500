@@ -1,37 +1,38 @@
 # Contributing
 
-Thanks for helping make this course companion better! This repo accepts fixes from anyone working through the SC-500 course or the SC-500 exam itself.
+Thank you for helping make this course companion better. Fixes are welcome from anyone working through the SC-500 course or preparing for the exam.
 
 ## What to submit
 
-**Yes please:**
+**Yes, please:**
 
-- Typos, broken links, dead Microsoft Learn URLs
-- Demo scripts that no longer work because a service changed
-- Clarifications on Microsoft Defender for Cloud, Microsoft Sentinel, or Microsoft Foundry behavior you discovered while studying
-- Additional `az` / `Az` / Bicep / Terraform equivalents for the same demo
-- Exam-realistic practice scenarios (no live exam content — see below)
+- Typos, broken links, and dead Microsoft Learn URLs
+- Walkthrough steps that no longer match the portal because a service changed
+- Clarifications about Microsoft Defender for Cloud, Microsoft Sentinel, Microsoft Foundry, or Microsoft Entra behavior you found while studying
+- Optional command-line equivalents (Azure CLI, Azure PowerShell, or Bicep) for a portal step, clearly labeled as optional
+- Exam-style practice scenarios that you wrote yourself (see the next section)
 
-**Please don't submit:**
+**Please do not submit:**
 
-- Verbatim or paraphrased exam questions from any live or beta SC-500 exam. This violates the [Microsoft Certification Exam Policies](https://learn.microsoft.com/credentials/certifications/certification-exam-policies) and the Pearson VUE NDA you accepted when sitting the exam.
+- Verbatim or paraphrased questions from any SC-500 exam, live or beta. That violates the [Microsoft certification exam policies](https://learn.microsoft.com/credentials/certifications/certification-exam-policies) and the agreement you accepted when you sat the exam.
 - Promotional content for other courses or products
-- Off-topic Azure content that doesn't map to a published SC-500 sub-domain
+- Azure content that does not map to a skill in the [exam objective map](docs/exam-objectives.md)
 
 ## How to submit
 
-1. **For small fixes** (typos, broken links): open an issue using the *Typo or broken link* template, or send a pull request directly.
-2. **For demo fixes or new content**: open an issue first using the *Content question or demo issue* template so we can scope the change before you spend time on it.
-3. **For larger contributions**: ping [@timothywarner](https://github.com/timothywarner) on the issue thread before opening a PR.
+1. **Small fixes** (typos, broken links): open an issue with the *Typo or broken link* template, or send a pull request.
+2. **Walkthrough fixes or new content**: open an issue with the *Content question or demo issue* template first, so the change is scoped before you spend time on it.
+3. **Larger contributions**: mention [@timothywarner](https://github.com/timothywarner) on the issue before you open a pull request.
 
 ## Style
 
-- Demo scripts in PowerShell follow the project conventions: `Verb-Noun` cmdlet naming, `[CmdletBinding()]`, comment-based help, parameter validation, idempotent.
-- Bash and Azure CLI demos use `set -euo pipefail` and the parameter block at the top of the file.
-- Bicep and Terraform follow Microsoft's [Azure naming convention](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming).
-- Markdown uses GitHub-flavored Markdown. Tables for lists of three or more items. Code fences with language hints.
-- All demos are **idempotent and self-cleaning**. Include a `Remove-` / `az ... delete` block at the end of every demo so learners don't accumulate orphan resources.
+- Walkthroughs lead with portal steps. Command-line steps are optional and say so.
+- Every name, region, and subscription a learner would change lives in one settings block at the top of the walkthrough or script, never buried in a later step.
+- PowerShell uses approved `Verb-Noun` names, `[CmdletBinding()]`, comment-based help, and parameter validation. Bash uses `set -euo pipefail`.
+- Every walkthrough and script ends with cleanup, so learners do not pay for leftover resources.
+- No secrets, keys, connection strings, or real tenant data in any file.
+- Markdown is GitHub-flavored, plain ASCII, with language hints on code fences. Bicep follows the [Azure resource naming guidance](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming).
 
 ## Code of conduct
 
-Be kind. Assume good faith. Disagree with ideas, not with people. The full [Contributor Covenant](https://www.contributor-covenant.org/version/2/1/code_of_conduct/) applies.
+Be kind. Assume good faith. Disagree with ideas, not with people. The [Contributor Covenant](https://www.contributor-covenant.org/version/2/1/code_of_conduct/) applies.

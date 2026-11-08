@@ -1,173 +1,117 @@
-# SC-500: Cloud and AI Security Engineer Associate — Course Companion
+# Exam SC-500: Cloud and AI Security Engineer Associate (Video)
 
-> **Exam companion repository for the Pearson / Microsoft Press video course taught by [Tim Warner](https://timw.info), Microsoft MVP.**
->
-> 15 lessons · ~10 hours runtime · 100% aligned to the official Microsoft *Skills Measured* document for **Exam SC-500**.
+[![Study guide checked](https://img.shields.io/badge/study%20guide-checked%202026--11--08-0078D4?style=for-the-badge)](https://learn.microsoft.com/credentials/certifications/resources/study-guides/sc-500)
+[![License: MIT](https://img.shields.io/badge/license-MIT-2EA44F?style=for-the-badge)](LICENSE)
+[![Website](https://img.shields.io/badge/website-TechTrainerTim.com-24292F?style=for-the-badge)](https://techtrainertim.com)
+[![GitHub](https://img.shields.io/badge/GitHub-timothywarner--org-24292F?style=for-the-badge&logo=github)](https://github.com/timothywarner-org)
 
-[![Microsoft Learn](https://img.shields.io/badge/Microsoft%20Learn-SC--500-0078D4?logo=microsoft)](https://learn.microsoft.com/credentials/certifications/exams/sc-500/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Course Status](https://img.shields.io/badge/status-in%20production-yellow)]()
-[![Beta Exam](https://img.shields.io/badge/Beta%20Exam-May%202026-blue)]()
+Tim Warner | Pearson video course, Microsoft Press imprint | Companion repository
 
----
+**Secure Azure, hybrid, multicloud, and AI workloads end to end, and walk into Exam SC-500 knowing why each control exists.**
 
-## About this repository
+How do you prove that a managed identity can read a resource group but not change it? What stops a Copilot agent from reading a SharePoint site it should never see? When Microsoft Sentinel fires an incident at 2:00 AM, what runs before a human wakes up? This course answers those questions with working demos, and this repository is where you practice them.
 
-This repo is the **optional but recommended companion** to the video course *Exam SC-500: Cloud and AI Security Engineer Associate (Video)*, published by Pearson under the Microsoft Press imprint. The course teaches every published objective on Microsoft's SC-500 exam, the successor to AZ-500.
+**Watching the videos?** Open the lesson folder that matches the lesson you are on. Each folder lists the exact objectives, the study guide sections they cover, and what to line up before you start.
 
-Inside, you will find:
+**Studying without the videos?** Start with the [exam objective map](docs/exam-objectives.md). Rate yourself on every skill, then spend your time on anything below a 4.
 
-- A folder per lesson with hands-on demo scripts, Azure CLI / PowerShell commands, and ARM / Bicep / Terraform snippets
-- A consolidated objectives map showing exactly which lesson covers which Microsoft Functional Group (FG) sub-domain
-- Curated links to Microsoft Learn, Microsoft Defender for Cloud documentation, Microsoft Sentinel content hub solutions, and Microsoft Security Copilot guidance
-- Practice scenarios and a study schedule template you can copy into your tool of choice
-
-> **Heads up:** This repo is in active development alongside the course recording. Content lands lesson by lesson as the videos are produced. Star and watch the repo to track updates.
-
----
-
-## Exam at a glance
-
-| | |
-|---|---|
-| **Exam code** | SC-500 |
-| **Full title** | Microsoft Certified: Cloud and AI Security Engineer Associate |
-| **Successor to** | AZ-500 (retires August 31, 2026) |
-| **Beta exam window** | May 2026 |
-| **General availability** | July 2026 |
-| **Format** | Multiple choice, case studies, scenario-based |
-| **Official study guide** | [SC-500 Skills Measured (Microsoft)](https://learn.microsoft.com/credentials/certifications/exams/sc-500/) |
-
-### Skills measured (published weights)
-
-| Functional group | Weight | Lessons |
-|---|---|---|
-| Manage identity, access, and governance | 20-25% | 1, 2, 3 |
-| Secure storage, databases, and networking | 25-30% | 4, 5, 6, 7 |
-| Secure compute (including AI workloads) | 20-25% | 8, 9, 10, 11 |
-| Manage and monitor security posture | 20-25% | 12, 13, 14, 15 |
-
----
+**Want every click?** Step-by-step walkthroughs and lab files land in each lesson's `demos/` folder after that lesson publishes. Watch this repository, or check the [changelog](CHANGELOG.md).
 
 ## Course outline
 
-| # | Lesson | Maps to |
-|---|---|---|
-| 1 | [Identity Foundations: PIM, RBAC, Custom Roles, and Governance Scope](lessons/lesson-01-identity-foundations/) | FG1.1, FG1.3 |
-| 2 | [Entra ID Access: MFA, Conditional Access, Apps, and Managed Identities](lessons/lesson-02-entra-id-access/) | FG1.1 |
-| 3 | [Key Vault, Azure Policy, Compliance, Backup, and IaC](lessons/lesson-03-keyvault-policy-iac/) | FG1.2, FG1.3 |
-| 4 | [Secure Storage and Databases](lessons/lesson-04-storage-databases/) | FG2.1, FG2.2 |
-| 5 | [Network Segmentation: NSGs, ASGs, AVNM, Virtual WAN, VPN](lessons/lesson-05-network-segmentation/) | FG2.3 |
-| 6 | [Private Connectivity: Private Link, Private Endpoints, Entra Private Access](lessons/lesson-06-private-connectivity/) | FG2.3 |
-| 7 | [Perimeter Protection: Azure Firewall and Network Watcher](lessons/lesson-07-perimeter-protection/) | FG2.3 |
-| 8 | [Secure Servers and Virtual Machines](lessons/lesson-08-servers-vms/) | FG3.2, FG4.1 |
-| 9 | [Secure Application Platform Services: Containers, Serverless, App Service, WAF, APIM](lessons/lesson-09-app-platform/) | FG3.3 |
-| 10 | [Secure AI Workloads I: Data Overexposure, Copilot, Entra Agent ID](lessons/lesson-10-ai-workloads-i/) | FG3.1 |
-| 11 | [Secure AI Workloads II: Foundry, AI Gateway, Defender for AI](lessons/lesson-11-ai-workloads-ii/) | FG3.1 |
-| 12 | [Manage Posture with Defender for Cloud and Multicloud](lessons/lesson-12-defender-cloud-multicloud/) | FG4.1 |
-| 13 | [Microsoft Sentinel I: Workspace, Connectors, Log Ingestion](lessons/lesson-13-sentinel-i/) | FG4.2 |
-| 14 | [Microsoft Sentinel II: Analytics, Automation, KQL, Purview Audit](lessons/lesson-14-sentinel-ii/) | FG4.2 |
-| 15 | [Microsoft Security Copilot for Cloud and AI Defenders](lessons/lesson-15-security-copilot/) | FG4.3 |
+| Lesson | Title | Study guide domain |
+| --- | --- | --- |
+| 1 | [Identity Foundations: PIM, RBAC, Custom Roles, and Governance Scope](lessons/lesson-01-identity-foundations/) | Manage identity, access, and governance |
+| 2 | [Entra ID Access: MFA, Conditional Access, Apps, and Managed Identities](lessons/lesson-02-entra-id-access/) | Manage identity, access, and governance |
+| 3 | [Key Vault, Azure Policy, Compliance, Backup, and Infrastructure as Code](lessons/lesson-03-keyvault-policy-iac/) | Manage identity, access, and governance |
+| 4 | [Secure Storage and Databases](lessons/lesson-04-storage-databases/) | Secure storage, databases, and networking |
+| 5 | [Network Segmentation: NSGs, ASGs, Virtual Network Manager, Virtual WAN, and VPN](lessons/lesson-05-network-segmentation/) | Secure storage, databases, and networking |
+| 6 | [Private Connectivity: Private Link, Private Endpoints, and Microsoft Entra Private Access](lessons/lesson-06-private-connectivity/) | Secure storage, databases, and networking |
+| 7 | [Perimeter Protection: Azure Firewall and Network Watcher Diagnostics](lessons/lesson-07-perimeter-protection/) | Secure storage, databases, and networking |
+| 8 | [Secure Servers and Virtual Machines](lessons/lesson-08-servers-vms/) | Secure compute; Manage and monitor security posture |
+| 9 | [Secure Application Platform Services: Containers, Serverless, App Service, WAF, and API Management](lessons/lesson-09-app-platform/) | Secure compute |
+| 10 | [Secure AI Workloads I: Data Overexposure, Copilot, and Microsoft Entra Agent ID](lessons/lesson-10-ai-workloads-i/) | Secure compute |
+| 11 | [Secure AI Workloads II: Microsoft Foundry, AI Gateway, and Defender for AI](lessons/lesson-11-ai-workloads-ii/) | Secure compute |
+| 12 | [Manage Posture with Microsoft Defender for Cloud and Multicloud](lessons/lesson-12-defender-cloud-multicloud/) | Manage and monitor security posture; Manage identity, access, and governance |
+| 13 | [Microsoft Sentinel I: Workspace, Connectors, and Log Ingestion](lessons/lesson-13-sentinel-i/) | Manage and monitor security posture |
+| 14 | [Microsoft Sentinel II: Analytics, Automation, KQL Hunting, and Purview Audit](lessons/lesson-14-sentinel-ii/) | Manage and monitor security posture |
+| 15 | [Microsoft Security Copilot for Cloud and AI Defenders](lessons/lesson-15-security-copilot/) | Manage and monitor security posture |
 
-See the full mapping in [`docs/exam-objectives.md`](docs/exam-objectives.md).
+The [exam objective map](docs/exam-objectives.md) goes one level deeper and ties every skill in Microsoft's study guide to the lesson that teaches it.
 
----
+## Exam at a glance
 
-## How to use this repo
+| Item | Detail |
+| --- | --- |
+| Exam | SC-500: Implementing End-to-End Security Controls for Cloud and AI Workloads |
+| Certification | Microsoft Certified: Cloud and AI Security Engineer Associate |
+| Replaces | AZ-500, which retired on August 31, 2026 |
+| Passing score | 700 |
+| Official study guide | [Exam SC-500 study guide](https://learn.microsoft.com/credentials/certifications/resources/study-guides/sc-500) (Microsoft's page shows "Last updated on 2026-05-13") |
+| Free practice assessment | Not available yet (checked November 8, 2026). Check the [certification page](https://learn.microsoft.com/credentials/certifications/cloud-and-ai-security-engineer-associate/) for updates. |
 
-### If you're watching the videos
+### Skills measured
 
-1. Open the lesson folder that matches the video you're watching.
-2. Use the `README.md` in that lesson folder as your hands-on guide.
-3. The demo scripts are idempotent and parameterized — clone them into your own sandbox subscription and run them as written, or modify the parameters at the top of each file.
+| Domain | Weight | Lessons |
+| --- | --- | --- |
+| Manage identity, access, and governance | 20-25% | 1, 2, 3, 12 |
+| Secure storage, databases, and networking | 25-30% | 4, 5, 6, 7 |
+| Secure compute | 20-25% | 8, 9, 10, 11 |
+| Manage and monitor security posture | 20-25% | 8, 12, 13, 14, 15 |
 
-### If you're prepping for the exam without the videos
+Lesson 8 shows up twice because Defender Vulnerability Management for Azure VMs sits in the posture domain. Lesson 12 shows up twice because regulatory compliance in Defender for Cloud sits in the governance domain.
 
-1. Start with [`docs/exam-objectives.md`](docs/exam-objectives.md) and self-rate each sub-domain on a 1-5 confidence scale.
-2. For any sub-domain below a 4, open the matching lesson folder and work through the demo scripts on your own subscription.
-3. Use [`docs/study-plan-template.md`](docs/study-plan-template.md) as a 30-, 60-, or 90-day study calendar.
+## How the hands-on work runs
 
-### If you're a corporate L&D buyer
+Most demos happen in the Azure portal and the Microsoft admin centers, because that is where you build the muscle memory the exam rewards. When a demo uses a Bicep template or a script, the walkthrough explains it before you run it, and the names, region, and subscription come from a short settings block you fill in with your own values.
 
-Tim's content is licensed for individual learner use under MIT (see [LICENSE](LICENSE)). For enterprise team licensing through Pearson, ACM Learning Center, or O'Reilly, contact your account representative or reach Tim directly via [timw.info](https://timw.info).
+Every walkthrough ends with cleanup steps. Several lessons use paid Defender plans and hourly resources, so each lesson README lists what to watch before you start.
 
----
+## Before you start
 
-## Prerequisites
+- An **Azure subscription** where you hold Owner at the subscription scope. A dedicated sandbox with a budget alert is the right call.
+- A **Microsoft Entra tenant** you administer. Privileged Identity Management needs Microsoft Entra ID P2 or Microsoft Entra ID Governance, and Conditional Access needs P1 or P2.
+- A **Microsoft 365 tenant** for Lesson 10 (SharePoint, Microsoft Purview, Copilot Studio, and the Microsoft 365 admin center).
+- **Microsoft Defender for Cloud** on your subscription. Foundational CSPM is free; the workload protection plans and Defender CSPM are paid.
+- Optional: [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) and [Azure PowerShell](https://learn.microsoft.com/powershell/azure/install-azure-powershell) for the steps that use them.
+- Working knowledge of Azure resources, networking, and identity at roughly the AZ-104 level.
 
-To run the demos in your own subscription you need:
+## How to study: the three pillars
 
-- An **Azure subscription** with Owner or Contributor at the subscription scope (sandbox or pay-as-you-go is fine; budget alerts strongly recommended)
-- **Azure CLI** 2.60+ ([install](https://learn.microsoft.com/cli/azure/install-azure-cli))
-- **Azure PowerShell** Az 11+ ([install](https://learn.microsoft.com/powershell/azure/install-azps-windows))
-- **Microsoft Entra ID** P1 or P2 license for Conditional Access and Privileged Identity Management demos
-- **Microsoft Defender for Cloud** enabled (Free tier is fine for posture management; certain demos require enhanced security features)
-- **Microsoft Sentinel** workspace (a Log Analytics workspace plus the Sentinel solution)
-- A working knowledge of Azure resource hierarchy, networking, and identity at the AZ-104 level
+Every study week, touch all three:
 
----
+1. **Theory**: the video course, Microsoft Learn, and the official study guide.
+2. **Hands-on experience**: your own sandbox and the walkthroughs in this repository.
+3. **Practice questions**: timed questions with a full review of every miss. Microsoft's free practice assessment for SC-500 was not available when this page was checked, so watch the certification page.
 
-## Repository structure
+The [study plan template](docs/study-plan-template.md) lays out 30-, 60-, and 90-day schedules that each come to about 40 hours.
 
-```
-sc500/
-├── README.md                          ← you are here
-├── LICENSE                            ← MIT
-├── CONTRIBUTING.md                    ← how to report issues and submit fixes
-├── CHANGELOG.md                       ← lesson-by-lesson publication log
-├── docs/
-│   ├── exam-objectives.md             ← full SC-500 objective domain map
-│   ├── study-plan-template.md         ← 30/60/90 day calendar template
-│   └── resources.md                   ← curated Microsoft Learn and external links
-├── lessons/
-│   ├── lesson-01-identity-foundations/
-│   ├── lesson-02-entra-id-access/
-│   ├── ... (one folder per lesson)
-│   └── lesson-15-security-copilot/
-├── demos/
-│   └── (demo scripts and ARM/Bicep/Terraform artifacts)
-└── .github/
-    └── ISSUE_TEMPLATE/                ← typo, broken link, content question
-```
+## What is in this repository
 
----
+- [`lessons/`](lessons/): one folder per lesson, each with a README and a `demos/` folder for its walkthroughs
+- [`docs/exam-objectives.md`](docs/exam-objectives.md): every study guide skill mapped to a lesson, with a self-rating column
+- [`docs/study-plan-template.md`](docs/study-plan-template.md): 30-, 60-, and 90-day schedules
+- [`docs/resources.md`](docs/resources.md): curated Microsoft Learn links by exam domain
+- [`demos/`](demos/): demo material that spans more than one lesson
+- [`CHANGELOG.md`](CHANGELOG.md): what changed and when
+- [`CONTRIBUTING.md`](CONTRIBUTING.md): how to report a problem or send a fix
+- [`NOTICE.md`](NOTICE.md) and [`LICENSE`](LICENSE): license, publisher, and trademark notices
 
-## Author
+## About the author
 
-**Tim Warner** is a Microsoft MVP in **Azure AI** and **Cloud and Datacenter Management**, Principal Staff Author at Pluralsight (200+ courses, 1M+ learners), Live Learning Instructor at O'Reilly, and Senior Content Developer at Pearson. He has trained Microsoft certification candidates since the days when 70-290 was a thing.
+**Tim Warner** is a Microsoft MVP, a Microsoft Certified Trainer since 1997, and a Principal Staff Author at Pluralsight with more than 200 courses and over a million learners. He teaches live courses for Pearson and O'Reilly, and he builds and ships MCP servers. His teaching model comes from Richard Feynman: start from first principles, prove the idea with a working demo, and keep the examples close to real enterprise work.
 
-- Website: [timw.info](https://timw.info)
-- YouTube: [@TechTrainerTim](https://www.youtube.com/@TechTrainerTim)
-- Bluesky: [@techtrainertim.bsky.social](https://bsky.app/profile/techtrainertim.bsky.social)
-- LinkedIn: [in/timothywarner](https://www.linkedin.com/in/timothywarner/)
-
----
-
-## How to study (the three-pillar method)
-
-Tim tells every certification student to balance three pillars:
-
-1. **Theoretical knowledge** — this course, Microsoft Learn, the published study guide
-2. **Hands-on experience** — your own Azure sandbox, the demo scripts in this repo
-3. **Practice exam review** — [MeasureUp](https://www.measureup.com/) is Microsoft's official practice exam vendor
-
-This repo gives you pillar 2. The video course gives you pillar 1. MeasureUp closes pillar 3.
-
----
-
-## License
-
-MIT — see [LICENSE](LICENSE). Course videos and Pearson-branded materials are separately licensed by Pearson and not redistributable.
-
----
+You can find his video courses on [Pluralsight](https://www.pluralsight.com/authors/tim-warner), short tutorials on [YouTube](https://www.youtube.com/@TechTrainerTim), more course repositories on [GitHub](https://github.com/timothywarner-org), and everything else at [TechTrainerTim.com](https://techtrainertim.com). Connect with him on [LinkedIn](https://www.linkedin.com/in/timothywarner).
 
 ## Acknowledgments
 
 - **Microsoft Press** and **Pearson** for publishing this title
 - **Laura Lewin** for editorial steering
-- The Microsoft Defender, Sentinel, Foundry, and Entra teams for shipping the products this exam actually tests
-- The thousands of certification candidates who have taken Tim's courses and asked the questions that made this material better
+- The Microsoft Entra, Defender, Sentinel, Purview, and Foundry teams for shipping the products this exam tests
+- Every certification candidate who asked the question that made this material better
 
----
+## License
 
-*Go earn that badge.* 🎯
+The code and documentation in this repository are released under the [MIT License](LICENSE). The course videos and Pearson materials are licensed separately by Pearson. See [NOTICE.md](NOTICE.md) for publisher and trademark notices.
+
+*Go earn that badge.*
