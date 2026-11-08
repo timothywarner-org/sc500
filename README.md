@@ -11,7 +11,7 @@ Tim Warner | Pearson video course, Microsoft Press imprint | Companion repositor
 
 How do you prove that a managed identity can read a resource group but not change it? What stops a Copilot agent from reading a SharePoint site it should never see? When Microsoft Sentinel fires an incident at 2:00 AM, what runs before a human wakes up? This course answers those questions with working demos, and this repository is where you practice them.
 
-**Watching the videos?** Open the lesson folder that matches the lesson you are on. Each folder lists the exact objectives, the study guide sections they cover, and what to line up before you start.
+**Watching the videos?** Open the lesson folder that matches the lesson you are on. Each folder lists the exact objectives, the study guide sections they cover, and what to line up before you start. Its `lab-guide.md` has every portal step and command from the lesson's demos, in the order the video runs them, so you can do each demo yourself.
 
 **Studying without the videos?** Start with the [exam objective map](docs/exam-objectives.md). Rate yourself on every skill, then spend your time on anything below a 4.
 
@@ -65,7 +65,9 @@ Lesson 8 shows up twice because Defender Vulnerability Management for Azure VMs 
 
 Most demos happen in the Azure portal and the Microsoft admin centers, because that is where you build the muscle memory the exam rewards. When a demo uses a Bicep template or a script, you get the same file the lesson runs on screen, and its help says what it reads and what it changes. Your tenant, subscription, domain, and a short name suffix go in once with [`lab/Set-LabConfig.ps1`](lab/Set-LabConfig.ps1), and every resource name comes from the lesson's `config.json`.
 
-Every lesson has a `Remove-` script that deletes what its lab created. Several lessons use paid Defender plans and hourly resources, so each lesson README lists what to watch before you start.
+Each lesson's lab guide walks through its demos step by step. Steps that start with **Confirm** are checks: find that value on your own screen before you move on, the same way a performance-based exam item grades your configuration.
+
+Lessons 1 and 4 through 15 have a `Remove-` script that deletes what the lab created. Lessons 2 and 3 have a **Clean up** section in their README instead, because Lesson 2 leaves tenant objects that Lesson 10 reuses and Lesson 3's backup vault has to be emptied before it can be deleted. Several lessons use paid Defender plans and hourly resources, so each lesson README lists what to watch before you start.
 
 ## Before you start
 
@@ -88,7 +90,7 @@ The [study plan template](docs/study-plan-template.md) lays out 30-, 60-, and 90
 
 ## What is in this repository
 
-- [`lessons/`](lessons/): one folder per lesson, each with a README and a `demos/` page that lists its lab files
+- [`lessons/`](lessons/): one folder per lesson, each with a README, a `lab-guide.md` with every demo step, and a `demos/` page that lists its lab files
 - [`lab/`](lab/): every script and Bicep template from the demos in all 15 lessons, plus the one-time setup
 - [`docs/exam-objectives.md`](docs/exam-objectives.md): every study guide skill mapped to a lesson, with a self-rating column
 - [`docs/study-plan-template.md`](docs/study-plan-template.md): 30-, 60-, and 90-day schedules

@@ -4,6 +4,16 @@ All notable changes to this course companion repository are tracked here. This p
 
 ## [Unreleased]
 
+### Added (2026-11-08, step by step)
+- `lessons/*/lab-guide.md`: every portal step and command from each lesson's demos, in the order the video runs them, for all 15 lessons. Steps that start with **Confirm** are checks against your own screen. Each guide lists the portal pages the demos open.
+- Lessons 2 and 3: a **Clean up** section, because neither lab has a `Remove-` script. Lesson 3 covers emptying the Recovery Services vault first.
+- `demos/lesson-02-federation.md`: how to run the workload federation proof in your own fork.
+
+### Fixed (2026-11-08)
+- Lesson 14's Purview Audit search step: leave **File, folder, or site** empty and search by the `FileUploaded` operation. A file name with hyphens or dots in that box returns no results.
+- The course README no longer says every lesson has a `Remove-` script.
+- `Enable-L14Audit.ps1` help: "after you explicitly approve".
+
 ### Added (2026-11-08, Lessons 14 and 15)
 - `lab/scripts/lesson-14`, `lab/infra/lesson-14`: the Microsoft Sentinel analytics rule, automation rule, response playbook, hunting queries, workbook, and Purview Audit demo scripts.
 - `lab/scripts/lesson-15`, `lab/infra/lesson-15`: the Security Copilot cost guard (a deadline tag plus a reaper logic app that deletes an expired capacity), the ServiceHub KQL plugin manifest, and the read-only demo readouts.
