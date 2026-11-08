@@ -12,7 +12,7 @@ Build first, check, run the demos, then reset or clean up. Within a stage, follo
 | Stage | Script | What it does (from the script's own help) |
 | --- | --- | --- |
 | Build | [`Deploy-L14Lab.ps1`](../../../lab/scripts/lesson-14/Deploy-L14Lab.ps1) | Deploys the SC-500 Lesson 14 lab: detection and response on Lesson 13's Microsoft Sentinel workspace, with no VMs and no standing compute. |
-| Build | [`Enable-L14Audit.ps1`](../../../lab/scripts/lesson-14/Enable-L14Audit.ps1) | Enable unified auditing after you explicitly approves this tenant-wide prerequisite. |
+| Build | [`Enable-L14Audit.ps1`](../../../lab/scripts/lesson-14/Enable-L14Audit.ps1) | Enable unified auditing after you explicitly approve this tenant-wide prerequisite. |
 | Check | [`Test-L14Contracts.ps1`](../../../lab/scripts/lesson-14/Test-L14Contracts.ps1) | Offline regression tests for L14 case selection and evidence rejection, with no Azure calls. |
 | Check | [`Test-L14Lab.ps1`](../../../lab/scripts/lesson-14/Test-L14Lab.ps1) | Read-only readiness check for the SC-500 Lesson 14 lab. Exits 1 on any FAIL. |
 | Demo | [`Invoke-L14AuditDemo.ps1`](../../../lab/scripts/lesson-14/Invoke-L14AuditDemo.ps1) | Demo 14.4: stage one genuine Microsoft 365 action for Microsoft Purview Audit, check for it where a script is allowed to look, and assemble the case timeline. Modes: `Stage`, `Office`, `Timeline`. |

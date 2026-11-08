@@ -36,6 +36,9 @@ npm-debug.log*
 # PowerShell history
 *.ps1_history
 
+# Instructor-only files (notes, builds, backups) stay local and never ship
+.local/
+
 # Build / scratch
 build/
 dist/

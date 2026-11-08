@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Enable unified auditing after you explicitly approves this tenant-wide prerequisite.
+    Enable unified auditing after you explicitly approve this tenant-wide prerequisite.
 .DESCRIPTION
     Uses the existing Exchange module and your delegated sign-in, verifies the tenant,
     enables organization customization only when required, and saves before/after evidence.
